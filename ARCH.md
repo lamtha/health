@@ -471,7 +471,6 @@ The Next.js UI will render a new tab that composes sidecar responses with existi
 
 ## Open Questions
 
-- [ ] **Units normalization** — normalize at ingest (lossy, clean) or at chart time (flexible, more code)?
 - [ ] **Unstructured reports** (clinical notes, imaging) — extract key-value summaries into `Metric` with `value_text`, or a separate `Finding` table? Defer until Phase 5 forces the decision.
 - [ ] **DNA delivery format** — VCF vs raw FASTQ vs provider portal — drives sidecar design. Revisit when Paul's sequence is in hand.
 
@@ -482,4 +481,5 @@ The Next.js UI will render a new tab that composes sidecar responses with existi
 - **Single-user per install** — this repo is the distributable desktop app, not a SaaS. Multi-tenant cloud hosting stays out of scope. (Aligned with VISION v0.2, 2026-04-18.)
 - **Desktop packaging** — Electron wrapping the existing Next.js app; macOS Apple Silicon first, Windows contributor-built later. Unsigned `.app` in Phase 5; signed + notarized + auto-updating in Phase 7. (Phase 5 shipped 2026-04-18.)
 - **Canonical metric taxonomy** — 18 categories + 8 cross-cutting tags, hand-authored as a TS seed file and applied idempotently at migrate time (packaged app) or via `pnpm db:seed` (dev). Extensions via `/mappings` at runtime. (Phase 4 shipped 2026-04-18.)
+- **Units normalization** — store raw units from each report (lossless) and normalize at chart/display time. Two-layer approach in `lib/units.ts`: (1) string aliases collapse spelling/notation variants (mcg ≡ µ ≡ μ, IU/L ≡ U/L, Thousand/uL ≡ x10E3/uL) to one canonical key; (2) per-canonical-metric numeric factor tables rescale values + ref ranges to one display unit (e.g. cells/µL → k/µL ×0.001 for absolute differentials). Plotted values are converted; original value + original unit are preserved on every point for the raw-data table. Rows with no known conversion fail loud (excluded with a warning, listed by date + provider). (2026-04-20.)
 - **Interventions as first-class entity** — separate table with its own lifecycle (create / stop / change), events widened to `start|stop|change|singleton` with optional FK, cascade on delete. Drives chart bands + timeline pages. (Phase 4 shipped 2026-04-18.)

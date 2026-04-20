@@ -14,7 +14,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { getMetricSeries, type MetricConflict } from "@/lib/metric-series";
+import {
+  getMetricSeries,
+  type MetricConflict,
+  type MetricPoint,
+} from "@/lib/metric-series";
 import { getAllOverlays } from "@/lib/overlays";
 import {
   assignProviderColors,
@@ -84,7 +88,16 @@ export default async function MetricPage({ params }: PageProps) {
           : undefined
       : undefined;
 
-  const pointsNewestFirst = [...data.points].slice().reverse();
+  // Table shows every parseable row (kept + excluded) in original units, so the
+  // user can audit everything the extraction pulled out — not just what's
+  // plotted. Mark excluded rows so readers know why they don't appear on the
+  // chart.
+  const pointsNewestFirst = [...data.pointsAll].reverse();
+  const excludedKeys = new Set(
+    data.excludedForUnits.map(
+      (p) => `${p.reportId}-${p.provider}-${p.timestamp}`,
+    ),
+  );
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -126,8 +139,15 @@ export default async function MetricPage({ params }: PageProps) {
       />
 
       <div className="space-y-6 px-8 pb-10">
-        {data.unitsMismatch && (
-          <UnitsWarning
+        {data.convertedFromUnits.length > 0 && data.units && (
+          <UnitsConversionNote
+            from={data.convertedFromUnits}
+            to={data.units}
+          />
+        )}
+
+        {data.excludedForUnits.length > 0 && (
+          <UnitsExclusionWarning
             unitsAll={data.unitsAll}
             kept={data.units}
             excluded={data.excludedForUnits}
@@ -154,8 +174,8 @@ export default async function MetricPage({ params }: PageProps) {
         <Card className="py-0">
           <CardHeader className="border-b px-5 py-3">
             <CardTitle className="text-[13px]">
-              Raw values · {data.points.length} observation
-              {data.points.length === 1 ? "" : "s"}
+              Raw values · {data.pointsAll.length} observation
+              {data.pointsAll.length === 1 ? "" : "s"}
             </CardTitle>
           </CardHeader>
           <Table>
@@ -172,8 +192,13 @@ export default async function MetricPage({ params }: PageProps) {
             <TableBody>
               {pointsNewestFirst.map((p) => {
                 const color = colors.get(p.provider);
+                const rowKey = `${p.reportId}-${p.provider}-${p.timestamp}`;
+                const isExcluded = excludedKeys.has(rowKey);
                 return (
-                  <TableRow key={`${p.reportId}-${p.provider}-${p.timestamp}`}>
+                  <TableRow
+                    key={rowKey}
+                    className={cn(isExcluded && "opacity-60")}
+                  >
                     <TableCell className="pl-5 font-mono text-[12px] text-muted-foreground">
                       {p.date}
                     </TableCell>
@@ -186,18 +211,24 @@ export default async function MetricPage({ params }: PageProps) {
                       {providerDisplayName(p.provider)}
                     </TableCell>
                     <TableCell className="text-right font-mono text-[13px] font-medium">
-                      {formatValue(p.value)}
+                      {formatValue(p.originalValue)}
                     </TableCell>
                     <TableCell className="text-right font-mono text-[11.5px] text-muted-foreground">
                       {p.units ?? "—"}
                     </TableCell>
                     <TableCell className="text-right">
-                      <Flag flag={p.flag} />
+                      {isExcluded ? (
+                        <span className="font-mono text-[10px] uppercase text-muted-foreground">
+                          not charted
+                        </span>
+                      ) : (
+                        <Flag flag={p.flag} />
+                      )}
                     </TableCell>
                     <TableCell className="pr-5 text-right font-mono text-[11.5px] text-muted-foreground">
-                      {p.refLow != null || p.refHigh != null
-                        ? `${p.refLow != null ? formatValue(p.refLow) : "—"} – ${
-                            p.refHigh != null ? formatValue(p.refHigh) : "—"
+                      {p.originalRefLow != null || p.originalRefHigh != null
+                        ? `${p.originalRefLow != null ? formatValue(p.originalRefLow) : "—"} – ${
+                            p.originalRefHigh != null ? formatValue(p.originalRefHigh) : "—"
                           }`
                         : "—"}
                     </TableCell>
@@ -210,14 +241,6 @@ export default async function MetricPage({ params }: PageProps) {
       </div>
     </div>
   );
-}
-
-interface ExcludedPoint {
-  reportId: number;
-  provider: string;
-  date: string;
-  value: number;
-  units: string | null;
 }
 
 function ConflictsWarning({
@@ -271,14 +294,38 @@ function ConflictsWarning({
   );
 }
 
-function UnitsWarning({
+function UnitsConversionNote({
+  from,
+  to,
+}: {
+  from: string[];
+  to: string;
+}) {
+  return (
+    <Card className="border-border bg-muted/40 py-0 text-[13px]">
+      <div className="flex items-start gap-3 px-5 py-3">
+        <div className="min-w-0 flex-1 text-muted-foreground">
+          Units normalized for charting: values in{" "}
+          <span className="font-mono text-foreground">
+            {from.join(", ")}
+          </span>{" "}
+          rescaled to{" "}
+          <span className="font-mono text-foreground">{to}</span>. Original
+          values and units preserved in the table below.
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+function UnitsExclusionWarning({
   unitsAll,
   kept,
   excluded,
 }: {
   unitsAll: string[];
   kept: string | null;
-  excluded: ExcludedPoint[];
+  excluded: MetricPoint[];
 }) {
   return (
     <Card
@@ -291,28 +338,28 @@ function UnitsWarning({
         <Flag flag="high" />
         <div className="min-w-0 flex-1">
           <div className="font-semibold text-foreground">
-            Units vary across providers
+            {excluded.length} row{excluded.length === 1 ? "" : "s"} excluded
+            from chart — no known conversion
           </div>
           <div className="mt-1 text-muted-foreground">
-            Found {unitsAll.length} unit{unitsAll.length === 1 ? "" : "s"}:{" "}
+            Observed units:{" "}
             <span className="font-mono text-foreground">
               {unitsAll.join(", ")}
             </span>
-            . Plotting only rows in{" "}
-            <span className="font-mono text-foreground">{kept ?? "—"}</span>;{" "}
-            {excluded.length} row{excluded.length === 1 ? "" : "s"} excluded to
-            avoid silent conversion.
+            . Charting{" "}
+            <span className="font-mono text-foreground">{kept ?? "—"}</span>;
+            the following rows need a conversion in{" "}
+            <span className="font-mono">lib/units.ts</span> before they can
+            plot alongside.
           </div>
-          {excluded.length > 0 && (
-            <ul className="mt-2 space-y-0.5 font-mono text-[11.5px] text-muted-foreground">
-              {excluded.map((p) => (
-                <li key={`${p.reportId}-${p.provider}-${p.date}`}>
-                  {p.date} · {providerDisplayName(p.provider)} ·{" "}
-                  {formatValue(p.value)} {p.units ?? "—"}
-                </li>
-              ))}
-            </ul>
-          )}
+          <ul className="mt-2 space-y-0.5 font-mono text-[11.5px] text-muted-foreground">
+            {excluded.map((p) => (
+              <li key={`${p.reportId}-${p.provider}-${p.date}`}>
+                {p.date} · {providerDisplayName(p.provider)} ·{" "}
+                {formatValue(p.originalValue)} {p.units ?? "—"}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </Card>

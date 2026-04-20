@@ -8,19 +8,29 @@ import {
   metrics as metricsTable,
   reports,
 } from "@/db/schema";
-import { canonicalUnit } from "@/lib/units";
+import {
+  canonicalUnit,
+  getUnitConversion,
+  hasMetricUnitSpec,
+} from "@/lib/units";
 
 export interface MetricPoint {
   reportId: number;
   provider: string;
   date: string;
   timestamp: number;
+  // `value`, `refLow`, `refHigh` are in the *chart's* unit: rescaled when a
+  // per-metric conversion applies, otherwise identical to the originals.
   value: number;
-  units: string | null;
+  units: string | null; // raw unit as reported by the lab (unchanged)
   flag: "high" | "low" | "ok" | null;
   refLow: number | null;
   refHigh: number | null;
   uploadedAt: string;
+  // Originals are always the raw lab values, for the raw-data table.
+  originalValue: number;
+  originalRefLow: number | null;
+  originalRefHigh: number | null;
 }
 
 export interface MetricConflict {
@@ -38,11 +48,19 @@ export interface MetricSeriesResult {
   name: string;
   canonicalMetricId: number | null;
   rawNames: string[]; // every distinct raw name that contributed rows (for canonical groups)
+  // Display unit shown on the chart. For metrics with a unit-conversion spec
+  // this is the spec's displayUnit; otherwise it's the dominant raw form.
   units: string | null;
   unitsAll: string[];
   unitsMismatch: boolean;
+  // The set of raw units that were numerically converted into `units` (empty
+  // when no conversion was applied). Drives the info banner on the detail page.
+  convertedFromUnits: string[];
   excludedForUnits: MetricPoint[];
   points: MetricPoint[];
+  // Every parseable row, originals preserved, sorted chronologically. Feeds
+  // the raw-values table so users can audit both converted + excluded rows.
+  pointsAll: MetricPoint[];
   providers: string[];
   refLow: number | null;
   refHigh: number | null;
@@ -135,17 +153,23 @@ export function getMetricSeries(name: string): MetricSeriesResult | null {
     if (r.valueNumeric == null || !r.reportDate) continue;
     const ts = Date.parse(r.reportDate);
     if (Number.isNaN(ts)) continue;
+    const units = normalizeUnits(r.units);
+    const refLow = r.refLow ?? null;
+    const refHigh = r.refHigh ?? null;
     allRaw.push({
       reportId: r.reportId,
       provider: r.provider,
       date: r.reportDate,
       timestamp: ts,
       value: r.valueNumeric,
-      units: normalizeUnits(r.units),
+      units,
       flag: parseFlag(r.flag),
-      refLow: r.refLow ?? null,
-      refHigh: r.refHigh ?? null,
+      refLow,
+      refHigh,
       uploadedAt: r.uploadedAt,
+      originalValue: r.valueNumeric,
+      originalRefLow: refLow,
+      originalRefHigh: refHigh,
     });
   }
 
@@ -161,28 +185,74 @@ export function getMetricSeries(name: string): MetricSeriesResult | null {
     ),
   );
   const unitsMismatch = canonicalAll.length > 1;
-  const dominantCanonical = pickDominant(allRaw.map((p) => canonicalUnit(p.units)));
+  const hasSpec = hasMetricUnitSpec(displayName);
 
-  if (unitsMismatch) {
-    console.warn(
-      `[metric-series] Unmapped unit collision for "${name}": canonical groups=[${canonicalAll.join(", ")}] raw=[${unitsAll.join(", ")}]. Consider adding to UNIT_ALIASES.`,
+  // Partition rows into `kept` (plottable) and `excluded` (unit can't be
+  // unified with the chart's scale). Two paths:
+  //   a. spec present: per-row conversion lookup; unknown units → excluded.
+  //   b. no spec: legacy behavior — keep the dominant canonical bucket only
+  //      when there's a mismatch, otherwise keep everything.
+  let kept: MetricPoint[] = [];
+  let excluded: MetricPoint[] = [];
+  let displayUnit: string | null = null;
+  const convertedFromSet = new Set<string>();
+
+  if (hasSpec) {
+    for (const raw of allRaw) {
+      const conv = getUnitConversion(displayName, raw.units);
+      if (!conv) {
+        excluded.push(raw);
+        continue;
+      }
+      displayUnit = conv.displayUnit;
+      if (conv.factor === 1) {
+        kept.push(raw);
+      } else {
+        if (raw.units) convertedFromSet.add(raw.units);
+        kept.push({
+          ...raw,
+          value: raw.originalValue * conv.factor,
+          refLow:
+            raw.originalRefLow != null
+              ? raw.originalRefLow * conv.factor
+              : null,
+          refHigh:
+            raw.originalRefHigh != null
+              ? raw.originalRefHigh * conv.factor
+              : null,
+        });
+      }
+    }
+    if (excluded.length > 0) {
+      const excludedUnits = Array.from(
+        new Set(excluded.map((p) => p.units ?? "(null)")),
+      );
+      console.warn(
+        `[metric-series] Metric "${displayName}" has rows with units outside the conversion spec: ${excludedUnits.join(", ")}. ${excluded.length} row(s) excluded from chart; add factors to METRIC_UNIT_CONVERSIONS if convertible.`,
+      );
+    }
+  } else if (unitsMismatch) {
+    const dominantCanonical = pickDominant(
+      allRaw.map((p) => canonicalUnit(p.units)),
     );
+    kept = allRaw.filter((p) => canonicalUnit(p.units) === dominantCanonical);
+    excluded = allRaw.filter(
+      (p) => canonicalUnit(p.units) !== dominantCanonical,
+    );
+    console.warn(
+      `[metric-series] Unmapped unit collision for "${name}": canonical groups=[${canonicalAll.join(", ")}] raw=[${unitsAll.join(", ")}]. Add a METRIC_UNIT_CONVERSIONS entry in lib/units.ts.`,
+    );
+  } else {
+    kept = allRaw;
   }
 
-  const keptByUnit = unitsMismatch
-    ? allRaw.filter((p) => canonicalUnit(p.units) === dominantCanonical)
-    : allRaw;
-  const excludedForUnits = unitsMismatch
-    ? allRaw.filter((p) => canonicalUnit(p.units) !== dominantCanonical)
-    : [];
-
-  // Cross-report dedupe within the kept unit bucket. Group by report date:
+  // Cross-report dedupe within the kept bucket. Group by report date:
   // if multiple points share a date, a later report restated an earlier
   // result (or the same collection was re-reported). Same value → collapse
   // silently. Different values → conflict; keep the most recently uploaded
   // report's value so a corrected revision wins over the original.
   const byDate = new Map<string, MetricPoint[]>();
-  for (const p of keptByUnit) {
+  for (const p of kept) {
     const group = byDate.get(p.date) ?? [];
     group.push(p);
     byDate.set(p.date, group);
@@ -198,18 +268,18 @@ export function getMetricSeries(name: string): MetricSeriesResult | null {
     const sorted = [...group].sort((a, b) =>
       b.uploadedAt.localeCompare(a.uploadedAt),
     );
-    const kept = sorted[0];
+    const keptPoint = sorted[0];
     const others = sorted.slice(1);
     const distinct = new Set(group.map((p) => p.value));
     if (distinct.size === 1) {
       duplicatesCollapsed += others.length;
     } else {
       conflicts.push({
-        date: kept.date,
+        date: keptPoint.date,
         kept: {
-          value: kept.value,
-          reportId: kept.reportId,
-          provider: kept.provider,
+          value: keptPoint.value,
+          reportId: keptPoint.reportId,
+          provider: keptPoint.provider,
         },
         discarded: others.map((o) => ({
           value: o.value,
@@ -219,23 +289,30 @@ export function getMetricSeries(name: string): MetricSeriesResult | null {
         })),
       });
       console.warn(
-        `[metric-series] Conflict for "${name}" on ${kept.date}: keeping ${kept.value} from report ${kept.reportId} (uploaded ${kept.uploadedAt}); discarded ${others
-          .map((o) => `${o.value} (report ${o.reportId}, uploaded ${o.uploadedAt})`)
+        `[metric-series] Conflict for "${name}" on ${keptPoint.date}: keeping ${keptPoint.value} from report ${keptPoint.reportId} (uploaded ${keptPoint.uploadedAt}); discarded ${others
+          .map(
+            (o) =>
+              `${o.value} (report ${o.reportId}, uploaded ${o.uploadedAt})`,
+          )
           .join(", ")}.`,
       );
     }
-    points.push(kept);
+    points.push(keptPoint);
   }
   points.sort((a, b) => a.timestamp - b.timestamp);
 
-  // Display unit: the most common raw form within the kept bucket, so the
-  // label on the chart matches what the lab actually printed.
-  const dominant = pickDominant(points.map((p) => p.units));
+  // Display unit resolution: spec's displayUnit wins when set; otherwise the
+  // most common raw form within the kept bucket.
+  if (!displayUnit) displayUnit = pickDominant(points.map((p) => p.units));
 
   const providers = Array.from(new Set(points.map((p) => p.provider)));
 
-  const refLows = points.map((p) => p.refLow).filter((v): v is number => v != null);
-  const refHighs = points.map((p) => p.refHigh).filter((v): v is number => v != null);
+  const refLows = points
+    .map((p) => p.refLow)
+    .filter((v): v is number => v != null);
+  const refHighs = points
+    .map((p) => p.refHigh)
+    .filter((v): v is number => v != null);
   const refLow = refLows.length ? pickDominant(refLows) : null;
   const refHigh = refHighs.length ? pickDominant(refHighs) : null;
   const refLowVaries = new Set(refLows).size > 1;
@@ -249,15 +326,22 @@ export function getMetricSeries(name: string): MetricSeriesResult | null {
   const min = values.length ? Math.min(...values) : null;
   const max = values.length ? Math.max(...values) : null;
 
+  // pointsAll = every parseable row (kept + excluded), sorted chronologically.
+  const pointsAll = [...points, ...excluded].sort(
+    (a, b) => a.timestamp - b.timestamp,
+  );
+
   return {
     name: displayName,
     canonicalMetricId: canonical?.id ?? null,
     rawNames,
-    units: dominant ?? null,
+    units: displayUnit,
     unitsAll,
     unitsMismatch,
-    excludedForUnits,
+    convertedFromUnits: Array.from(convertedFromSet).sort(),
+    excludedForUnits: excluded,
     points,
+    pointsAll,
     providers,
     refLow,
     refHigh,
