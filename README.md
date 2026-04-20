@@ -4,6 +4,33 @@ A local-first personal health dashboard. Ingests varied-format lab, GI, and clin
 
 Single-user, runs entirely on your machine. The only network egress is to the Claude API for PDF extraction.
 
+## Screenshots
+
+<p align="center">
+  <img src="screenshots/dashboard.jpg" width="720" alt="Dashboard">
+  <br><em>Dashboard — grouped by flagged vs in-range, with a recent-reports sidebar.</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/metrics-compare.jpg" width="720" alt="Compare metrics">
+  <br><em>Compare up to 4 canonical metrics on a shared time axis.</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/ingested-reports.jpg" width="720" alt="Ingested reports">
+  <br><em>Ingested reports list.</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/interventions.jpg" width="720" alt="Interventions">
+  <br><em>Interventions with overlay bands + markers across every chart.</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/pdf-export.jpg" width="720" alt="Clinician PDF export">
+  <br><em>Clinician PDF export — per-metric trend pages.</em>
+</p>
+
 ## Quick start
 
 Requirements: Node 22+ (tested on Node 25), pnpm 10+, and an Anthropic API key.

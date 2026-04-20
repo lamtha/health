@@ -61,3 +61,6 @@ coverage/
 .claude/settings.local.json
 
 design/
+
+# Screenshot sources — commit the JPGs, keep PNG originals local
+screenshots/*.png
