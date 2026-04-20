@@ -1124,7 +1124,7 @@ function upsertAliasAndBackfill(
   };
 }
 
-// ─── Seed diff ───────────────────────────────────────────────────────────
+// ─── Seed diff + in-place merge ──────────────────────────────────────────
 
 export interface SeedDiff {
   newCanonicals: {
@@ -1211,18 +1211,7 @@ export function computeSeedDiff(): SeedDiff {
   if (newCanonicals.length) {
     lines.push(`// ── New canonicals (append inside CANONICAL_METRICS array) ──`);
     for (const c of newCanonicals) {
-      lines.push(`  {`);
-      lines.push(`    canonicalName: ${JSON.stringify(c.canonicalName)},`);
-      lines.push(`    category: ${JSON.stringify(c.category)},`);
-      lines.push(`    tags: [${c.tags.map((t) => JSON.stringify(t)).join(", ")}],`);
-      lines.push(
-        `    preferredUnits: ${c.preferredUnits === null ? "null" : JSON.stringify(c.preferredUnits)},`,
-      );
-      lines.push(`    description: ${JSON.stringify(c.description)},`);
-      lines.push(`    aliases: [`);
-      for (const a of c.aliases) lines.push(`      ${JSON.stringify(a)},`);
-      lines.push(`    ],`);
-      lines.push(`  },`);
+      for (const line of formatCanonicalEntry(c)) lines.push(line);
     }
     lines.push("");
   }
@@ -1247,6 +1236,156 @@ export function computeSeedDiff(): SeedDiff {
     aliasAdditions,
     formatted: lines.join("\n") + "\n",
   };
+}
+
+// Format a single canonical seed entry exactly as it appears in
+// db/seeds/canonical-metrics.ts — 2-space indent for the outer `{`, 4 for
+// fields, 6 for alias strings.
+function formatCanonicalEntry(c: SeedDiff["newCanonicals"][number]): string[] {
+  const out: string[] = [];
+  out.push(`  {`);
+  out.push(`    canonicalName: ${JSON.stringify(c.canonicalName)},`);
+  out.push(`    category: ${JSON.stringify(c.category)},`);
+  out.push(`    tags: [${c.tags.map((t) => JSON.stringify(t)).join(", ")}],`);
+  out.push(
+    `    preferredUnits: ${c.preferredUnits === null ? "null" : JSON.stringify(c.preferredUnits)},`,
+  );
+  out.push(`    description: ${JSON.stringify(c.description)},`);
+  out.push(`    aliases: [`);
+  for (const a of c.aliases) out.push(`      ${JSON.stringify(a)},`);
+  out.push(`    ],`);
+  out.push(`  },`);
+  return out;
+}
+
+// ─── Seed file merge (in-place --apply-seed) ────────────────────────────
+
+export interface SeedMergeStats {
+  canonicalsAppended: number;
+  canonicalsSkipped: number;
+  aliasesInserted: number;
+  aliasesSkipped: number;
+  aliasAdditionsMissed: { canonicalName: string; aliases: string[] }[];
+}
+
+// Transform the contents of db/seeds/canonical-metrics.ts so it includes
+// every new canonical + alias in `diff`. Idempotent: a canonical already
+// present by name is skipped; an alias already in the target array is
+// skipped. Returns the merged text plus stats; caller decides whether to
+// write or print.
+export function mergeSeedDiff(
+  source: string,
+  diff: SeedDiff,
+): { merged: string; stats: SeedMergeStats } {
+  let merged = source;
+  const stats: SeedMergeStats = {
+    canonicalsAppended: 0,
+    canonicalsSkipped: 0,
+    aliasesInserted: 0,
+    aliasesSkipped: 0,
+    aliasAdditionsMissed: [],
+  };
+
+  // Alias additions first — keyed to existing blocks, so do them before
+  // appending new ones.
+  for (const add of diff.aliasAdditions) {
+    const result = insertAliasesIntoBlock(
+      merged,
+      add.canonicalName,
+      add.newAliases,
+    );
+    if (!result) {
+      stats.aliasAdditionsMissed.push({
+        canonicalName: add.canonicalName,
+        aliases: add.newAliases,
+      });
+      continue;
+    }
+    merged = result.source;
+    stats.aliasesInserted += result.inserted;
+    stats.aliasesSkipped += result.skipped;
+  }
+
+  // Append new canonicals at the end of the CANONICAL_METRICS array.
+  for (const c of diff.newCanonicals) {
+    if (seedContainsCanonical(merged, c.canonicalName)) {
+      stats.canonicalsSkipped += 1;
+      continue;
+    }
+    const appended = appendCanonicalToArray(merged, c);
+    if (!appended) {
+      throw new Error(
+        `Could not locate the closing \`];\` of CANONICAL_METRICS in the seed file — refusing to corrupt it.`,
+      );
+    }
+    merged = appended;
+    stats.canonicalsAppended += 1;
+  }
+
+  return { merged, stats };
+}
+
+function escapeForRegex(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function seedContainsCanonical(source: string, canonicalName: string): boolean {
+  const re = new RegExp(
+    `canonicalName:\\s*${escapeForRegex(JSON.stringify(canonicalName))}\\s*,`,
+  );
+  return re.test(source);
+}
+
+function insertAliasesIntoBlock(
+  source: string,
+  canonicalName: string,
+  aliases: string[],
+): { source: string; inserted: number; skipped: number } | null {
+  // Match the block starting at `canonicalName: "NAME",` up to the first
+  // `    ],` that closes its aliases array.
+  const blockRe = new RegExp(
+    `(canonicalName:\\s*${escapeForRegex(JSON.stringify(canonicalName))}\\s*,[\\s\\S]*?aliases:\\s*\\[\\n)([\\s\\S]*?)(\\n?    \\],)`,
+  );
+  const m = source.match(blockRe);
+  if (!m) return null;
+
+  const [, prefix, currentAliases, suffix] = m;
+  const existing = new Set(
+    [...currentAliases.matchAll(/"((?:[^"\\]|\\.)*)"/g)].map((mm) =>
+      JSON.parse(`"${mm[1]}"`),
+    ),
+  );
+  let inserted = 0;
+  let skipped = 0;
+  const lines: string[] = [];
+  for (const a of aliases) {
+    if (existing.has(a)) {
+      skipped += 1;
+      continue;
+    }
+    existing.add(a);
+    lines.push(`      ${JSON.stringify(a)},`);
+    inserted += 1;
+  }
+  if (inserted === 0) return { source, inserted, skipped };
+
+  const trimmedExisting = currentAliases.replace(/\n*$/, "");
+  const newBody = trimmedExisting + "\n" + lines.join("\n");
+  const updated = source.replace(blockRe, prefix + newBody + suffix);
+  return { source: updated, inserted, skipped };
+}
+
+function appendCanonicalToArray(
+  source: string,
+  c: SeedDiff["newCanonicals"][number],
+): string | null {
+  // The array closes with `\n];` at the end of the file (possibly with
+  // trailing whitespace). Find the last such marker.
+  const closeRe = /\n\];\s*$/;
+  const m = source.match(closeRe);
+  if (!m || m.index == null) return null;
+  const block = formatCanonicalEntry(c).join("\n");
+  return source.slice(0, m.index) + "\n" + block + source.slice(m.index);
 }
 
 // ─── utils ───────────────────────────────────────────────────────────────

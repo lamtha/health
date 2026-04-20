@@ -33,6 +33,7 @@ import {
   drainMappingRuns,
   getRun,
   listRuns,
+  mergeSeedDiff,
   runFixupOnRun,
 } from "@/lib/bulk-map";
 
@@ -154,11 +155,83 @@ function exportSeed(opts: { outPath?: string }) {
   }
 }
 
+function applySeed(opts: { dryRun: boolean }) {
+  const seedPath = path.join(
+    process.cwd(),
+    "db",
+    "seeds",
+    "canonical-metrics.ts",
+  );
+  if (!fs.existsSync(seedPath)) {
+    throw new Error(`Seed file not found at ${seedPath}`);
+  }
+  const source = fs.readFileSync(seedPath, "utf8");
+  const diff = computeSeedDiff();
+
+  if (diff.newCanonicals.length === 0 && diff.aliasAdditions.length === 0) {
+    console.log(`[bulk-map] seed file already in sync with DB — nothing to do.`);
+    return;
+  }
+
+  const { merged, stats } = mergeSeedDiff(source, diff);
+
+  if (opts.dryRun) {
+    console.log(
+      [
+        `[bulk-map] --dry-run (no write)`,
+        `             canonicals to append:  ${stats.canonicalsAppended}`,
+        `             canonicals skipped:    ${stats.canonicalsSkipped}`,
+        `             aliases to insert:     ${stats.aliasesInserted}`,
+        `             aliases skipped:       ${stats.aliasesSkipped}`,
+        ...(stats.aliasAdditionsMissed.length
+          ? [
+              `             ⚠ missed (canonical not found in seed file):`,
+              ...stats.aliasAdditionsMissed.map(
+                (m) =>
+                  `                 · "${m.canonicalName}" — ${m.aliases.length} alias(es) would be dropped`,
+              ),
+            ]
+          : []),
+      ].join("\n"),
+    );
+    return;
+  }
+
+  if (stats.canonicalsAppended === 0 && stats.aliasesInserted === 0) {
+    console.log(`[bulk-map] seed file already includes every diff entry — no write needed.`);
+    return;
+  }
+
+  fs.writeFileSync(seedPath, merged);
+  console.log(
+    [
+      `[bulk-map] updated ${seedPath}`,
+      `             canonicals appended:  ${stats.canonicalsAppended}`,
+      `             canonicals skipped:   ${stats.canonicalsSkipped} (already present)`,
+      `             aliases inserted:     ${stats.aliasesInserted}`,
+      `             aliases skipped:      ${stats.aliasesSkipped} (already present)`,
+      ...(stats.aliasAdditionsMissed.length
+        ? [
+            `             ⚠ missed (canonical not found in seed file):`,
+            ...stats.aliasAdditionsMissed.map(
+              (m) =>
+                `                 · "${m.canonicalName}" — ${m.aliases.length} alias(es) dropped`,
+            ),
+          ]
+        : []),
+      ``,
+      `Review the diff with \`git diff db/seeds/canonical-metrics.ts\`, run tests, then commit.`,
+    ].join("\n"),
+  );
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const isApply = args.includes("--apply");
   const isExportSeed = args.includes("--export-seed");
+  const isApplySeed = args.includes("--apply-seed");
   const isFixup = args.includes("--fixup");
+  const isDryRun = args.includes("--dry-run");
   const outArg = args.find((a) => a.startsWith("--out="))?.split("=", 2)[1];
   const limitArg = args.find((a) => a.startsWith("--limit="))?.split("=", 2)[1];
   const batchArg = args
@@ -172,6 +245,11 @@ async function main() {
 
   if (isExportSeed) {
     exportSeed({ outPath: outArg ? path.resolve(outArg) : undefined });
+    return;
+  }
+
+  if (isApplySeed) {
+    applySeed({ dryRun: isDryRun });
     return;
   }
 

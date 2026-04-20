@@ -135,6 +135,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "absolute lymphocytes",
       "lymphs (abs)",
       "lymphocytes, absolute",
+      "lymphs (absolute)",
     ],
   },
   {
@@ -149,6 +150,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "lymphocytes (%)",
       "% lymphocytes",
       "lymphocytes",
+      "lymphs",
     ],
   },
   {
@@ -161,6 +163,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "monocytes (absolute)",
       "absolute monocytes",
       "monocytes, absolute",
+      "monocytes(absolute)",
     ],
   },
   {
@@ -186,6 +189,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "eosinophils (absolute)",
       "absolute eosinophils",
       "eosinophils, absolute",
+      "eos (absolute)",
     ],
   },
   {
@@ -199,6 +203,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "eosinophils (%)",
       "% eosinophils",
       "eosinophils",
+      "eos",
     ],
   },
   {
@@ -211,6 +216,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "basophils (absolute)",
       "absolute basophils",
       "basophils, absolute",
+      "baso (absolute)",
     ],
   },
   {
@@ -224,6 +230,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "basophils (%)",
       "% basophils",
       "basophils",
+      "basos",
     ],
   },
 
@@ -451,6 +458,8 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "ldl cholesterol (calc)",
       "ldl-cholesterol",
       "ldl chol",
+      "ldl chol calc (nih)",
+      "ldl-c (nih calc)",
     ],
   },
   {
@@ -547,6 +556,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "c-reactive protein, hs",
       "high sensitivity crp",
       "hs crp",
+      "c-reactive protein, cardiac",
     ],
   },
   {
@@ -650,6 +660,9 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "thyroid peroxidase antibodies",
       "tpo ab",
       "tpo antibodies",
+      "triiodothyronine (t3), free",
+      "t4,free(direct)",
+      "homocyst(e)ine",
     ],
   },
   {
@@ -686,6 +699,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "testosterone free",
       "testosterone, free",
       "free testosterone",
+      "testost., free, calc",
     ],
   },
   {
@@ -769,6 +783,9 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "igf-i",
       "igf 1",
       "igf 1, lc/ms",
+      "cortisol, total, lc/ms",
+      "insulin-like growth factor i",
+      "sex horm binding glob, serum",
     ],
   },
   {
@@ -797,6 +814,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "psa",
       "prostate specific antigen",
       "psa, total",
+      "prostate specific ag",
     ],
   },
 
@@ -881,6 +899,8 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "vitamin d, 25-oh",
       "25-oh vitamin d total",
       "vitamin d,25-oh,total,ia",
+      "vitamin d, 25-hydroxy",
+      "folate (folic acid), serum",
     ],
   },
   {
@@ -918,6 +938,9 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "iron saturation",
       "% saturation",
       "iron saturation, %",
+      "iron, total",
+      "iron bind.cap.(tibc)",
+      "iron binding capacity",
     ],
   },
   {
@@ -1057,6 +1080,10 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
       "akkermansia",
       "a. muciniphila",
       "akkermansia muciniphila atcc baa-835",
+      "copper, blood",
+      "vitamin a (retinol)",
+      "vitamin e, alpha tocopherol",
+      "zinc, plasma or serum",
     ],
   },
   {
@@ -2321,6 +2348,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
     description: "The ratio of pro-inflammatory arachidonic acid to anti-inflammatory EPA, used as a marker of systemic inflammatory balance and cardiovascular risk.",
     aliases: [
       "arachidonic acid/epa ratio",
+      "arachidonic acid /epa ratio",
     ],
   },
   {
@@ -4020,6 +4048,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
     description: "Serum antibody (IgA or IgG) against deamidated gliadin peptides, used as a marker for celiac disease and gluten sensitivity.",
     aliases: [
       "deamidated gliadin peptide",
+      "gliadin (deamidated) ab (iga)",
     ],
   },
   {
@@ -6217,6 +6246,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
     description: "Venous blood lead concentration used to screen for lead toxicity and environmental heavy metal exposure.",
     aliases: [
       "lead (venous)",
+      "lead, blood (adult)",
     ],
   },
   {
@@ -6237,6 +6267,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
     description: "An adipokine hormone secreted by fat cells that regulates energy balance and appetite; elevated levels are associated with leptin resistance and metabolic dysfunction.",
     aliases: [
       "leptin",
+      "leptin, serum",
     ],
   },
   {
@@ -6482,6 +6513,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
     aliases: [
       "mmp 9",
       "mmp 9 (ng/ml)",
+      "matrix metalloproteinase 9 (mmp 9)",
     ],
   },
   {
@@ -6874,6 +6906,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
     description: "Percentage of EPA and DHA relative to total red blood cell fatty acids, used as a marker of omega-3 status and cardiovascular risk.",
     aliases: [
       "omega 3 (epa+dha) index",
+      "omegacheck(tm)",
     ],
   },
   {
@@ -7452,6 +7485,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
     description: "An autoantibody targeting the Fc portion of IgG, used as a serologic marker for rheumatoid arthritis and other autoimmune conditions.",
     aliases: [
       "rheumatoid factor",
+      "rheumatoid factor (rf)",
     ],
   },
   {
@@ -8523,6 +8557,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
     description: "Serum IgA antibodies against tissue transglutaminase, a primary serological marker for celiac disease screening and monitoring.",
     aliases: [
       "tissue transglutaminase",
+      "(ttg) ab, iga",
     ],
   },
   {
@@ -8715,6 +8750,7 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
     description: "Creatinine concentration in urine, used to normalize other urinary analyte measurements and assess kidney filtration.",
     aliases: [
       "urine creatinine",
+      "creatinine, urine",
     ],
   },
   {
@@ -9000,6 +9036,3778 @@ export const CANONICAL_METRICS: CanonicalSeed[] = [
     description: "Zearalenone (ZEA) is a mycotoxin produced by Fusarium fungi, measured in urine or serum to assess mycotoxin exposure.",
     aliases: [
       "zearalenone (zea)",
+    ],
+  },
+  {
+    canonicalName: "ABO Blood Group",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Determination of ABO blood group type (A, B, AB, or O) from a blood sample.",
+    aliases: [
+      "abo group",
+    ],
+  },
+  {
+    canonicalName: "Alder Tree IgE (t2)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level against alder tree (Alnus spp.) pollen, used in allergy testing.",
+    aliases: [
+      "alder (t2) ige",
+    ],
+  },
+  {
+    canonicalName: "Alfalfa IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to alfalfa (Medicago sativa), typically measured by IgG or IgE panel.",
+    aliases: [
+      "alfalfa",
+    ],
+  },
+  {
+    canonicalName: "Allspice IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to allspice (Pimenta dioica), typically measured by IgG or IgE panel.",
+    aliases: [
+      "allspice",
+    ],
+  },
+  {
+    canonicalName: "Almond IgE (f20)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level against almond (Prunus dulcis), used in food allergy testing.",
+    aliases: [
+      "almond (f20) ige",
+    ],
+  },
+  {
+    canonicalName: "Almond IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to almond, typically measured by IgG or IgE panel.",
+    aliases: [
+      "almond",
+    ],
+  },
+  {
+    canonicalName: "Alpha-1 Globulin",
+    category: "cmp",
+    tags: [],
+    preferredUnits: "g/dL",
+    description: "Alpha-1 globulin fraction measured by serum protein electrophoresis, reflecting acute-phase proteins such as alpha-1 antitrypsin.",
+    aliases: [
+      "alpha 1 globulin",
+    ],
+  },
+  {
+    canonicalName: "Alpha-2 Globulin",
+    category: "cmp",
+    tags: [],
+    preferredUnits: "g/dL",
+    description: "Alpha-2 globulin fraction measured by serum protein electrophoresis, including haptoglobin and ceruloplasmin.",
+    aliases: [
+      "alpha 2 globulin",
+    ],
+  },
+  {
+    canonicalName: "Alternaria alternata IgE (m6)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level against the mold Alternaria alternata, used in inhalant allergy testing.",
+    aliases: [
+      "alternaria alternata (m6) ige",
+    ],
+  },
+  {
+    canonicalName: "Aluminum (Blood)",
+    category: "other",
+    tags: [],
+    preferredUnits: "µg/L",
+    description: "Whole blood or serum aluminum concentration measured to assess toxic metal exposure.",
+    aliases: [
+      "aluminum, blood",
+    ],
+  },
+  {
+    canonicalName: "Amaranth IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to amaranth grain, typically measured by IgG or IgE panel.",
+    aliases: [
+      "amaranth",
+    ],
+  },
+  {
+    canonicalName: "Amoxicillin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Susceptibility or resistance of detected GI pathogens/microbiome organisms to the antibiotic amoxicillin, as reported on GI-MAP panels.",
+    aliases: [
+      "amoxicillin",
+    ],
+  },
+  {
+    canonicalName: "Anaplasma phagocytophilum IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Serum IgG antibody titer against Anaplasma phagocytophilum, the causative agent of anaplasmosis (tick-borne illness).",
+    aliases: [
+      "a. phagocytophilum ab (igg)",
+    ],
+  },
+  {
+    canonicalName: "Anaplasma phagocytophilum IgM",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Serum IgM antibody titer against Anaplasma phagocytophilum, indicating recent or acute anaplasmosis infection.",
+    aliases: [
+      "a. phagocytophilum ab (igm)",
+    ],
+  },
+  {
+    canonicalName: "Anti-CdtB IgG",
+    category: "gi-inflammation",
+    tags: ["sibo-theme", "autoimmunity"],
+    preferredUnits: "U/mL",
+    description: "IgG antibody against cytolethal distending toxin B (CdtB), a bacterial toxin linked to post-infectious IBS and SIBO predisposition.",
+    aliases: [
+      "anti-cytolethal distending toxin b igg",
+    ],
+  },
+  {
+    canonicalName: "Anti-Vinculin IgG",
+    category: "gi-inflammation",
+    tags: ["sibo-theme", "autoimmunity", "gut-barrier"],
+    preferredUnits: "U/mL",
+    description: "IgG antibody against vinculin, a cytoskeletal protein; elevated levels are associated with autoimmune-mediated gut motility dysfunction and post-infectious IBS/SIBO.",
+    aliases: [
+      "anti-vinculin igg",
+    ],
+  },
+  {
+    canonicalName: "Apple IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to apple (mix of varieties), typically measured by IgG or IgE panel.",
+    aliases: [
+      "apple mix",
+    ],
+  },
+  {
+    canonicalName: "Apricot IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to apricot, typically measured by IgG or IgE panel.",
+    aliases: [
+      "apricot",
+    ],
+  },
+  {
+    canonicalName: "Arrowroot IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to arrowroot starch, typically measured by IgG or IgE panel.",
+    aliases: [
+      "arrowroot",
+    ],
+  },
+  {
+    canonicalName: "Arsenic (Blood)",
+    category: "other",
+    tags: [],
+    preferredUnits: "µg/L",
+    description: "Blood arsenic concentration used to assess acute or chronic toxic metal exposure.",
+    aliases: [
+      "arsenic, blood",
+    ],
+  },
+  {
+    canonicalName: "Artichoke IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to artichoke, typically measured by IgG or IgE panel.",
+    aliases: [
+      "artichoke",
+    ],
+  },
+  {
+    canonicalName: "Asparagus IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to asparagus, typically measured by IgG or IgE panel.",
+    aliases: [
+      "asparagus",
+    ],
+  },
+  {
+    canonicalName: "Aspergillus fumigatus IgE (m3)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level against the mold Aspergillus fumigatus, used in allergy and hypersensitivity testing.",
+    aliases: [
+      "aspergillus fumigatus (m3) ige",
+    ],
+  },
+  {
+    canonicalName: "Avocado IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to avocado, typically measured by IgG or IgE panel.",
+    aliases: [
+      "avocado",
+    ],
+  },
+  {
+    canonicalName: "Babesia duncani IgG Antibody (IFA)",
+    category: "other",
+    tags: [],
+    preferredUnits: "titer",
+    description: "IgG antibody against Babesia duncani (WA1 strain) measured by immunofluorescence assay, used to diagnose babesiosis.",
+    aliases: [
+      "babesia duncani (wa1) antibody (igg), ifa",
+    ],
+  },
+  {
+    canonicalName: "Babesia microti IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: "titer",
+    description: "Serum IgG antibody against Babesia microti, a tick-borne intraerythrocytic parasite causing babesiosis.",
+    aliases: [
+      "babesia microti ab (igg)",
+    ],
+  },
+  {
+    canonicalName: "Babesia microti IgM Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: "titer",
+    description: "Serum IgM antibody against Babesia microti indicating acute or recent babesiosis infection.",
+    aliases: [
+      "babesia microti ab (igm)",
+    ],
+  },
+  {
+    canonicalName: "Baker's Yeast IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to baker's yeast (Saccharomyces cerevisiae), typically measured by IgG or IgE panel.",
+    aliases: [
+      "baker's yeast",
+    ],
+  },
+  {
+    canonicalName: "Bamboo Shoots IgG/IgE Reactivity",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to bamboo shoots, typically measured by IgG or IgE panel.",
+    aliases: [
+      "bamboo shoots",
+    ],
+  },
+  {
+    canonicalName: "Banana (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to banana, as measured by IgG or IgE testing.",
+    aliases: [
+      "banana",
+    ],
+  },
+  {
+    canonicalName: "Barley (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to barley, as measured by IgG or IgE testing.",
+    aliases: [
+      "barley",
+    ],
+  },
+  {
+    canonicalName: "Bartonella henselae IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: "titer",
+    description: "Serum IgG antibody screen against Bartonella henselae, the causative agent of cat scratch disease.",
+    aliases: [
+      "b. henselae ab (igg), screen",
+    ],
+  },
+  {
+    canonicalName: "Bartonella henselae IgM Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: "titer",
+    description: "Serum IgM antibody screen against Bartonella henselae indicating acute or recent infection.",
+    aliases: [
+      "b. henselae ab (igm), screen",
+    ],
+  },
+  {
+    canonicalName: "Bartonella quintana IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: "titer",
+    description: "Serum IgG antibody screen against Bartonella quintana, the causative agent of trench fever.",
+    aliases: [
+      "b. quintana ab (igg), screen",
+    ],
+  },
+  {
+    canonicalName: "Bartonella quintana IgM Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: "titer",
+    description: "Serum IgM antibody screen against Bartonella quintana indicating acute or recent infection.",
+    aliases: [
+      "b. quintana ab (igm), screen",
+    ],
+  },
+  {
+    canonicalName: "Basil (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to basil, as measured by IgG or IgE testing.",
+    aliases: [
+      "basil",
+    ],
+  },
+  {
+    canonicalName: "Bean Sprouts (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to bean sprouts, as measured by IgG or IgE testing.",
+    aliases: [
+      "bean sprouts",
+    ],
+  },
+  {
+    canonicalName: "Beef (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to beef, as measured by IgG or IgE testing.",
+    aliases: [
+      "beef",
+    ],
+  },
+  {
+    canonicalName: "Beet (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to beet, as measured by IgG or IgE testing.",
+    aliases: [
+      "beet",
+    ],
+  },
+  {
+    canonicalName: "Beta-1 Globulin",
+    category: "cmp",
+    tags: [],
+    preferredUnits: "g/dL",
+    description: "Beta-1 globulin fraction measured by serum protein electrophoresis, primarily reflecting transferrin levels.",
+    aliases: [
+      "beta 1 globulin",
+    ],
+  },
+  {
+    canonicalName: "Beta-2 Globulin",
+    category: "cmp",
+    tags: [],
+    preferredUnits: "g/dL",
+    description: "Beta-2 globulin fraction measured by serum protein electrophoresis, including complement proteins and beta-2 microglobulin.",
+    aliases: [
+      "beta 2 globulin",
+    ],
+  },
+  {
+    canonicalName: "Betaine",
+    category: "nutrients",
+    tags: ["methylation"],
+    preferredUnits: "µmol/L",
+    description: "Serum or plasma betaine (trimethylglycine) level, a methyl donor involved in homocysteine remethylation and one-carbon metabolism.",
+    aliases: [
+      "betaine",
+    ],
+  },
+  {
+    canonicalName: "Betaine/Choline Ratio",
+    category: "nutrients",
+    tags: ["methylation"],
+    preferredUnits: null,
+    description: "Ratio of betaine to choline, used to assess methyl donor balance and choline metabolism status.",
+    aliases: [
+      "betaine/choline ratio",
+    ],
+  },
+  {
+    canonicalName: "Birch Tree IgE (t3)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level against birch tree (Betula spp.) pollen, used in inhalant allergy testing.",
+    aliases: [
+      "birch (t3) ige",
+    ],
+  },
+  {
+    canonicalName: "Bisphenol A (Urine, Total)",
+    category: "other",
+    tags: [],
+    preferredUnits: "µg/g creatinine",
+    description: "Total urine bisphenol A (free plus conjugated) concentration used to assess environmental endocrine disruptor exposure.",
+    aliases: [
+      "bisphenol a, total (conj/unconj), urine",
+    ],
+  },
+  {
+    canonicalName: "Black Bean (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to black bean, as measured by IgG or IgE testing.",
+    aliases: [
+      "black bean",
+    ],
+  },
+  {
+    canonicalName: "Black Olive (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to black olive, as measured by IgG or IgE testing.",
+    aliases: [
+      "black olive",
+    ],
+  },
+  {
+    canonicalName: "Black Pepper (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to black pepper, as measured by IgG or IgE testing.",
+    aliases: [
+      "black pepper",
+    ],
+  },
+  {
+    canonicalName: "Blackberry (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to blackberry, as measured by IgG or IgE testing.",
+    aliases: [
+      "blackberry",
+    ],
+  },
+  {
+    canonicalName: "Blueberry (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to blueberry, as measured by IgG or IgE testing.",
+    aliases: [
+      "blueberry",
+    ],
+  },
+  {
+    canonicalName: "Bok Choy (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to bok choy, as measured by IgG or IgE testing.",
+    aliases: [
+      "bok choy",
+    ],
+  },
+  {
+    canonicalName: "Bone Density Z-Score",
+    category: "imaging",
+    tags: [],
+    preferredUnits: null,
+    description: "Z-score from DEXA bone density scan comparing patient's bone mineral density to age- and sex-matched peers.",
+    aliases: [
+      "z score (male)",
+    ],
+  },
+  {
+    canonicalName: "Borrelia miyamotoi IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: "titer",
+    description: "Serum IgG antibody against Borrelia miyamotoi, a relapsing fever spirochete transmitted by Ixodes ticks.",
+    aliases: [
+      "b. miyamotoi ab (igg)",
+    ],
+  },
+  {
+    canonicalName: "Borrelia miyamotoi IgM Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: "titer",
+    description: "Serum IgM antibody against Borrelia miyamotoi indicating acute or recent relapsing fever infection.",
+    aliases: [
+      "b. miyamotoi ab (igm)",
+    ],
+  },
+  {
+    canonicalName: "Boysenberry (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to boysenberry, as measured by IgG or IgE testing.",
+    aliases: [
+      "boysenberry",
+    ],
+  },
+  {
+    canonicalName: "Branched PFOA (Sb PFOA)",
+    category: "other",
+    tags: [],
+    preferredUnits: "ng/mL",
+    description: "Serum concentration of branched-chain perfluorooctanoic acid (Sb PFOA), a per- and polyfluoroalkyl substance (PFAS) environmental toxicant.",
+    aliases: [
+      "branched pfoa (sb pfoa)",
+    ],
+  },
+  {
+    canonicalName: "Branched PFOS (Sm PFOS)",
+    category: "other",
+    tags: [],
+    preferredUnits: "ng/mL",
+    description: "Serum concentration of branched-chain perfluorooctane sulfonate (Sm PFOS), a per- and polyfluoroalkyl substance (PFAS) environmental toxicant.",
+    aliases: [
+      "branched pfos (sm pfos)",
+    ],
+  },
+  {
+    canonicalName: "Brazil Nut (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to Brazil nut, as measured by IgG or IgE testing.",
+    aliases: [
+      "brazil nut",
+    ],
+  },
+  {
+    canonicalName: "Brazil Nut IgE (f18)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level against Brazil nut (Bertholletia excelsa), used in food allergy testing.",
+    aliases: [
+      "brazil nut (f18) ige",
+    ],
+  },
+  {
+    canonicalName: "Brewer's Yeast (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to brewer's yeast, as measured by IgG or IgE testing.",
+    aliases: [
+      "brewer's yeast",
+    ],
+  },
+  {
+    canonicalName: "Broccoli (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to broccoli, as measured by IgG or IgE testing.",
+    aliases: [
+      "broccoli",
+    ],
+  },
+  {
+    canonicalName: "Brown Rice (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to brown rice, as measured by IgG or IgE testing.",
+    aliases: [
+      "brown rice",
+    ],
+  },
+  {
+    canonicalName: "Brussels Sprout (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to Brussels sprout, as measured by IgG or IgE testing.",
+    aliases: [
+      "brussels sprout",
+    ],
+  },
+  {
+    canonicalName: "Buckwheat (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to buckwheat, as measured by IgG or IgE testing.",
+    aliases: [
+      "buckwheat",
+    ],
+  },
+  {
+    canonicalName: "Buffalo (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to buffalo meat, as measured by IgG or IgE testing.",
+    aliases: [
+      "buffalo",
+    ],
+  },
+  {
+    canonicalName: "Butternut Squash (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to butternut squash, as measured by IgG or IgE testing.",
+    aliases: [
+      "butternut squash",
+    ],
+  },
+  {
+    canonicalName: "Cabbage (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to cabbage, as measured by IgG or IgE testing.",
+    aliases: [
+      "cabbage",
+    ],
+  },
+  {
+    canonicalName: "Calcium (Ionized)",
+    category: "cmp",
+    tags: [],
+    preferredUnits: "mg/dL",
+    description: "Serum ionized (free) calcium level, reflecting the biologically active fraction of total calcium independent of albumin binding.",
+    aliases: [
+      "calcium, ionized",
+    ],
+  },
+  {
+    canonicalName: "Candida dubliniensis",
+    category: "gi-pathogens",
+    tags: [],
+    preferredUnits: null,
+    description: "Candida dubliniensis, a yeast species closely related to C. albicans, detected in gastrointestinal or oral samples as a potential pathogen.",
+    aliases: [
+      "candida dubliniensis",
+    ],
+  },
+  {
+    canonicalName: "Candida guilliermondii",
+    category: "gi-pathogens",
+    tags: [],
+    preferredUnits: null,
+    description: "Candida guilliermondii, an opportunistic yeast species detected in gastrointestinal samples.",
+    aliases: [
+      "candida guilliermondii",
+    ],
+  },
+  {
+    canonicalName: "Candida krusei",
+    category: "gi-pathogens",
+    tags: [],
+    preferredUnits: null,
+    description: "Candida krusei (Pichia kudriavzevii), an opportunistic yeast species with intrinsic fluconazole resistance, detected in gastrointestinal samples.",
+    aliases: [
+      "candida krusei",
+    ],
+  },
+  {
+    canonicalName: "Candida lusitaniae",
+    category: "gi-pathogens",
+    tags: [],
+    preferredUnits: null,
+    description: "Candida lusitaniae, an opportunistic yeast species occasionally resistant to amphotericin B, detected in gastrointestinal samples.",
+    aliases: [
+      "candida lusitaniae",
+    ],
+  },
+  {
+    canonicalName: "Candida parapsilosis",
+    category: "gi-pathogens",
+    tags: [],
+    preferredUnits: null,
+    description: "Candida parapsilosis, an opportunistic yeast species and common cause of candidiasis, detected in gastrointestinal samples.",
+    aliases: [
+      "candida parapsilosis",
+    ],
+  },
+  {
+    canonicalName: "Candida tropicalis",
+    category: "gi-pathogens",
+    tags: [],
+    preferredUnits: null,
+    description: "Candida tropicalis, an opportunistic yeast species and significant pathogen especially in immunocompromised individuals, detected in gastrointestinal samples.",
+    aliases: [
+      "candida tropicalis",
+    ],
+  },
+  {
+    canonicalName: "Cane Sugar (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cane sugar (sucrose), as measured by food sensitivity panels.",
+    aliases: [
+      "cane sugar",
+    ],
+  },
+  {
+    canonicalName: "Cantaloupe (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cantaloupe, as measured by food sensitivity panels.",
+    aliases: [
+      "cantaloupe",
+    ],
+  },
+  {
+    canonicalName: "Carbapenem Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Susceptibility or resistance of detected GI organisms to carbapenem-class antibiotics, as reported on GI microbiome panels.",
+    aliases: [
+      "carbapenem",
+    ],
+  },
+  {
+    canonicalName: "Carob (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to carob, as measured by food sensitivity panels.",
+    aliases: [
+      "carob",
+    ],
+  },
+  {
+    canonicalName: "Carrot (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to carrot, as measured by food sensitivity panels.",
+    aliases: [
+      "carrot",
+    ],
+  },
+  {
+    canonicalName: "Casein (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to casein (milk protein), as measured by food sensitivity panels.",
+    aliases: [
+      "casein",
+    ],
+  },
+  {
+    canonicalName: "Cashew (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cashew, as measured by food sensitivity panels.",
+    aliases: [
+      "cashew",
+    ],
+  },
+  {
+    canonicalName: "Cashew Nut IgE (f202)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to cashew nut allergen (RAST/ImmunoCAP code f202), used to evaluate cashew allergy.",
+    aliases: [
+      "cashew nut (f202) ige",
+    ],
+  },
+  {
+    canonicalName: "Cat Dander IgE (e1)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to cat dander allergen (RAST/ImmunoCAP code e1), used to evaluate cat allergy.",
+    aliases: [
+      "cat dander (e1) ige",
+    ],
+  },
+  {
+    canonicalName: "Cauliflower (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cauliflower, as measured by food sensitivity panels.",
+    aliases: [
+      "cauliflower",
+    ],
+  },
+  {
+    canonicalName: "Celery (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to celery, as measured by food sensitivity panels.",
+    aliases: [
+      "celery",
+    ],
+  },
+  {
+    canonicalName: "Cheddar Cheese (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cheddar cheese, as measured by food sensitivity panels.",
+    aliases: [
+      "cheddar cheese",
+    ],
+  },
+  {
+    canonicalName: "Cherry (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cherry, as measured by food sensitivity panels.",
+    aliases: [
+      "cherry",
+    ],
+  },
+  {
+    canonicalName: "Chia Seed (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to chia seed, as measured by food sensitivity panels.",
+    aliases: [
+      "chia seed",
+    ],
+  },
+  {
+    canonicalName: "Chicken (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to chicken, as measured by food sensitivity panels.",
+    aliases: [
+      "chicken",
+    ],
+  },
+  {
+    canonicalName: "Chili Pepper (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to chili pepper, as measured by food sensitivity panels.",
+    aliases: [
+      "chili pepper",
+    ],
+  },
+  {
+    canonicalName: "Chlamydia trachomatis RNA (Urogenital TMA)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Transcription-mediated amplification (TMA) nucleic acid test for Chlamydia trachomatis RNA from urogenital specimens, used for STI screening.",
+    aliases: [
+      "chlamydia trachomatis rna, tma, urogenital",
+    ],
+  },
+  {
+    canonicalName: "Choline",
+    category: "nutrients",
+    tags: ["methylation"],
+    preferredUnits: "µmol/L",
+    description: "Serum or plasma choline level, an essential nutrient involved in methylation, neurotransmitter synthesis, and cell membrane integrity.",
+    aliases: [
+      "choline",
+    ],
+  },
+  {
+    canonicalName: "Chromium (Blood)",
+    category: "nutrients",
+    tags: ["insulin-resistance"],
+    preferredUnits: "µg/L",
+    description: "Measurement of chromium concentration in whole blood, relevant to glucose metabolism, insulin sensitivity, and potential heavy metal exposure.",
+    aliases: [
+      "chromium, blood",
+    ],
+  },
+  {
+    canonicalName: "Cilantro (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cilantro, as measured by food sensitivity panels.",
+    aliases: [
+      "cilantro",
+    ],
+  },
+  {
+    canonicalName: "Cinnamon (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cinnamon, as measured by food sensitivity panels.",
+    aliases: [
+      "cinnamon",
+    ],
+  },
+  {
+    canonicalName: "Ciprofloxacin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Susceptibility or resistance of detected GI organisms to the fluoroquinolone antibiotic ciprofloxacin, as reported on GI microbiome panels.",
+    aliases: [
+      "ciprofloxacin",
+    ],
+  },
+  {
+    canonicalName: "Cladosporium herbarum IgE (m2)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to Cladosporium herbarum mold allergen (ImmunoCAP code m2), used to evaluate mold allergy.",
+    aliases: [
+      "cladosporium herbarum (m2) ige",
+    ],
+  },
+  {
+    canonicalName: "Cladosporium spp.",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Detection or antibody reactivity to Cladosporium, a common environmental mold genus, as measured on allergy or environmental exposure panels.",
+    aliases: [
+      "cladosporium",
+    ],
+  },
+  {
+    canonicalName: "Clam (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to clam, as measured by food sensitivity panels.",
+    aliases: [
+      "clam",
+    ],
+  },
+  {
+    canonicalName: "Clam IgE (f207)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to clam allergen (ImmunoCAP code f207), used to evaluate shellfish allergy.",
+    aliases: [
+      "clam (f207) ige",
+    ],
+  },
+  {
+    canonicalName: "Clarithromycin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Susceptibility or resistance of detected GI pathogens/microbiome organisms to the antibiotic clarithromycin, as reported on GI-MAP panels.",
+    aliases: [
+      "clarithromycin",
+    ],
+  },
+  {
+    canonicalName: "Clindamycin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Susceptibility or resistance of detected GI organisms to the antibiotic clindamycin, as reported on GI microbiome panels.",
+    aliases: [
+      "clindamycin",
+    ],
+  },
+  {
+    canonicalName: "Cloves (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cloves, as measured by food sensitivity panels.",
+    aliases: [
+      "cloves",
+    ],
+  },
+  {
+    canonicalName: "Cockroach IgE (i6)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to cockroach allergen (ImmunoCAP code i6), used to evaluate cockroach allergy.",
+    aliases: [
+      "cockroach (i6) ige",
+    ],
+  },
+  {
+    canonicalName: "Cocoa (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cocoa, as measured by food sensitivity panels.",
+    aliases: [
+      "cocoa",
+    ],
+  },
+  {
+    canonicalName: "Coconut (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to coconut, as measured by food sensitivity panels.",
+    aliases: [
+      "coconut",
+    ],
+  },
+  {
+    canonicalName: "Cod (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cod fish, as measured by food sensitivity panels.",
+    aliases: [
+      "cod",
+    ],
+  },
+  {
+    canonicalName: "Codfish IgE (f3)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to codfish allergen (ImmunoCAP code f3), used to evaluate fish allergy.",
+    aliases: [
+      "codfish (f3) ige",
+    ],
+  },
+  {
+    canonicalName: "Coffee (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to coffee, as measured by food sensitivity panels.",
+    aliases: [
+      "coffee",
+    ],
+  },
+  {
+    canonicalName: "Common Ragweed IgE (w1)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to common ragweed (short) pollen allergen (ImmunoCAP code w1), used to evaluate ragweed allergy.",
+    aliases: [
+      "common ragweed (short) (w1) ige",
+    ],
+  },
+  {
+    canonicalName: "Complement C4a",
+    category: "inflammation",
+    tags: ["autoimmunity"],
+    preferredUnits: "ng/mL",
+    description: "Plasma complement component C4a, an anaphylatoxin generated during complement activation, elevated in conditions such as mold illness, autoimmune disease, and chronic infections.",
+    aliases: [
+      "complement component c4a, plasma",
+    ],
+  },
+  {
+    canonicalName: "Coriander (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to coriander (seed form of cilantro), as measured by food sensitivity panels.",
+    aliases: [
+      "coriander",
+    ],
+  },
+  {
+    canonicalName: "Corn (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to corn, as measured by food sensitivity panels.",
+    aliases: [
+      "corn",
+    ],
+  },
+  {
+    canonicalName: "Corn Starch (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to corn starch, as measured by food sensitivity panels.",
+    aliases: [
+      "corn starch",
+    ],
+  },
+  {
+    canonicalName: "Corn Sugar (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to corn sugar (dextrose/high-fructose corn syrup), as measured by food sensitivity panels.",
+    aliases: [
+      "corn sugar",
+    ],
+  },
+  {
+    canonicalName: "Cottage Cheese (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cottage cheese, as measured by food sensitivity panels.",
+    aliases: [
+      "cottage cheese",
+    ],
+  },
+  {
+    canonicalName: "Cottonwood Tree IgE (t14)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to cottonwood tree pollen allergen (ImmunoCAP code t14), used to evaluate cottonwood allergy.",
+    aliases: [
+      "cottonwood (t14) ige",
+    ],
+  },
+  {
+    canonicalName: "Cow's Milk (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cow's milk, as measured by food sensitivity panels.",
+    aliases: [
+      "cow's milk",
+    ],
+  },
+  {
+    canonicalName: "Cow's Milk IgE (f2)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to cow's milk allergen (ImmunoCAP code f2), used to evaluate milk allergy.",
+    aliases: [
+      "cow's milk (f2) ige",
+    ],
+  },
+  {
+    canonicalName: "Crab (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to crab, as measured by food sensitivity panels.",
+    aliases: [
+      "crab",
+    ],
+  },
+  {
+    canonicalName: "Crab IgE (f23)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to crab allergen (ImmunoCAP code f23), used to evaluate shellfish allergy.",
+    aliases: [
+      "crab (f23) ige",
+    ],
+  },
+  {
+    canonicalName: "Cranberry (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cranberry, as measured by food sensitivity panels.",
+    aliases: [
+      "cranberry",
+    ],
+  },
+  {
+    canonicalName: "Cucumber (IgG)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody (IgG) reactivity to cucumber, as measured by food sensitivity panels.",
+    aliases: [
+      "cucumber",
+    ],
+  },
+  {
+    canonicalName: "Cumin (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to cumin, typically measured as IgG or IgE.",
+    aliases: [
+      "cumin",
+    ],
+  },
+  {
+    canonicalName: "Currants (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to currants, typically measured as IgG or IgE.",
+    aliases: [
+      "currants",
+    ],
+  },
+  {
+    canonicalName: "Cystathionine",
+    category: "organic-acids",
+    tags: ["methylation"],
+    preferredUnits: "nmol/mL",
+    description: "Plasma amino acid intermediate in the transsulfuration pathway linking homocysteine metabolism to cysteine synthesis.",
+    aliases: [
+      "cystathionine",
+    ],
+  },
+  {
+    canonicalName: "Cysteine/Cystine",
+    category: "organic-acids",
+    tags: ["methylation"],
+    preferredUnits: "nmol/mL",
+    description: "Plasma or urine measurement of cysteine and/or cystine, sulfur-containing amino acids involved in glutathione synthesis and methylation pathways.",
+    aliases: [
+      "cyst(e)ine",
+    ],
+  },
+  {
+    canonicalName: "Deamidated Gliadin Peptide Antibody IgG",
+    category: "gi-inflammation",
+    tags: ["autoimmunity", "gut-barrier"],
+    preferredUnits: "U/mL",
+    description: "Serum IgG antibody to deamidated gliadin peptides, used in the diagnosis of celiac disease and gluten sensitivity.",
+    aliases: [
+      "gliadin (deamidated) ab (igg)",
+    ],
+  },
+  {
+    canonicalName: "Dermatophagoides farinae IgE (D2)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to Dermatophagoides farinae (dust mite species D2), used in allergy testing.",
+    aliases: [
+      "dermatophagoides farinae (d2) ige",
+    ],
+  },
+  {
+    canonicalName: "Dermatophagoides pteronyssinus IgE (D1)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to Dermatophagoides pteronyssinus (dust mite species D1), used in allergy testing.",
+    aliases: [
+      "dermatophagoides pteronyssinus (d1) ige",
+    ],
+  },
+  {
+    canonicalName: "Dill (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to dill, typically measured as IgG or IgE.",
+    aliases: [
+      "dill",
+    ],
+  },
+  {
+    canonicalName: "Dimethylglycine (DMG)",
+    category: "organic-acids",
+    tags: ["methylation"],
+    preferredUnits: "nmol/mL",
+    description: "Plasma or urine level of dimethylglycine, an intermediate in choline and one-carbon metabolism related to methylation capacity.",
+    aliases: [
+      "dimethylglycine (dmg)",
+    ],
+  },
+  {
+    canonicalName: "Dog Dander IgE (E5)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to dog dander (allergen code E5), used in allergy evaluation.",
+    aliases: [
+      "dog dander (e5) ige",
+    ],
+  },
+  {
+    canonicalName: "Duck Egg (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to duck egg, typically measured as IgG or IgE.",
+    aliases: [
+      "duck egg",
+    ],
+  },
+  {
+    canonicalName: "Duck Meat (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to duck meat, typically measured as IgG or IgE.",
+    aliases: [
+      "duck meat",
+    ],
+  },
+  {
+    canonicalName: "Egg White (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to egg white, typically measured as IgG or IgE.",
+    aliases: [
+      "egg white",
+    ],
+  },
+  {
+    canonicalName: "Egg White IgE (F1)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to egg white (allergen code F1), used in food allergy testing.",
+    aliases: [
+      "egg white (f1) ige",
+    ],
+  },
+  {
+    canonicalName: "Egg Yolk (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to egg yolk, typically measured as IgG or IgE.",
+    aliases: [
+      "egg yolk",
+    ],
+  },
+  {
+    canonicalName: "Eggplant (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to eggplant, typically measured as IgG or IgE.",
+    aliases: [
+      "eggplant",
+    ],
+  },
+  {
+    canonicalName: "Ehrlichia chaffeensis Antibody IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "titer",
+    description: "Serum IgG antibody titer to Ehrlichia chaffeensis, the causative agent of human monocytic ehrlichiosis.",
+    aliases: [
+      "e. chaffeensis ab igg",
+    ],
+  },
+  {
+    canonicalName: "Ehrlichia chaffeensis Antibody IgM",
+    category: "other",
+    tags: [],
+    preferredUnits: "titer",
+    description: "Serum IgM antibody titer to Ehrlichia chaffeensis, indicating acute or recent human monocytic ehrlichiosis infection.",
+    aliases: [
+      "e. chaffeensis ab igm",
+    ],
+  },
+  {
+    canonicalName: "Elm Tree IgE (T8)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to elm tree pollen (allergen code T8), used in inhalant allergy testing.",
+    aliases: [
+      "elm (t8) ige",
+    ],
+  },
+  {
+    canonicalName: "Endive (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to endive, typically measured as IgG or IgE.",
+    aliases: [
+      "endive",
+    ],
+  },
+  {
+    canonicalName: "Epithelial Cells (Non-Renal, Urine)",
+    category: "other",
+    tags: [],
+    preferredUnits: "cells/hpf",
+    description: "Microscopic count of non-renal epithelial cells in urine sediment, typically squamous or transitional cells indicating contamination or lower urinary tract origin.",
+    aliases: [
+      "epithelial cells (non renal)",
+    ],
+  },
+  {
+    canonicalName: "Erythromycin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Susceptibility or resistance of detected GI organisms to the macrolide antibiotic erythromycin, as reported on GI microbiome panels.",
+    aliases: [
+      "erythromycin",
+    ],
+  },
+  {
+    canonicalName: "Estimated Average Glucose (eAG)",
+    category: "glycemic",
+    tags: ["insulin-resistance"],
+    preferredUnits: "mg/dL",
+    description: "Estimated average glucose derived from HbA1c, providing a clinically intuitive measure of average blood glucose over approximately 3 months.",
+    aliases: [
+      "estim. avg glu (eag)",
+    ],
+  },
+  {
+    canonicalName: "Fig (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to fig, typically measured as IgG or IgE.",
+    aliases: [
+      "fig",
+    ],
+  },
+  {
+    canonicalName: "Flaxseed (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to flaxseed, typically measured as IgG or IgE.",
+    aliases: [
+      "flaxseed",
+    ],
+  },
+  {
+    canonicalName: "Gamma Globulin",
+    category: "cmp",
+    tags: [],
+    preferredUnits: "g/dL",
+    description: "Serum gamma globulin fraction (immunoglobulins) measured by protein electrophoresis, reflecting immune protein levels.",
+    aliases: [
+      "gamma globulin",
+    ],
+  },
+  {
+    canonicalName: "Garbanzo Bean (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to garbanzo bean (chickpea), typically measured as IgG or IgE.",
+    aliases: [
+      "garbanzo bean",
+    ],
+  },
+  {
+    canonicalName: "Garlic (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to garlic, typically measured as IgG or IgE.",
+    aliases: [
+      "garlic",
+    ],
+  },
+  {
+    canonicalName: "Gentamicin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Susceptibility or resistance of detected GI organisms to the aminoglycoside antibiotic gentamicin, as reported on GI microbiome panels.",
+    aliases: [
+      "gentamicin",
+    ],
+  },
+  {
+    canonicalName: "Ginger (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to ginger, typically measured as IgG or IgE.",
+    aliases: [
+      "ginger",
+    ],
+  },
+  {
+    canonicalName: "Gliadin (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity antibody reactivity to gliadin (wheat protein fraction), typically measured as IgG or IgE in food sensitivity panels.",
+    aliases: [
+      "gliadin",
+    ],
+  },
+  {
+    canonicalName: "Glutathione",
+    category: "nutrients",
+    tags: ["methylation"],
+    preferredUnits: "µmol/L",
+    description: "Plasma or whole-blood level of glutathione, the primary endogenous antioxidant and marker of oxidative stress status.",
+    aliases: [
+      "glutathione",
+    ],
+  },
+  {
+    canonicalName: "Gluten (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to gluten (wheat protein complex), typically measured as IgG or IgE.",
+    aliases: [
+      "gluten",
+    ],
+  },
+  {
+    canonicalName: "Goat's Milk (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to goat's milk, typically measured as IgG or IgE.",
+    aliases: [
+      "goat's milk",
+    ],
+  },
+  {
+    canonicalName: "Grapefruit (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to grapefruit, typically measured as IgG or IgE.",
+    aliases: [
+      "grapefruit",
+    ],
+  },
+  {
+    canonicalName: "Green Bean (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to green bean, typically measured as IgG or IgE.",
+    aliases: [
+      "green bean",
+    ],
+  },
+  {
+    canonicalName: "Green Olive (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to green olive, typically measured as IgG or IgE.",
+    aliases: [
+      "green olive",
+    ],
+  },
+  {
+    canonicalName: "Green Pepper (IgG/IgE)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Food sensitivity or allergy antibody reactivity to green pepper, typically measured as IgG or IgE.",
+    aliases: [
+      "green pepper",
+    ],
+  },
+  {
+    canonicalName: "Halibut IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to halibut antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "halibut",
+    ],
+  },
+  {
+    canonicalName: "Hazelnut IgE (F17)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum specific IgE antibody level to hazelnut (allergen code F17), used in food allergy testing.",
+    aliases: [
+      "hazelnut (f17) ige",
+    ],
+  },
+  {
+    canonicalName: "Hazelnut IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to hazelnut antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "hazelnut",
+    ],
+  },
+  {
+    canonicalName: "HDL Large Particles",
+    category: "lipids",
+    tags: ["cardio-risk"],
+    preferredUnits: "nmol/L",
+    description: "Concentration of large HDL particle subclass measured by NMR or ion mobility, associated with cardiovascular protection.",
+    aliases: [
+      "hdl large",
+    ],
+  },
+  {
+    canonicalName: "HDL Particle Number (Total)",
+    category: "lipids",
+    tags: ["cardio-risk"],
+    preferredUnits: "µmol/L",
+    description: "Total concentration of HDL particles measured by NMR spectroscopy, a cardiovascular risk marker.",
+    aliases: [
+      "hdl-p (total)",
+    ],
+  },
+  {
+    canonicalName: "HDL Size",
+    category: "lipids",
+    tags: ["cardio-risk"],
+    preferredUnits: "nm",
+    description: "Mean particle diameter of HDL cholesterol particles, measured by NMR spectroscopy.",
+    aliases: [
+      "hdl size",
+    ],
+  },
+  {
+    canonicalName: "Hemp IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to hemp antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "hemp",
+    ],
+  },
+  {
+    canonicalName: "HIV Ag/Ab Screen",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Fourth-generation HIV combination antigen/antibody screening immunoassay.",
+    aliases: [
+      "hiv ag/ab, screen",
+    ],
+  },
+  {
+    canonicalName: "Honey IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to honey antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "honey",
+    ],
+  },
+  {
+    canonicalName: "Hops IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to hops antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "hops",
+    ],
+  },
+  {
+    canonicalName: "Horseradish IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to horseradish antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "horseradish",
+    ],
+  },
+  {
+    canonicalName: "HSV-1 IgG (Type Specific)",
+    category: "other",
+    tags: [],
+    preferredUnits: "index",
+    description: "Type-specific IgG antibody titer to Herpes Simplex Virus type 1, indicating past or latent infection.",
+    aliases: [
+      "hsv 1 igg, type specific ab",
+    ],
+  },
+  {
+    canonicalName: "HSV-2 IgG (Type Specific)",
+    category: "other",
+    tags: [],
+    preferredUnits: "index",
+    description: "Type-specific IgG antibody titer to Herpes Simplex Virus type 2, indicating past or latent infection.",
+    aliases: [
+      "hsv 2 igg, type specific ab",
+    ],
+  },
+  {
+    canonicalName: "IgG Subclass 1",
+    category: "inflammation",
+    tags: ["autoimmunity"],
+    preferredUnits: "mg/dL",
+    description: "Serum IgG subclass 1 level, used to evaluate humoral immune deficiencies and susceptibility to recurrent infections.",
+    aliases: [
+      "immunoglobulin g subclass 1",
+    ],
+  },
+  {
+    canonicalName: "IgG Subclass 2",
+    category: "inflammation",
+    tags: ["autoimmunity"],
+    preferredUnits: "mg/dL",
+    description: "Serum IgG subclass 2 level, important for response to polysaccharide antigens; deficiency linked to recurrent respiratory infections.",
+    aliases: [
+      "immunoglobulin g subclass 2",
+    ],
+  },
+  {
+    canonicalName: "IgG Subclass 3",
+    category: "inflammation",
+    tags: ["autoimmunity"],
+    preferredUnits: "mg/dL",
+    description: "Serum IgG subclass 3 level, effective against protein antigens; deficiency associated with recurrent infections despite normal total IgG.",
+    aliases: [
+      "immunoglobulin g subclass 3",
+    ],
+  },
+  {
+    canonicalName: "IgG Subclass 4",
+    category: "inflammation",
+    tags: ["autoimmunity"],
+    preferredUnits: "mg/dL",
+    description: "Serum IgG subclass 4 level; elevated levels are associated with IgG4-related disease, an immune-mediated fibroinflammatory condition.",
+    aliases: [
+      "immunoglobulin g subclass 4",
+    ],
+  },
+  {
+    canonicalName: "Immature Granulocytes (%)",
+    category: "cbc",
+    tags: [],
+    preferredUnits: "%",
+    description: "Percentage of immature granulocytes in peripheral blood differential, indicative of left shift, infection, or bone marrow stress.",
+    aliases: [
+      "immature granulocytes",
+    ],
+  },
+  {
+    canonicalName: "Immature Granulocytes (Absolute)",
+    category: "cbc",
+    tags: [],
+    preferredUnits: "10^3/µL",
+    description: "Absolute count of immature granulocytes (bands, metamyelocytes, myelocytes) in peripheral blood, indicative of left shift or infection.",
+    aliases: [
+      "immature grans (abs)",
+    ],
+  },
+  {
+    canonicalName: "Immunoglobulin A (IgA)",
+    category: "inflammation",
+    tags: ["autoimmunity"],
+    preferredUnits: "mg/dL",
+    description: "Serum total IgA concentration, used to assess immune function, diagnose IgA deficiency, and evaluate autoimmune and mucosal conditions.",
+    aliases: [
+      "immunoglobulin a",
+    ],
+  },
+  {
+    canonicalName: "Immunoglobulin G (IgG)",
+    category: "inflammation",
+    tags: ["autoimmunity"],
+    preferredUnits: "mg/dL",
+    description: "Serum total IgG concentration, the most abundant immunoglobulin; used to assess humoral immunity, immune deficiency, and autoimmune conditions.",
+    aliases: [
+      "immunoglobulin g, serum",
+    ],
+  },
+  {
+    canonicalName: "Immunoglobulin M (IgM)",
+    category: "inflammation",
+    tags: ["autoimmunity"],
+    preferredUnits: "mg/dL",
+    description: "Serum total IgM concentration, the first antibody produced in response to infection; used to evaluate immune function and diagnose certain autoimmune conditions.",
+    aliases: [
+      "immunoglobulin m",
+    ],
+  },
+  {
+    canonicalName: "Iodine (Serum/Plasma)",
+    category: "nutrients",
+    tags: [],
+    preferredUnits: "µg/L",
+    description: "Measurement of iodine concentration in serum or plasma, reflecting recent dietary iodine intake and status relevant to thyroid hormone synthesis.",
+    aliases: [
+      "iodine, serum/plasma",
+    ],
+  },
+  {
+    canonicalName: "Isochrysis galbana IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity to Isochrysis galbana (marine microalgae) antigen on food sensitivity panel.",
+    aliases: [
+      "isochrysis galbana",
+    ],
+  },
+  {
+    canonicalName: "Jalapeño IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to jalapeño pepper antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "jalapeno",
+    ],
+  },
+  {
+    canonicalName: "Kale IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to kale antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "kale",
+    ],
+  },
+  {
+    canonicalName: "Kelp IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to kelp antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "kelp",
+    ],
+  },
+  {
+    canonicalName: "Kidney Bean IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to kidney bean antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "kidney bean",
+    ],
+  },
+  {
+    canonicalName: "Kiwi IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to kiwi fruit antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "kiwi",
+    ],
+  },
+  {
+    canonicalName: "Kohlrabi IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to kohlrabi antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "kohlrabi",
+    ],
+  },
+  {
+    canonicalName: "Lamb IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to lamb meat antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "lamb",
+    ],
+  },
+  {
+    canonicalName: "Large HDL Particle Number",
+    category: "lipids",
+    tags: ["cardio-risk"],
+    preferredUnits: "µmol/L",
+    description: "Concentration of large HDL particles measured by NMR spectroscopy; higher levels associated with reduced cardiovascular risk.",
+    aliases: [
+      "large hdl-p",
+    ],
+  },
+  {
+    canonicalName: "Large VLDL Particle Number",
+    category: "lipids",
+    tags: ["cardio-risk"],
+    preferredUnits: "nmol/L",
+    description: "Concentration of large VLDL particles measured by NMR spectroscopy, associated with triglyceride metabolism and cardiovascular risk.",
+    aliases: [
+      "large vldl-p",
+    ],
+  },
+  {
+    canonicalName: "LDL Medium Particles",
+    category: "lipids",
+    tags: ["cardio-risk"],
+    preferredUnits: "nmol/L",
+    description: "Concentration of medium-sized LDL particles by NMR spectroscopy, a cardiovascular risk sub-fraction.",
+    aliases: [
+      "ldl medium",
+    ],
+  },
+  {
+    canonicalName: "LDL Pattern",
+    category: "lipids",
+    tags: ["cardio-risk"],
+    preferredUnits: null,
+    description: "Qualitative classification of LDL particle distribution as Pattern A (large, buoyant) or Pattern B (small, dense).",
+    aliases: [
+      "ldl pattern",
+    ],
+  },
+  {
+    canonicalName: "LDL Peak Size",
+    category: "lipids",
+    tags: ["cardio-risk"],
+    preferredUnits: "nm",
+    description: "Peak (modal) diameter of LDL particles measured by NMR or gradient gel electrophoresis.",
+    aliases: [
+      "ldl peak size",
+    ],
+  },
+  {
+    canonicalName: "LDL Size",
+    category: "lipids",
+    tags: ["cardio-risk"],
+    preferredUnits: "nm",
+    description: "Mean diameter of LDL particles measured by NMR spectroscopy; smaller size correlates with increased cardiovascular risk.",
+    aliases: [
+      "ldl size",
+    ],
+  },
+  {
+    canonicalName: "Lemon IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to lemon antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "lemon",
+    ],
+  },
+  {
+    canonicalName: "Lentil IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to lentil antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "lentil",
+    ],
+  },
+  {
+    canonicalName: "Lettuce IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to lettuce antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "lettuce",
+    ],
+  },
+  {
+    canonicalName: "Leukocyte Esterase (Urine)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Urine dipstick marker for leukocyte esterase, used to detect urinary tract infection or inflammation.",
+    aliases: [
+      "leukocyte esterase",
+    ],
+  },
+  {
+    canonicalName: "Levofloxacin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Antimicrobial susceptibility result for levofloxacin (fluoroquinolone) against a cultured GI organism.",
+    aliases: [
+      "levofloxacin",
+    ],
+  },
+  {
+    canonicalName: "Ligilactobacillus ruminis & Pediococcus acidilactici",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Combined abundance reporting of Ligilactobacillus ruminis and Pediococcus acidilactici, two lactic acid bacteria detected together on GI microbiome panels.",
+    aliases: [
+      "ligilactobacillus ruminis & pediococcus acidilactici",
+    ],
+  },
+  {
+    canonicalName: "Lima Bean IgG/IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Immunoreactivity (IgG or IgE) to lima bean antigen on food sensitivity/allergy panel.",
+    aliases: [
+      "lima bean",
+    ],
+  },
+  {
+    canonicalName: "Linear PFOA (n-PFOA)",
+    category: "other",
+    tags: [],
+    preferredUnits: "ng/mL",
+    description: "Serum concentration of linear perfluorooctanoic acid (n-PFOA), a persistent PFAS environmental contaminant.",
+    aliases: [
+      "linear pfoa (n pfoa)",
+    ],
+  },
+  {
+    canonicalName: "Linear PFOS (n-PFOS)",
+    category: "other",
+    tags: [],
+    preferredUnits: "ng/mL",
+    description: "Linear isomer of perfluorooctane sulfonate (n-PFOS), a per- and polyfluoroalkyl substance (PFAS) measured in serum as an environmental toxicant.",
+    aliases: [
+      "linear pfos (n pfos)",
+    ],
+  },
+  {
+    canonicalName: "Linezolid Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Antimicrobial susceptibility result for linezolid (oxazolidinone) against a cultured GI organism.",
+    aliases: [
+      "linezolid(zyvox)",
+    ],
+  },
+  {
+    canonicalName: "Lobster IgE (f80)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Specific IgE antibody to lobster allergen (ISAC/CAP code f80), indicating shellfish allergy.",
+    aliases: [
+      "lobster (f80) ige",
+    ],
+  },
+  {
+    canonicalName: "Lobster IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to lobster, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "lobster",
+    ],
+  },
+  {
+    canonicalName: "LP-IR Score",
+    category: "glycemic",
+    tags: ["insulin-resistance", "cardio-risk"],
+    preferredUnits: null,
+    description: "Lipoprotein Insulin Resistance Score derived from NMR lipoprotein subfractions, predicting insulin resistance and type 2 diabetes risk.",
+    aliases: [
+      "lp-ir score",
+    ],
+  },
+  {
+    canonicalName: "Lyme Disease Ab Screen",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Screening antibody test (ELISA) for Borrelia burgdorferi, the causative agent of Lyme disease.",
+    aliases: [
+      "lyme ab screen",
+    ],
+  },
+  {
+    canonicalName: "Macadamia Nut IgE (RF345)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum IgE antibody specific to macadamia nut allergen (Quest code RF345), used in allergy testing.",
+    aliases: [
+      "macadamia nut (rf345) ige **",
+    ],
+  },
+  {
+    canonicalName: "Macadamia Nut IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to macadamia nut, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "macadamia nut",
+    ],
+  },
+  {
+    canonicalName: "Macrolide Resistance",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Presence or level of macrolide antibiotic resistance genes detected in gut microbiome profiling.",
+    aliases: [
+      "macrolides",
+    ],
+  },
+  {
+    canonicalName: "Mango IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to mango, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "mango",
+    ],
+  },
+  {
+    canonicalName: "Maple / Box Elder Tree IgE (T1)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum IgE antibody specific to maple/box elder tree pollen allergen (T1), used in environmental allergy testing.",
+    aliases: [
+      "maple (box elder) (t1) ige",
+    ],
+  },
+  {
+    canonicalName: "Maple Sugar IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to maple sugar, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "maple sugar",
+    ],
+  },
+  {
+    canonicalName: "MeFOSAA",
+    category: "other",
+    tags: [],
+    preferredUnits: "ng/mL",
+    description: "N-methyl perfluorooctane sulfonamido acetic acid, a PFAS compound measured in serum as an environmental/industrial toxicant.",
+    aliases: [
+      "mefosaa",
+    ],
+  },
+  {
+    canonicalName: "Mercury (Blood)",
+    category: "other",
+    tags: [],
+    preferredUnits: "µg/L",
+    description: "Whole blood mercury concentration used to assess heavy metal exposure.",
+    aliases: [
+      "mercury, blood",
+    ],
+  },
+  {
+    canonicalName: "Methionine",
+    category: "organic-acids",
+    tags: ["methylation"],
+    preferredUnits: "μmol/L",
+    description: "Essential amino acid serving as the primary methyl donor precursor in the methylation cycle; measured in plasma or urine amino acid panels.",
+    aliases: [
+      "methionine",
+    ],
+  },
+  {
+    canonicalName: "Methionine/Sulfur Balance Ratio",
+    category: "organic-acids",
+    tags: ["methylation"],
+    preferredUnits: null,
+    description: "Ratio reflecting the balance between methionine metabolism and sulfur pathway intermediates, used to assess methylation and transsulfuration pathway status.",
+    aliases: [
+      "met/sulf balance ratio",
+    ],
+  },
+  {
+    canonicalName: "Methylation Balance Ratio",
+    category: "organic-acids",
+    tags: ["methylation"],
+    preferredUnits: null,
+    description: "A composite ratio of methylation pathway intermediates (e.g., SAM/SAH or related markers) used to assess overall methylation capacity.",
+    aliases: [
+      "methylation balance ratio",
+    ],
+  },
+  {
+    canonicalName: "Millet IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to millet grain, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "millet",
+    ],
+  },
+  {
+    canonicalName: "Molybdenum (Blood)",
+    category: "nutrients",
+    tags: [],
+    preferredUnits: "µg/L",
+    description: "Blood concentration of molybdenum, an essential trace mineral involved in enzyme cofactor function.",
+    aliases: [
+      "molybdenum, blood",
+    ],
+  },
+  {
+    canonicalName: "Mountain Cedar Tree IgE (T6)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum IgE antibody specific to mountain cedar (Juniperus ashei) pollen allergen (T6), used in environmental allergy testing.",
+    aliases: [
+      "mountain cedar (t6) ige",
+    ],
+  },
+  {
+    canonicalName: "Mouse Urine Proteins IgE (E72)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum IgE antibody specific to mouse urine proteins allergen (E72), used in occupational and environmental allergy testing.",
+    aliases: [
+      "mouse urine proteins (e72) ige",
+    ],
+  },
+  {
+    canonicalName: "Moxifloxacin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Antimicrobial susceptibility result for moxifloxacin (fluoroquinolone) against a cultured GI organism.",
+    aliases: [
+      "moxifloxacin",
+    ],
+  },
+  {
+    canonicalName: "Mozzarella Cheese IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to mozzarella cheese, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "mozzarella cheese",
+    ],
+  },
+  {
+    canonicalName: "Mung Bean IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to mung bean, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "mung bean",
+    ],
+  },
+  {
+    canonicalName: "Mushroom IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to mushroom, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "mushroom",
+    ],
+  },
+  {
+    canonicalName: "Mustard IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to mustard, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "mustard",
+    ],
+  },
+  {
+    canonicalName: "NASEM PFAS Recommended Summation",
+    category: "other",
+    tags: [],
+    preferredUnits: "ng/mL",
+    description: "Sum of select PFAS compounds as recommended by the National Academies of Sciences, Engineering, and Medicine (NASEM) for clinical exposure assessment.",
+    aliases: [
+      "nasem recommended summation",
+    ],
+  },
+  {
+    canonicalName: "Navy Bean IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to navy bean, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "navy bean",
+    ],
+  },
+  {
+    canonicalName: "Neisseria gonorrhoeae RNA (TMA, Urogenital)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Transcription-mediated amplification (TMA) nucleic acid test for Neisseria gonorrhoeae RNA in urogenital specimens, used for gonorrhea diagnosis.",
+    aliases: [
+      "neisseria gonorrhoeae rna, tma, urogenital",
+    ],
+  },
+  {
+    canonicalName: "Nettle IgE (W20)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum IgE antibody specific to stinging nettle weed pollen allergen (W20), used in environmental allergy testing.",
+    aliases: [
+      "nettle (w20) ige",
+    ],
+  },
+  {
+    canonicalName: "Neurofilament Light Chain (NfL)",
+    category: "other",
+    tags: [],
+    preferredUnits: "pg/mL",
+    description: "Plasma biomarker of neuroaxonal injury; elevated levels indicate neurodegeneration and are used in monitoring neurological conditions.",
+    aliases: [
+      "neurofilament light chain (nfl), plasma",
+    ],
+  },
+  {
+    canonicalName: "Nitrite (Urine)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Urine dipstick marker for nitrites, used to detect bacteriuria indicative of urinary tract infection.",
+    aliases: [
+      "nitrite",
+    ],
+  },
+  {
+    canonicalName: "Nutmeg IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to nutmeg spice, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "nutmeg",
+    ],
+  },
+  {
+    canonicalName: "Oak Tree IgE (T7)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum IgE antibody specific to oak tree pollen allergen (T7), used in environmental allergy testing.",
+    aliases: [
+      "oak (t7) ige",
+    ],
+  },
+  {
+    canonicalName: "Oat IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to oat, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "oat",
+    ],
+  },
+  {
+    canonicalName: "Okra IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to okra, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "okra",
+    ],
+  },
+  {
+    canonicalName: "Onion IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to onion, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "onion",
+    ],
+  },
+  {
+    canonicalName: "Orange IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to orange, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "orange",
+    ],
+  },
+  {
+    canonicalName: "Oregano IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to oregano, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "oregano",
+    ],
+  },
+  {
+    canonicalName: "Oxacillin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Antimicrobial susceptibility result for oxacillin/methicillin (beta-lactam) against a cultured GI organism.",
+    aliases: [
+      "oxacillin(methicillin)",
+    ],
+  },
+  {
+    canonicalName: "Oyster IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to oyster, used in food sensitivity/intolerance panels.",
+    aliases: [
+      "oyster",
+    ],
+  },
+  {
+    canonicalName: "PAI-1 Antigen",
+    category: "inflammation",
+    tags: ["cardio-risk"],
+    preferredUnits: "ng/mL",
+    description: "Plasminogen activator inhibitor-1 antigen is a key regulator of fibrinolysis; elevated levels are associated with increased thrombotic and cardiovascular risk.",
+    aliases: [
+      "plasminogen activator inhibitor (pai-1) ag",
+    ],
+  },
+  {
+    canonicalName: "Papaya IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to papaya antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "papaya",
+    ],
+  },
+  {
+    canonicalName: "Parathyroid Hormone (PTH), Intact",
+    category: "hormones",
+    tags: [],
+    preferredUnits: "pg/mL",
+    description: "Intact parathyroid hormone level in serum, used to assess calcium homeostasis, parathyroid function, and metabolic bone disease.",
+    aliases: [
+      "parathyroid hormone, intact",
+    ],
+  },
+  {
+    canonicalName: "Parmesan Cheese IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to Parmesan cheese antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "parmesan",
+    ],
+  },
+  {
+    canonicalName: "Parsley IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to parsley antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "parsley",
+    ],
+  },
+  {
+    canonicalName: "Pea IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to pea antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "pea",
+    ],
+  },
+  {
+    canonicalName: "Peach IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to peach antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "peach",
+    ],
+  },
+  {
+    canonicalName: "Peanut IgE (F13)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum IgE antibody specific to peanut allergen (Quest code F13), used in food allergy diagnosis.",
+    aliases: [
+      "peanut (f13) ige",
+    ],
+  },
+  {
+    canonicalName: "Peanut IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to peanut antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "peanut",
+    ],
+  },
+  {
+    canonicalName: "Pear IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to pear antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "pear",
+    ],
+  },
+  {
+    canonicalName: "Pecan IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to pecan antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "pecan",
+    ],
+  },
+  {
+    canonicalName: "Penicillin G Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Antimicrobial susceptibility result for penicillin G against a cultured GI organism.",
+    aliases: [
+      "penicillin-g",
+    ],
+  },
+  {
+    canonicalName: "Penicillium notatum IgE (M1)",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Serum IgE antibody specific to Penicillium notatum mold allergen (M1), used in environmental/mold allergy testing.",
+    aliases: [
+      "penicillium notatum (m1) ige",
+    ],
+  },
+  {
+    canonicalName: "Peppermint IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to peppermint antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "peppermint",
+    ],
+  },
+  {
+    canonicalName: "PFDA (Perfluorodecanoic Acid)",
+    category: "other",
+    tags: [],
+    preferredUnits: "ng/mL",
+    description: "Perfluorodecanoic acid, a long-chain per- and polyfluoroalkyl substance (PFAS) measured in serum as an environmental toxicant.",
+    aliases: [
+      "pfda",
+    ],
+  },
+  {
+    canonicalName: "PFHxS (Perfluorohexane Sulfonic Acid)",
+    category: "other",
+    tags: [],
+    preferredUnits: "ng/mL",
+    description: "PFHxS is a per- and polyfluoroalkyl substance (PFAS) measured in blood as a marker of environmental exposure to industrial fluorinated compounds.",
+    aliases: [
+      "pfhxs",
+    ],
+  },
+  {
+    canonicalName: "PFNA (Perfluorononanoic Acid)",
+    category: "other",
+    tags: [],
+    preferredUnits: "ng/mL",
+    description: "PFNA is a per- and polyfluoroalkyl substance (PFAS) measured in blood as a marker of environmental exposure to long-chain fluorinated compounds.",
+    aliases: [
+      "pfna",
+    ],
+  },
+  {
+    canonicalName: "PFUnDA (Perfluoroundecanoic Acid)",
+    category: "other",
+    tags: [],
+    preferredUnits: "ng/mL",
+    description: "PFUnDA is a long-chain per- and polyfluoroalkyl substance (PFAS) measured in blood to assess environmental fluorochemical exposure.",
+    aliases: [
+      "pfunda",
+    ],
+  },
+  {
+    canonicalName: "Pine Nuts IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to pine nut antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "pine nuts",
+    ],
+  },
+  {
+    canonicalName: "Pineapple IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to pineapple antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "pineapple",
+    ],
+  },
+  {
+    canonicalName: "Pinto Bean IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to pinto bean antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "pinto bean",
+    ],
+  },
+  {
+    canonicalName: "Pistachio IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to pistachio antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "pistachio",
+    ],
+  },
+  {
+    canonicalName: "Plum IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to plum antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "plum",
+    ],
+  },
+  {
+    canonicalName: "Pollen IgE Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgE antibody reactivity to mixed or unspecified pollen antigens, used in allergy testing panels.",
+    aliases: [
+      "pollen",
+    ],
+  },
+  {
+    canonicalName: "Polymyxin Resistance",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Presence or level of polymyxin antibiotic resistance genes detected in gut microbiome profiling.",
+    aliases: [
+      "polymyxins",
+    ],
+  },
+  {
+    canonicalName: "Pomegranate IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to pomegranate antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "pomegranate",
+    ],
+  },
+  {
+    canonicalName: "Poppy Seed IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to poppy seed antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "poppy seed",
+    ],
+  },
+  {
+    canonicalName: "Pork IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to pork antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "pork",
+    ],
+  },
+  {
+    canonicalName: "Potato IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to potato antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "potato",
+    ],
+  },
+  {
+    canonicalName: "Psyllium Seed IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to psyllium seed antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "psyllium seed",
+    ],
+  },
+  {
+    canonicalName: "Pumpkin IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to pumpkin antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "pumpkin",
+    ],
+  },
+  {
+    canonicalName: "Pumpkin Seed IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to pumpkin seed antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "pumpkin seed",
+    ],
+  },
+  {
+    canonicalName: "Pyrenophora tritici-repentis",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "A fungal species (wheat pathogen) detected in GI microbiome/mycobiome sequencing panels; its presence in the gut may reflect dietary exposure or environmental contamination.",
+    aliases: [
+      "pyrenophora tritici-repentis",
+    ],
+  },
+  {
+    canonicalName: "Quinoa IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to quinoa antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "quinoa",
+    ],
+  },
+  {
+    canonicalName: "Quinupristin/Dalfopristin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Antimicrobial susceptibility result for quinupristin/dalfopristin (Synercid) against a cultured GI organism.",
+    aliases: [
+      "quinup/dalfo(synercid)",
+    ],
+  },
+  {
+    canonicalName: "Radish IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to radish antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "radish",
+    ],
+  },
+  {
+    canonicalName: "Raspberry IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to raspberry antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "raspberry",
+    ],
+  },
+  {
+    canonicalName: "Red Grape IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to red grape antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "red grape",
+    ],
+  },
+  {
+    canonicalName: "Rh Blood Type",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Determination of Rh (D antigen) blood group status, reported as Rh positive or Rh negative.",
+    aliases: [
+      "rh type",
+    ],
+  },
+  {
+    canonicalName: "Rhubarb IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to rhubarb antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "rhubarb",
+    ],
+  },
+  {
+    canonicalName: "Rice IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to rice antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "rice",
+    ],
+  },
+  {
+    canonicalName: "Rifampicin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Antimicrobial susceptibility result for rifampicin (rifampin) against a cultured GI organism.",
+    aliases: [
+      "rifampicin",
+    ],
+  },
+  {
+    canonicalName: "Rosemary IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to rosemary antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "rosemary",
+    ],
+  },
+  {
+    canonicalName: "Rough Pigweed (w14) IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody to rough pigweed (Amaranthus retroflexus, w14), used in environmental allergy testing.",
+    aliases: [
+      "rough pigweed (w14) ige",
+    ],
+  },
+  {
+    canonicalName: "RPR (Syphilis Screen)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Rapid plasma reagin test used as a non-treponemal screening assay for syphilis, with reflex titer and confirmatory testing if reactive.",
+    aliases: [
+      "rpr (dx) w/refl titer and confirmatory testing",
+    ],
+  },
+  {
+    canonicalName: "Rutabaga IgG Antibody",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to rutabaga antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "rutabaga",
+    ],
+  },
+  {
+    canonicalName: "S-Adenosylhomocysteine (SAH)",
+    category: "organic-acids",
+    tags: ["methylation"],
+    preferredUnits: "nmol/L",
+    description: "S-adenosylhomocysteine is the product of methyl transfer reactions from S-adenosylmethionine; elevated levels inhibit methylation and reflect impaired methylation capacity.",
+    aliases: [
+      "s-adenosylhomocysteine (sah)",
+    ],
+  },
+  {
+    canonicalName: "S-Adenosylmethionine (SAM)",
+    category: "organic-acids",
+    tags: ["methylation"],
+    preferredUnits: "nmol/mL",
+    description: "S-adenosylmethionine, the primary methyl donor in one-carbon metabolism, measured to assess methylation capacity.",
+    aliases: [
+      "s-adenosylmethionine (sam)",
+    ],
+  },
+  {
+    canonicalName: "Saccharomyces cerevisiae",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Baker's/brewer's yeast detected in stool; can be a commensal or supplement-derived organism in the GI tract.",
+    aliases: [
+      "saccharomyces cerevisiae",
+    ],
+  },
+  {
+    canonicalName: "Safflower Seed IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to safflower seed, used in food sensitivity or allergy panels.",
+    aliases: [
+      "safflower seed",
+    ],
+  },
+  {
+    canonicalName: "Sage IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to sage herb, used in food sensitivity panels.",
+    aliases: [
+      "sage",
+    ],
+  },
+  {
+    canonicalName: "Salmon IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level to salmon (f41), used to evaluate type I hypersensitivity.",
+    aliases: [
+      "salmon (f41) ige",
+    ],
+  },
+  {
+    canonicalName: "Salmon IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to salmon, used in food sensitivity panels.",
+    aliases: [
+      "salmon",
+    ],
+  },
+  {
+    canonicalName: "SAM/SAH Ratio (Methylation Index)",
+    category: "organic-acids",
+    tags: ["methylation"],
+    preferredUnits: null,
+    description: "Ratio of S-adenosylmethionine (SAM) to S-adenosylhomocysteine (SAH), reflecting cellular methylation potential and one-carbon metabolism status.",
+    aliases: [
+      "methylation index (sam/sah ratio)",
+    ],
+  },
+  {
+    canonicalName: "Sarcosine",
+    category: "organic-acids",
+    tags: ["methylation"],
+    preferredUnits: "µmol/L",
+    description: "N-methylglycine, an intermediate in one-carbon/methylation metabolism, measured in urine or plasma.",
+    aliases: [
+      "sarcosine",
+    ],
+  },
+  {
+    canonicalName: "Sardine IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to sardine, used in food sensitivity panels.",
+    aliases: [
+      "sardine",
+    ],
+  },
+  {
+    canonicalName: "Scallop IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level to scallop (f338), used to evaluate type I hypersensitivity.",
+    aliases: [
+      "scallop (f338) ige",
+    ],
+  },
+  {
+    canonicalName: "Serum Osmolality",
+    category: "cmp",
+    tags: [],
+    preferredUnits: "mOsm/kg",
+    description: "Measurement of the concentration of dissolved particles in serum, used to assess hydration status, electrolyte balance, and kidney function.",
+    aliases: [
+      "osmolality (serum)",
+    ],
+  },
+  {
+    canonicalName: "Sesame Seed IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level to sesame seed (f10), used to evaluate type I hypersensitivity.",
+    aliases: [
+      "sesame seed (f10) ige",
+    ],
+  },
+  {
+    canonicalName: "Sheep Milk IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to sheep milk, used in food sensitivity panels.",
+    aliases: [
+      "sheep milk",
+    ],
+  },
+  {
+    canonicalName: "Sheep Sorrel IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level to sheep sorrel weed (w18), used to evaluate environmental allergic sensitization.",
+    aliases: [
+      "sheep sorrel (w18) ige",
+    ],
+  },
+  {
+    canonicalName: "Shrimp IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level to shrimp (f24), used to evaluate type I hypersensitivity.",
+    aliases: [
+      "shrimp (f24) ige",
+    ],
+  },
+  {
+    canonicalName: "Sole IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to sole (flatfish), used in food sensitivity panels.",
+    aliases: [
+      "sole",
+    ],
+  },
+  {
+    canonicalName: "Sorghum IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to sorghum grain, used in food sensitivity panels.",
+    aliases: [
+      "sorghum",
+    ],
+  },
+  {
+    canonicalName: "Soybean IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level to soybean (f14), used to evaluate type I hypersensitivity.",
+    aliases: [
+      "soybean (f14) ige",
+    ],
+  },
+  {
+    canonicalName: "Spearmint IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to spearmint, used in food sensitivity panels.",
+    aliases: [
+      "spearmint",
+    ],
+  },
+  {
+    canonicalName: "Spinach IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to spinach, used in food sensitivity panels.",
+    aliases: [
+      "spinach",
+    ],
+  },
+  {
+    canonicalName: "Squamous Epithelial Cells (Urine)",
+    category: "other",
+    tags: [],
+    preferredUnits: "/hpf",
+    description: "Count of squamous epithelial cells per high-power field in urine microscopy, used to assess specimen quality.",
+    aliases: [
+      "squamous epithelial cells",
+    ],
+  },
+  {
+    canonicalName: "Strawberry IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to strawberry, used in food sensitivity panels.",
+    aliases: [
+      "strawberry",
+    ],
+  },
+  {
+    canonicalName: "Sunflower Seed IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to sunflower seed, used in food sensitivity panels.",
+    aliases: [
+      "sunflower seed",
+    ],
+  },
+  {
+    canonicalName: "Sweet Potato IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to sweet potato, used in food sensitivity panels.",
+    aliases: [
+      "sweet potato",
+    ],
+  },
+  {
+    canonicalName: "Tapioca IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to tapioca (cassava starch), used in food sensitivity panels.",
+    aliases: [
+      "tapioca",
+    ],
+  },
+  {
+    canonicalName: "Tarragon IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to tarragon herb, used in food sensitivity panels.",
+    aliases: [
+      "tarragon",
+    ],
+  },
+  {
+    canonicalName: "Tea IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to tea, used in food sensitivity panels.",
+    aliases: [
+      "tea",
+    ],
+  },
+  {
+    canonicalName: "Teff IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to teff grain, used in food sensitivity panels.",
+    aliases: [
+      "teff",
+    ],
+  },
+  {
+    canonicalName: "Tetracycline Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Antimicrobial susceptibility result for tetracycline/doxycycline against a cultured GI organism.",
+    aliases: [
+      "tetracycline(doxycycline)",
+    ],
+  },
+  {
+    canonicalName: "Thyme IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to thyme herb, used in food sensitivity panels.",
+    aliases: [
+      "thyme",
+    ],
+  },
+  {
+    canonicalName: "Tigecycline Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Antimicrobial susceptibility result for tigecycline (glycylcycline) against a cultured GI organism.",
+    aliases: [
+      "tigecycline",
+    ],
+  },
+  {
+    canonicalName: "Tilapia IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to tilapia fish, used in food sensitivity panels.",
+    aliases: [
+      "tilapia",
+    ],
+  },
+  {
+    canonicalName: "Timothy Grass IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level to timothy grass pollen (g6), used to evaluate environmental allergic sensitization.",
+    aliases: [
+      "timothy grass (g6) ige",
+    ],
+  },
+  {
+    canonicalName: "Tissue Transglutaminase IgG",
+    category: "gi-inflammation",
+    tags: ["autoimmunity", "gut-barrier"],
+    preferredUnits: "U/mL",
+    description: "Tissue transglutaminase IgG antibody used as an alternative celiac disease marker, particularly in IgA-deficient patients.",
+    aliases: [
+      "(ttg) ab, igg",
+    ],
+  },
+  {
+    canonicalName: "Tomato IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Food-specific IgG or IgE reactivity to tomato, used in food sensitivity panels.",
+    aliases: [
+      "tomato",
+    ],
+  },
+  {
+    canonicalName: "Total IgA",
+    category: "inflammation",
+    tags: ["autoimmunity"],
+    preferredUnits: "mg/dL",
+    description: "Total serum immunoglobulin A concentration, reflecting mucosal and systemic immune status.",
+    aliases: [
+      "total iga (mg/dl)",
+    ],
+  },
+  {
+    canonicalName: "Total IgE",
+    category: "inflammation",
+    tags: [],
+    preferredUnits: "IU/mL",
+    description: "Total serum immunoglobulin E level, elevated in allergic conditions and parasitic infections.",
+    aliases: [
+      "immunoglobulin e",
+      "total ige (iu/ml)",
+    ],
+  },
+  {
+    canonicalName: "Total IgG",
+    category: "inflammation",
+    tags: ["autoimmunity"],
+    preferredUnits: "mg/dL",
+    description: "Total serum immunoglobulin G concentration, the most abundant antibody class, reflecting adaptive immune status.",
+    aliases: [
+      "total igg (mg/dl)",
+    ],
+  },
+  {
+    canonicalName: "Total IgM",
+    category: "inflammation",
+    tags: ["autoimmunity"],
+    preferredUnits: "mg/dL",
+    description: "Total serum immunoglobulin M concentration, the first antibody produced in response to infection or antigen exposure.",
+    aliases: [
+      "total igm (mg/dl)",
+    ],
+  },
+  {
+    canonicalName: "Trichomonas vaginalis RNA (TMA)",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Qualitative transcription-mediated amplification (TMA) assay detecting Trichomonas vaginalis RNA for diagnosis of trichomoniasis.",
+    aliases: [
+      "trichomonas vaginalis rna, ql tma",
+    ],
+  },
+  {
+    canonicalName: "Trichosporon ovoides",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "A yeast-like fungus of the genus Trichosporon detected in stool or mucosal samples, occasionally associated with opportunistic infection.",
+    aliases: [
+      "trichosporon ovoides",
+    ],
+  },
+  {
+    canonicalName: "Trimethoprim/Sulfamethoxazole Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Susceptibility or resistance of detected GI organisms to trimethoprim/sulfamethoxazole (Bactrim), as reported on GI microbiome panels.",
+    aliases: [
+      "bactrim",
+      "trimeth/sulfa(bactrim)",
+    ],
+  },
+  {
+    canonicalName: "Trout IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to trout antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "trout",
+    ],
+  },
+  {
+    canonicalName: "Tuna IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Allergen-specific IgE antibody level to tuna (f40), used to evaluate type I hypersensitivity.",
+    aliases: [
+      "tuna (f40) ige",
+    ],
+  },
+  {
+    canonicalName: "Tuna IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to tuna antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "tuna",
+    ],
+  },
+  {
+    canonicalName: "Turkey IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to turkey antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "turkey",
+    ],
+  },
+  {
+    canonicalName: "Turmeric IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to turmeric antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "turmeric",
+    ],
+  },
+  {
+    canonicalName: "UIBC",
+    category: "nutrients",
+    tags: ["iron-status"],
+    preferredUnits: "µg/dL",
+    description: "Unsaturated iron-binding capacity, reflecting the reserve capacity of transferrin to bind additional iron; used in iron status assessment.",
+    aliases: [
+      "uibc",
+    ],
+  },
+  {
+    canonicalName: "Urine Albumin",
+    category: "kidney",
+    tags: [],
+    preferredUnits: "mg/L",
+    description: "Quantitative measurement of albumin in urine, a sensitive marker of early renal damage and glomerular filtration integrity.",
+    aliases: [
+      "albumin, urine",
+    ],
+  },
+  {
+    canonicalName: "Urine Albumin/Creatinine Ratio (UACR)",
+    category: "kidney",
+    tags: [],
+    preferredUnits: "mg/g",
+    description: "Urine albumin-to-creatinine ratio used to screen for and monitor kidney disease and microalbuminuria.",
+    aliases: [
+      "alb/creat ratio",
+    ],
+  },
+  {
+    canonicalName: "Urine Appearance",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Macroscopic appearance of urine (e.g., clear, cloudy, turbid) as reported on urinalysis panels.",
+    aliases: [
+      "appearance",
+    ],
+  },
+  {
+    canonicalName: "Urine Bacteria",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Presence and estimated quantity of bacteria in urine as observed on urinalysis microscopy, indicative of urinary tract infection.",
+    aliases: [
+      "bacteria",
+    ],
+  },
+  {
+    canonicalName: "Urine Bilirubin",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Detection of bilirubin in urine via dipstick urinalysis, indicating possible liver or biliary disease.",
+    aliases: [
+      "bilirubin",
+    ],
+  },
+  {
+    canonicalName: "Urine Casts",
+    category: "kidney",
+    tags: [],
+    preferredUnits: null,
+    description: "Microscopic examination of urinary casts (e.g., hyaline, granular, cellular) in urine sediment, used to assess kidney health.",
+    aliases: [
+      "casts",
+    ],
+  },
+  {
+    canonicalName: "Urine Color",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "Visual assessment of urine color as part of routine urinalysis.",
+    aliases: [
+      "urine-color",
+    ],
+  },
+  {
+    canonicalName: "Urine Hyaline Casts",
+    category: "kidney",
+    tags: [],
+    preferredUnits: "/lpf",
+    description: "Number of hyaline casts per low-power field on urine microscopy; small numbers are normal but elevated levels may indicate renal stress or dehydration.",
+    aliases: [
+      "hyaline cast",
+    ],
+  },
+  {
+    canonicalName: "Urine Ketones",
+    category: "glycemic",
+    tags: ["insulin-resistance"],
+    preferredUnits: null,
+    description: "Detection and semi-quantification of ketone bodies in urine via dipstick urinalysis, elevated in fasting, ketogenic diet, or diabetic ketoacidosis.",
+    aliases: [
+      "ketones",
+    ],
+  },
+  {
+    canonicalName: "Urine Protein",
+    category: "kidney",
+    tags: [],
+    preferredUnits: null,
+    description: "Detection and semi-quantification of protein in urine via dipstick urinalysis, a marker of renal function and glomerular integrity.",
+    aliases: [
+      "protein",
+    ],
+  },
+  {
+    canonicalName: "Urine Specific Gravity",
+    category: "kidney",
+    tags: [],
+    preferredUnits: null,
+    description: "Measure of urine concentration relative to water, reflecting renal concentrating ability and hydration status.",
+    aliases: [
+      "specific gravity",
+    ],
+  },
+  {
+    canonicalName: "Urobilinogen (Urine)",
+    category: "liver",
+    tags: [],
+    preferredUnits: "mg/dL",
+    description: "Semi-quantitative urine dipstick measurement of urobilinogen, reflecting bilirubin metabolism and liver/hemolytic status.",
+    aliases: [
+      "urobilinogen,semi-qn",
+    ],
+  },
+  {
+    canonicalName: "Valsa mali",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "A plant-pathogenic fungus detected in environmental or microbiome panels; not a recognized human commensal or pathogen.",
+    aliases: [
+      "valsa mali",
+    ],
+  },
+  {
+    canonicalName: "Vancomycin Susceptibility",
+    category: "gi-microbiome",
+    tags: [],
+    preferredUnits: null,
+    description: "Susceptibility or resistance of detected GI organisms to the antibiotic vancomycin, as reported on GI microbiome panels.",
+    aliases: [
+      "vancomycin",
+    ],
+  },
+  {
+    canonicalName: "Vanilla IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to vanilla antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "vanilla",
+    ],
+  },
+  {
+    canonicalName: "Venison IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to venison antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "venison",
+    ],
+  },
+  {
+    canonicalName: "Vitamin E (Beta+Gamma Tocopherol)",
+    category: "nutrients",
+    tags: [],
+    preferredUnits: "mg/L",
+    description: "Serum concentration of beta- and gamma-tocopherol isoforms of Vitamin E, distinct from the alpha-tocopherol fraction.",
+    aliases: [
+      "vitamin e, beta gamma tocopherol",
+    ],
+  },
+  {
+    canonicalName: "VLDL Cholesterol",
+    category: "lipids",
+    tags: ["cardio-risk"],
+    preferredUnits: "mg/dL",
+    description: "Calculated very-low-density lipoprotein cholesterol, derived from triglycerides and used to assess cardiovascular risk.",
+    aliases: [
+      "vldl cholesterol cal",
+    ],
+  },
+  {
+    canonicalName: "Walnut IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Specific IgE antibody to walnut (f256), used in allergy testing to assess immediate hypersensitivity.",
+    aliases: [
+      "walnut (f256) ige",
+    ],
+  },
+  {
+    canonicalName: "Walnut IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to walnut antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "walnut",
+    ],
+  },
+  {
+    canonicalName: "Walnut Tree IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Specific IgE antibody to walnut tree pollen (t10), used in inhalant allergy testing.",
+    aliases: [
+      "walnut tree (t10) ige",
+    ],
+  },
+  {
+    canonicalName: "Water Chestnut IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to water chestnut antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "water chestnut",
+    ],
+  },
+  {
+    canonicalName: "Watercress IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to watercress antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "watercress",
+    ],
+  },
+  {
+    canonicalName: "Watermelon IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to watermelon antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "watermelon",
+    ],
+  },
+  {
+    canonicalName: "Wheat IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Specific IgE antibody to wheat (f4), used in allergy testing to assess immediate hypersensitivity.",
+    aliases: [
+      "wheat (f4) ige",
+    ],
+  },
+  {
+    canonicalName: "Wheat IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to wheat antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "wheat",
+    ],
+  },
+  {
+    canonicalName: "Whey IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to whey protein antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "whey",
+    ],
+  },
+  {
+    canonicalName: "White Ash Tree IgE",
+    category: "other",
+    tags: [],
+    preferredUnits: "kU/L",
+    description: "Specific IgE antibody to white ash tree pollen (t15), used in inhalant allergy testing.",
+    aliases: [
+      "white ash (t15) ige",
+    ],
+  },
+  {
+    canonicalName: "White Grape IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to white grape antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "white grape",
+    ],
+  },
+  {
+    canonicalName: "Wild Rice IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to wild rice antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "wild rice",
+    ],
+  },
+  {
+    canonicalName: "Xanthan Gum IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to xanthan gum antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "xanthan gum",
+    ],
+  },
+  {
+    canonicalName: "Yam IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to yam antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "yam",
+    ],
+  },
+  {
+    canonicalName: "Yellow Squash IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to yellow squash antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "yellow squash",
+    ],
+  },
+  {
+    canonicalName: "Yogurt IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to yogurt antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "yogurt",
+    ],
+  },
+  {
+    canonicalName: "Zucchini IgG",
+    category: "other",
+    tags: [],
+    preferredUnits: null,
+    description: "IgG antibody reactivity to zucchini antigen, used in food sensitivity testing panels.",
+    aliases: [
+      "zucchini",
     ],
   },
 ];

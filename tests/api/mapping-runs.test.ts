@@ -17,8 +17,10 @@ import {
   getRun,
   HasPendingProposalsError,
   listProposals,
+  mergeSeedDiff,
   patchProposal,
   runFixupOnRun,
+  type SeedDiff,
 } from "@/lib/bulk-map";
 import type { ClaudeBatch } from "@/lib/bulk-map-util";
 
@@ -559,6 +561,105 @@ describe("POST /api/mappings/runs/[id]/apply", () => {
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.proposalsApplied + body.proposalsSkipped).toBeGreaterThan(0);
+  });
+});
+
+// ─── mergeSeedDiff ───────────────────────────────────────────────────────
+
+describe("mergeSeedDiff", () => {
+  const baseSource =
+    `import type { CategorySlug, TagSlug } from "@/db/seeds/taxonomy";\n\n` +
+    `export interface CanonicalSeed {\n  // shape elided\n}\n\n` +
+    `export const CANONICAL_METRICS: CanonicalSeed[] = [\n` +
+    `  {\n` +
+    `    canonicalName: "White Blood Cells",\n` +
+    `    category: "cbc",\n` +
+    `    tags: [],\n` +
+    `    preferredUnits: "k/µL",\n` +
+    `    description: "desc",\n` +
+    `    aliases: [\n` +
+    `      "wbc",\n` +
+    `      "leukocytes",\n` +
+    `    ],\n` +
+    `  },\n` +
+    `];\n`;
+
+  it("appends new canonicals and inserts aliases; is idempotent", () => {
+    const diff: SeedDiff = {
+      newCanonicals: [
+        {
+          canonicalName: "Test Metric",
+          category: "other",
+          tags: [],
+          preferredUnits: null,
+          description: "test",
+          aliases: ["test metric", "test m"],
+        },
+      ],
+      aliasAdditions: [
+        {
+          canonicalName: "White Blood Cells",
+          newAliases: ["wbc count", "white blood cell count"],
+        },
+      ],
+      formatted: "",
+    };
+
+    const first = mergeSeedDiff(baseSource, diff);
+    expect(first.stats.canonicalsAppended).toBe(1);
+    expect(first.stats.aliasesInserted).toBe(2);
+    expect(first.merged).toContain(`"Test Metric"`);
+    expect(first.merged).toContain(`"wbc count"`);
+    // Original aliases preserved.
+    expect(first.merged).toContain(`"wbc"`);
+    expect(first.merged).toContain(`"leukocytes"`);
+
+    // Re-run against the output — nothing new to do.
+    const second = mergeSeedDiff(first.merged, diff);
+    expect(second.stats.canonicalsAppended).toBe(0);
+    expect(second.stats.canonicalsSkipped).toBe(1);
+    expect(second.stats.aliasesInserted).toBe(0);
+    expect(second.stats.aliasesSkipped).toBe(2);
+    expect(second.merged).toBe(first.merged);
+  });
+
+  it("reports aliasAdditionsMissed when the canonical isn't in the seed file", () => {
+    const diff: SeedDiff = {
+      newCanonicals: [],
+      aliasAdditions: [
+        {
+          canonicalName: "Nonexistent Canonical",
+          newAliases: ["foo"],
+        },
+      ],
+      formatted: "",
+    };
+    const result = mergeSeedDiff(baseSource, diff);
+    expect(result.stats.aliasAdditionsMissed).toHaveLength(1);
+    expect(result.stats.aliasAdditionsMissed[0].canonicalName).toBe(
+      "Nonexistent Canonical",
+    );
+    expect(result.merged).toBe(baseSource);
+  });
+
+  it("throws if the CANONICAL_METRICS array close marker isn't found", () => {
+    const diff: SeedDiff = {
+      newCanonicals: [
+        {
+          canonicalName: "X",
+          category: "other",
+          tags: [],
+          preferredUnits: null,
+          description: "",
+          aliases: [],
+        },
+      ],
+      aliasAdditions: [],
+      formatted: "",
+    };
+    expect(() => mergeSeedDiff(`export const CANONICAL_METRICS = []`, diff)).toThrow(
+      /closing `\];`/,
+    );
   });
 });
 
