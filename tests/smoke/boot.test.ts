@@ -89,6 +89,15 @@ describe("smoke: next server boot", () => {
     expect(res.status).toBe(200);
   });
 
+  // Metric detail compiles the chart + raw-values table + shell client bundle.
+  // A fresh test DB has no data for this name, so notFound() fires and the
+  // route returns 404 — but only after the server successfully bundles every
+  // import, which is what we're asserting here. A broken import would 500.
+  it("GET /metric/<unknown> compiles and returns 404", async () => {
+    const res = await fetch(`${baseUrl}/metric/SmokeNoSuchMetric`);
+    expect(res.status).toBe(404);
+  });
+
   it("GET /api/search?q=wbc returns JSON with canonical hits", async () => {
     const res = await fetch(`${baseUrl}/api/search?q=wbc`);
     expect(res.status).toBe(200);

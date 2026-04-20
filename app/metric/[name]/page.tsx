@@ -1,18 +1,11 @@
 import { notFound } from "next/navigation";
 
-import { MetricChart } from "@/components/health/metric-chart";
 import { Flag } from "@/components/health/flag";
+import { pointKey } from "@/components/health/metric-chart";
+import { MetricDetailShell } from "@/components/health/metric-detail-shell";
 import { PageHeader, Stat } from "@/components/health/page-header";
 import { TopBar } from "@/components/health/top-bar";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
   getMetricSeries,
@@ -20,10 +13,7 @@ import {
   type MetricPoint,
 } from "@/lib/metric-series";
 import { getAllOverlays } from "@/lib/overlays";
-import {
-  assignProviderColors,
-  providerDisplayName,
-} from "@/lib/providers";
+import { providerDisplayName } from "@/lib/providers";
 import { CATEGORY_LABELS } from "@/db/seeds/taxonomy";
 
 export const dynamic = "force-dynamic";
@@ -56,7 +46,6 @@ export default async function MetricPage({ params }: PageProps) {
   if (!data) notFound();
   const overlays = getAllOverlays();
 
-  const colors = assignProviderColors(data.providers);
   const displayName = data.name;
 
   const categoryLabel = data.category
@@ -88,16 +77,10 @@ export default async function MetricPage({ params }: PageProps) {
           : undefined
       : undefined;
 
-  // Table shows every parseable row (kept + excluded) in original units, so the
-  // user can audit everything the extraction pulled out — not just what's
-  // plotted. Mark excluded rows so readers know why they don't appear on the
-  // chart.
-  const pointsNewestFirst = [...data.pointsAll].reverse();
-  const excludedKeys = new Set(
-    data.excludedForUnits.map(
-      (p) => `${p.reportId}-${p.provider}-${p.timestamp}`,
-    ),
-  );
+  // Tag excluded points by the shared pointKey so the table can visually
+  // mark them "not charted" and the shell can suppress hover->highlight for
+  // rows the chart can't reach.
+  const excludedKeys = new Set(data.excludedForUnits.map(pointKey));
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -158,10 +141,10 @@ export default async function MetricPage({ params }: PageProps) {
           <ConflictsWarning conflicts={data.conflicts} units={data.units} />
         )}
 
-        <MetricChart
+        <MetricDetailShell
           metricName={data.name}
           units={data.units}
-          points={data.points}
+          chartPoints={data.points}
           providers={data.providers}
           refLow={data.refLow}
           refHigh={data.refHigh}
@@ -169,75 +152,9 @@ export default async function MetricPage({ params }: PageProps) {
           refHighVaries={data.refHighVaries}
           bands={overlays.bands}
           markers={overlays.markers}
+          tablePoints={data.pointsAll}
+          excludedKeys={excludedKeys}
         />
-
-        <Card className="py-0">
-          <CardHeader className="border-b px-5 py-3">
-            <CardTitle className="text-[13px]">
-              Raw values · {data.pointsAll.length} observation
-              {data.pointsAll.length === 1 ? "" : "s"}
-            </CardTitle>
-          </CardHeader>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="pl-5">Date</TableHead>
-                <TableHead>Provider</TableHead>
-                <TableHead className="text-right">Value</TableHead>
-                <TableHead className="text-right">Units</TableHead>
-                <TableHead className="text-right">Flag</TableHead>
-                <TableHead className="pr-5 text-right">Range</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {pointsNewestFirst.map((p) => {
-                const color = colors.get(p.provider);
-                const rowKey = `${p.reportId}-${p.provider}-${p.timestamp}`;
-                const isExcluded = excludedKeys.has(rowKey);
-                return (
-                  <TableRow
-                    key={rowKey}
-                    className={cn(isExcluded && "opacity-60")}
-                  >
-                    <TableCell className="pl-5 font-mono text-[12px] text-muted-foreground">
-                      {p.date}
-                    </TableCell>
-                    <TableCell
-                      className="text-[13px] font-medium"
-                      style={{
-                        color: color ? `hsl(${color.hsl})` : undefined,
-                      }}
-                    >
-                      {providerDisplayName(p.provider)}
-                    </TableCell>
-                    <TableCell className="text-right font-mono text-[13px] font-medium">
-                      {formatValue(p.originalValue)}
-                    </TableCell>
-                    <TableCell className="text-right font-mono text-[11.5px] text-muted-foreground">
-                      {p.units ?? "—"}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {isExcluded ? (
-                        <span className="font-mono text-[10px] uppercase text-muted-foreground">
-                          not charted
-                        </span>
-                      ) : (
-                        <Flag flag={p.flag} />
-                      )}
-                    </TableCell>
-                    <TableCell className="pr-5 text-right font-mono text-[11.5px] text-muted-foreground">
-                      {p.originalRefLow != null || p.originalRefHigh != null
-                        ? `${p.originalRefLow != null ? formatValue(p.originalRefLow) : "—"} – ${
-                            p.originalRefHigh != null ? formatValue(p.originalRefHigh) : "—"
-                          }`
-                        : "—"}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </Card>
       </div>
     </div>
   );

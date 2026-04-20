@@ -34,6 +34,17 @@ export interface MetricChartPoint {
   value: number;
   units: string | null;
   flag: "high" | "low" | "ok" | null;
+  // Per-point ref range, in the same scale as `value` (converted when a
+  // per-metric unit spec applies). Used in the tooltip so the user can see
+  // the provider's own range for that reading.
+  refLow: number | null;
+  refHigh: number | null;
+}
+
+export function pointKey(
+  p: Pick<MetricChartPoint, "reportId" | "provider" | "timestamp">,
+): string {
+  return `${p.reportId}-${p.provider}-${p.timestamp}`;
 }
 
 interface Props {
@@ -47,6 +58,10 @@ interface Props {
   refHighVaries: boolean;
   bands?: OverlayBand[];
   markers?: OverlayMarker[];
+  // Externally-driven hover key (e.g. the raw-values table row the user is
+  // hovering). When set, the matching dot renders an active-style halo so the
+  // user can locate the reading on the timeline.
+  externalHoveredKey?: string | null;
 }
 
 type Range = "1y" | "2y" | "5y" | "all";
@@ -84,6 +99,7 @@ export function MetricChart({
   refHighVaries,
   bands = [],
   markers = [],
+  externalHoveredKey = null,
 }: Props) {
   const colors = useMemo(() => assignProviderColors(providers), [providers]);
   const [range, setRange] = useState<Range>("all");
@@ -269,6 +285,7 @@ export function MetricChart({
                         stroke={stroke}
                         flagLookup={filtered}
                         provider={provider}
+                        externalHoveredKey={externalHoveredKey}
                       />
                     )}
                     activeDot={{
@@ -318,9 +335,18 @@ interface DotProps {
   stroke: string;
   provider: string;
   flagLookup: MetricChartPoint[];
+  externalHoveredKey?: string | null;
 }
 
-function MetricDot({ cx, cy, payload, stroke, provider, flagLookup }: DotProps) {
+function MetricDot({
+  cx,
+  cy,
+  payload,
+  stroke,
+  provider,
+  flagLookup,
+  externalHoveredKey,
+}: DotProps) {
   if (cx == null || cy == null || !payload) return null;
   const ts = Number(payload.timestamp);
   const p = flagLookup.find(
@@ -333,13 +359,25 @@ function MetricDot({ cx, cy, payload, stroke, provider, flagLookup }: DotProps) 
       : flag === "low"
         ? "hsl(var(--flag-low) / 0.18)"
         : null;
+  const isExternallyHovered = p != null && externalHoveredKey === pointKey(p);
   return (
     <g>
       {haloFill && <circle cx={cx} cy={cy} r={9} fill={haloFill} />}
+      {isExternallyHovered && (
+        <circle
+          cx={cx}
+          cy={cy}
+          r={9}
+          fill="none"
+          stroke={stroke}
+          strokeWidth={2}
+          strokeOpacity={0.85}
+        />
+      )}
       <Dot
         cx={cx}
         cy={cy}
-        r={4}
+        r={isExternallyHovered ? 5 : 4}
         fill={stroke}
         stroke="hsl(var(--background))"
         strokeWidth={1.5}
@@ -388,41 +426,51 @@ function MetricTooltip({
 
   if (hits.length === 0) return null;
 
+  const unitLabel = units ? ` ${units}` : "";
   return (
     <div className="rounded-md border border-border bg-background p-2.5 shadow-md">
       <div className="mb-1.5 font-mono text-[11px] text-muted-foreground">
         {formatDateFull(ts)}
       </div>
-      <div className="space-y-1">
+      <div className="space-y-1.5">
         {hits.map((p) => {
           const color = colors.get(p.provider);
+          const hasRef = p.refLow != null || p.refHigh != null;
           return (
-            <div
-              key={p.provider}
-              className="flex items-center gap-2 text-[12.5px]"
-            >
-              <span
-                className="h-2 w-2 rounded-full"
-                style={{
-                  backgroundColor: color ? `hsl(${color.hsl})` : undefined,
-                }}
-              />
-              <span className="font-medium text-foreground">
-                {providerDisplayName(p.provider)}
-              </span>
-              <span className="ml-auto font-mono tabular-nums text-foreground">
-                {p.value}
-                {units ? ` ${units}` : ""}
-              </span>
-              {p.flag && p.flag !== "ok" && (
+            <div key={p.provider} className="text-[12.5px]">
+              <div className="flex items-center gap-2">
                 <span
-                  className={cn(
-                    "font-mono text-[10px] uppercase",
-                    p.flag === "high" ? "text-flag-high" : "text-flag-low",
-                  )}
-                >
-                  {p.flag}
+                  className="h-2 w-2 rounded-full"
+                  style={{
+                    backgroundColor: color ? `hsl(${color.hsl})` : undefined,
+                  }}
+                />
+                <span className="font-medium text-foreground">
+                  {providerDisplayName(p.provider)}
                 </span>
+                <span className="ml-auto font-mono tabular-nums text-foreground">
+                  {p.value}
+                  {unitLabel}
+                </span>
+                {p.flag && p.flag !== "ok" && (
+                  <span
+                    className={cn(
+                      "font-mono text-[10px] uppercase",
+                      p.flag === "high" ? "text-flag-high" : "text-flag-low",
+                    )}
+                  >
+                    {p.flag}
+                  </span>
+                )}
+              </div>
+              {hasRef && (
+                <div className="pl-4 font-mono text-[10.5px] text-muted-foreground">
+                  ref{" "}
+                  {p.refLow != null ? formatTooltipValue(p.refLow) : "—"}
+                  {" – "}
+                  {p.refHigh != null ? formatTooltipValue(p.refHigh) : "—"}
+                  {unitLabel}
+                </div>
               )}
             </div>
           );
@@ -430,6 +478,12 @@ function MetricTooltip({
       </div>
     </div>
   );
+}
+
+function formatTooltipValue(v: number): string {
+  if (!Number.isFinite(v)) return "—";
+  if (Math.abs(v) >= 100 && Number.isInteger(v)) return v.toString();
+  return Number(v.toFixed(3)).toString();
 }
 
 function LabLegend({
