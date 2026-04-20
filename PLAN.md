@@ -238,6 +238,26 @@ Adoption is folded into the phases that touch each screen (see phase notes). Pha
 
 ---
 
+## Phase 10 — Deterministic ingestion + local-first mapping
+
+**Goal:** eliminate mandatory LLM egress for the most common blood + GI formats. Fresh installs without an Anthropic key get working extraction and canonical mapping out of the box. Claude becomes a fallback for unparsed providers and genuinely-semantic decisions rather than the default path.
+
+**Motivation:** VISION is local-first personal health. Today every ingest ships the PDF to Claude — a real adoption barrier for privacy-conscious users and a real cost concern at scale. LabCorp / Quest / GI-MAP layouts are structured enough to parse deterministically; alias resolution is largely `normalize + fuzzy-match` and doesn't need a model.
+
+**Deliverables** (high level — scope properly when approached)
+- Provider-detection pass that routes a PDF to the right deterministic parser based on file signature.
+- Deterministic parsers for the highest-volume formats. Starting set: LabCorp, Quest, GI-MAP. Each its own module with a fixture-based test suite so format drift fails loudly.
+- Rules-first canonical mapping — normalize + fuzzy-match alias resolution and regex skip detection. LLM retained only for category assignment on genuine create_new decisions.
+- LLM extraction retained as a fallback when no deterministic parser claims the PDF, and for imaging / narrative formats that won't ever parse structurally.
+- API key becomes **optional** at first-run rather than mandatory; Settings gains a "No key — local-only mode" state.
+
+**Exit criteria**
+- A fresh install with no Anthropic key can ingest a LabCorp, Quest, and GI-MAP PDF end-to-end.
+- The bulk-map review flow completes ≥80% of typical unmapped rows without any Claude calls.
+- Parser fixture suites run in CI; a LabCorp layout change fails a test before it breaks a real ingest.
+
+---
+
 ## Cross-cutting / ongoing
 
 - **Extraction quality** — periodically spot-check a random report; log low-confidence extractions for review.

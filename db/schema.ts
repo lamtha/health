@@ -1,10 +1,12 @@
 import { sql } from "drizzle-orm";
 import {
+  index,
   integer,
   primaryKey,
   real,
   sqliteTable,
   text,
+  uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 
 export const reports = sqliteTable("reports", {
@@ -133,6 +135,86 @@ export const uploadBatches = sqliteTable("upload_batches", {
     .default(sql`(CURRENT_TIMESTAMP)`),
   totalCount: integer("total_count").notNull(),
 });
+
+// Bulk mapping runs — one row per `POST /api/mappings/runs` invocation
+// (or `pnpm bulk-map` from the CLI). Carries the batch-runner state so
+// a mid-run crash can resume on next boot, and the review UI can poll
+// progress without re-querying Claude.
+export const mappingRuns = sqliteTable("mapping_runs", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  // queued | proposing | ready_for_review | applying | applied | error | canceled
+  status: text("status").notNull().default("queued"),
+  model: text("model").notNull(),
+  batchSize: integer("batch_size").notNull(),
+  limitN: integer("limit_n"),
+  totalUnmapped: integer("total_unmapped").notNull().default(0),
+  batchesTotal: integer("batches_total").notNull().default(0),
+  batchesDone: integer("batches_done").notNull().default(0),
+  proposedCount: integer("proposed_count").notNull().default(0),
+  // JSON arrays — failed batches carry {batchIdx, error, names[]}; missing
+  // names are raw names Claude didn't return a proposal for.
+  failedBatchesJson: text("failed_batches_json").notNull().default("[]"),
+  missingNamesJson: text("missing_names_json").notNull().default("[]"),
+  errorMessage: text("error_message"),
+  createdAt: text("created_at")
+    .notNull()
+    .default(sql`(CURRENT_TIMESTAMP)`),
+  updatedAt: text("updated_at")
+    .notNull()
+    .default(sql`(CURRENT_TIMESTAMP)`),
+  startedAt: text("started_at"),
+  finishedAt: text("finished_at"),
+  appliedAt: text("applied_at"),
+});
+
+// One proposal per raw unmapped name encountered in a run. Holds everything
+// the apply phase needs so it never has to re-consult Claude.
+export const mappingProposals = sqliteTable(
+  "mapping_proposals",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    runId: integer("run_id")
+      .notNull()
+      .references(() => mappingRuns.id, { onDelete: "cascade" }),
+    rawName: text("raw_name").notNull(),
+    rawNameLower: text("raw_name_lower").notNull(),
+    occurrenceCount: integer("occurrence_count").notNull().default(0),
+    sampleProvidersJson: text("sample_providers_json").notNull().default("[]"),
+    // map_existing | create_new | skip
+    action: text("action").notNull(),
+    canonicalMetricId: integer("canonical_metric_id").references(
+      () => canonicalMetrics.id,
+      { onDelete: "set null" },
+    ),
+    proposedCanonicalName: text("proposed_canonical_name"),
+    // Full {canonicalName, category, tags, preferredUnits, description}
+    // payload for create_new proposals. Editable via PATCH.
+    newCanonicalJson: text("new_canonical_json"),
+    extraAliasesJson: text("extra_aliases_json").notNull().default("[]"),
+    confidence: real("confidence").notNull().default(0),
+    reason: text("reason"),
+    // pending | approved | rejected | applied | apply_error
+    status: text("status").notNull().default("pending"),
+    editedByUser: integer("edited_by_user").notNull().default(0),
+    applyError: text("apply_error"),
+    createdAt: text("created_at")
+      .notNull()
+      .default(sql`(CURRENT_TIMESTAMP)`),
+    updatedAt: text("updated_at")
+      .notNull()
+      .default(sql`(CURRENT_TIMESTAMP)`),
+  },
+  (t) => ({
+    runStatusIdx: index("mapping_proposals_run_status_idx").on(
+      t.runId,
+      t.status,
+    ),
+    runRawUnique: uniqueIndex("mapping_proposals_run_raw_unique").on(
+      t.runId,
+      t.rawNameLower,
+    ),
+  }),
+);
 
 export const uploadBatchItems = sqliteTable("upload_batch_items", {
   id: integer("id").primaryKey({ autoIncrement: true }),

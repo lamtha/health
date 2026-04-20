@@ -2,9 +2,14 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  BulkMappingPanel,
+  type BulkRunView,
+} from "@/components/health/bulk-mapping-panel";
 import { MappingRow } from "@/components/health/mapping-row";
 import { PageHeader, Stat } from "@/components/health/page-header";
 import { TopBar } from "@/components/health/top-bar";
+import { getLatestActiveRun } from "@/lib/bulk-map";
 import { getCanonicalOptions, getUnmappedSummary } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
@@ -12,6 +17,7 @@ export const dynamic = "force-dynamic";
 export default function MappingsPage() {
   const summary = getUnmappedSummary();
   const canonicals = getCanonicalOptions();
+  const activeRun = getLatestActiveRun() as BulkRunView | null;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -22,7 +28,7 @@ export default function MappingsPage() {
         subtitle={
           summary.totalUnmappedMetrics === 0
             ? "Nothing unmapped — every metric row is linked to a canonical."
-            : "Each row below is a raw metric name that hasn't been seen before. Mapping one backfills every metric with that name so charts + filters pick it up."
+            : "Propose mappings with Claude in bulk, or map individually below. Either path backfills every matching metric row."
         }
         stats={
           <>
@@ -48,7 +54,29 @@ export default function MappingsPage() {
         }
       />
 
-      <div className="px-8 pb-10">
+      <div className="space-y-6 px-8 pb-10">
+        <BulkMappingPanel initialRun={activeRun} />
+
+        {activeRun?.status === "applied" && (
+          <Card className="border-dashed">
+            <CardContent className="py-3 text-[12.5px] text-muted-foreground">
+              <span className="font-mono text-[10.5px] uppercase tracking-wider text-foreground">
+                dev tip
+              </span>{" "}
+              · Run{" "}
+              <code className="rounded bg-muted px-1 py-0.5 font-mono">
+                pnpm bulk-map --export-seed --out=/tmp/seed-diff.ts
+              </code>{" "}
+              to capture the new canonicals + aliases into a fragment you can
+              paste into{" "}
+              <code className="rounded bg-muted px-1 py-0.5 font-mono">
+                db/seeds/canonical-metrics.ts
+              </code>{" "}
+              so future installs ship with them.
+            </CardContent>
+          </Card>
+        )}
+
         {summary.rows.length === 0 ? (
           <Card className="border-dashed">
             <CardContent className="flex flex-col items-center gap-3 py-16 text-center">
@@ -63,20 +91,31 @@ export default function MappingsPage() {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-3">
-            {summary.rows.map((r) => (
-              <MappingRow
-                key={r.rawName}
-                rawName={r.rawName}
-                occurrenceCount={r.occurrenceCount}
-                providers={r.providers}
-                sampleReportId={r.sampleReportId}
-                sampleReportDate={r.sampleReportDate}
-                sampleValue={r.sampleValue}
-                sampleUnits={r.sampleUnits}
-                canonicals={canonicals}
-              />
-            ))}
+          <div>
+            <div className="mb-3 flex items-baseline justify-between">
+              <div className="font-serif-display text-[18px]">
+                Manual review
+              </div>
+              <div className="text-[12px] text-muted-foreground">
+                one-off mappings — useful for small handfuls or anything the
+                bulk pass got wrong
+              </div>
+            </div>
+            <div className="grid gap-3">
+              {summary.rows.map((r) => (
+                <MappingRow
+                  key={r.rawName}
+                  rawName={r.rawName}
+                  occurrenceCount={r.occurrenceCount}
+                  providers={r.providers}
+                  sampleReportId={r.sampleReportId}
+                  sampleReportDate={r.sampleReportDate}
+                  sampleValue={r.sampleValue}
+                  sampleUnits={r.sampleUnits}
+                  canonicals={canonicals}
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>
