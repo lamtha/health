@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Health — setup</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0; padding: 0; height: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+        background: #f7f7f8; color: #111;
+      }
+      body { display: grid; place-items: center; }
+      main {
+        width: 460px; padding: 32px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+      }
+      h1 { margin: 0 0 8px; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+      p { margin: 0 0 12px; color: #555; font-size: 13px; line-height: 1.55; }
+      a { color: #0a84ff; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      label {
+        display: block; margin: 18px 0 6px;
+        font-size: 12px; font-weight: 500; color: #333;
+        text-transform: uppercase; letter-spacing: 0.04em;
+      }
+      input {
+        width: 100%; padding: 10px 12px;
+        border: 1px solid #dcdce0; border-radius: 8px;
+        background: white; color: #111;
+        font: inherit; font-size: 13px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      input:focus {
+        outline: none;
+        border-color: #0a84ff;
+        box-shadow: 0 0 0 3px rgba(10,132,255,0.15);
+      }
+      button {
+        width: 100%; margin-top: 16px; padding: 10px 16px;
+        background: #111; color: white;
+        border: none; border-radius: 8px;
+        font: inherit; font-size: 14px; font-weight: 500;
+        cursor: pointer;
+      }
+      button:hover { background: #000; }
+      button:disabled { opacity: 0.5; cursor: not-allowed; }
+      .error { color: #c00; font-size: 12px; margin-top: 8px; min-height: 16px; }
+      .hint { font-size: 12px; color: #888; margin-top: 8px; }
+      @media (prefers-color-scheme: dark) {
+        html, body { background: #1a1a1b; color: #eaeaea; }
+        main { background: #242425; box-shadow: 0 1px 3px rgba(0,0,0,0.35), 0 8px 24px rgba(0,0,0,0.25); }
+        p { color: #b0b0b5; }
+        label { color: #c8c8cc; }
+        input { background: #1a1a1b; border-color: #3a3a3c; color: #eaeaea; }
+        input:focus { border-color: #0a84ff; }
+        button { background: #eaeaea; color: #111; }
+        button:hover { background: #fff; }
+        .hint { color: #7a7a80; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Welcome to Health</h1>
+      <p>Health extracts your lab reports using the Claude API. Paste your Anthropic API key below — it's stored locally in your macOS Keychain and never leaves this machine except as direct calls to Anthropic.</p>
+      <p>No key yet? Get one at <a href="#" id="key-link" data-href="https://console.anthropic.com/settings/keys">console.anthropic.com</a>.</p>
+      <label for="key">Anthropic API key</label>
+      <input type="password" id="key" placeholder="sk-ant-..." autofocus autocomplete="off" spellcheck="false" />
+      <div class="error" id="err"></div>
+      <button id="save">Save and continue</button>
+      <div class="hint">Stored in Keychain under the bundle id <code>com.lamthalabs.health</code>.</div>
+    </main>
+    <script>
+      const input = document.getElementById("key");
+      const btn = document.getElementById("save");
+      const err = document.getElementById("err");
+      const link = document.getElementById("key-link");
+
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.health?.openExternal?.(link.dataset.href);
+      });
+
+      const saveLabel = btn.textContent;
+
+      async function save() {
+        const key = input.value.trim();
+        err.textContent = "";
+        if (!key) { err.textContent = "Key is required."; return; }
+        if (!/^sk-ant-/.test(key)) {
+          err.textContent = "That doesn't look like an Anthropic key (should start with sk-ant-).";
+          return;
+        }
+        btn.disabled = true;
+        btn.textContent = "Validating…";
+        try {
+          await window.health.saveApiKey(key);
+          // Main process will close this window and open the dashboard.
+        } catch (e) {
+          err.textContent = (e && e.message) || String(e);
+          btn.disabled = false;
+          btn.textContent = saveLabel;
+        }
+      }
+
+      btn.addEventListener("click", save);
+      input.addEventListener("keydown", (e) => { if (e.key === "Enter") save(); });
+    </script>
+  </body>
+</html>
