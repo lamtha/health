@@ -92,13 +92,13 @@ export function CompareChart({
           <Flag flag={series.latestFlag} />
         </div>
       </CardHeader>
-      <div className="p-2" style={{ height: 160 }}>
+      <div className="p-2">
         {data.length === 0 ? (
-          <div className="grid h-full place-items-center text-[12px] text-muted-foreground">
+          <div className="grid h-[144px] place-items-center text-[12px] text-muted-foreground">
             No numeric data
           </div>
         ) : (
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height={144}>
             <LineChart data={data} margin={{ top: 8, right: 12, left: 0, bottom: 4 }}>
               <CartesianGrid stroke="hsl(0 0% 90%)" strokeOpacity={0.7} vertical={false} />
               <XAxis
