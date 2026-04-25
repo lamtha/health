@@ -112,6 +112,61 @@ describe("gimap parseText (2025-12 fixture)", () => {
     );
     expect(occurrences.length).toBe(1);
   });
+
+  it("captures Helicobacter pylori (regression: banner pattern was filtering the data row)", () => {
+    const m = report.metrics.find((x) => x.name === "Helicobacter pylori");
+    expect(m).toBeDefined();
+    expect(m?.valueNumeric).toBeCloseTo(1.91e2, 0);
+    expect(m?.panel).toContain("Virulence Factors");
+  });
+
+  it("captures page-8 Caproate (regression: 3-line value/analyte/range layout)", () => {
+    const m = report.metrics.find(
+      (x) =>
+        x.name === "Caproate" && x.panel?.includes("Short Chain Fatty Acids"),
+    );
+    expect(m).toBeDefined();
+    expect(m?.valueNumeric).toBeCloseTo(0.668, 2);
+  });
+
+  it("captures both Acetate rows distinctly (page 6 % and page 8 μg/g)", () => {
+    const summaryAcetate = report.metrics.find(
+      (x) => x.name === "Acetate - %" && x.panel === "SCFA Summary",
+    );
+    const detailAcetate = report.metrics.find(
+      (x) => x.name === "Acetate" && x.panel?.includes("Short Chain Fatty Acids"),
+    );
+    expect(summaryAcetate?.valueNumeric).toBeCloseTo(70.1, 1);
+    expect(detailAcetate?.valueNumeric).toBeCloseTo(3.10e3, 0);
+  });
+
+  it("strips Abbreviation + Conjugation columns from bile-acid analyte names", () => {
+    // Page-7 bile-acid table has [Analyte] [Abbreviation] [Conjugation U|C]
+    // [Result] [Reference] columns. Analyte should land clean.
+    const cholic = report.metrics.find((x) => x.name === "Cholic Acid");
+    expect(cholic).toBeDefined();
+    expect(cholic?.panel).toBe("Primary Bile Acids");
+    expect(cholic?.valueNumeric).toBeCloseTo(3.99e2, 0);
+
+    // Multi-line layout: analyte alone on one line, [abbreviation conjugation
+    // value range] on the next. Strip should still produce the clean name.
+    const tcdca = report.metrics.find(
+      (x) => x.name === "Taurochenodeoxycholic Acid",
+    );
+    expect(tcdca).toBeDefined();
+    expect(tcdca?.valueNumeric).toBeCloseTo(43.9, 1);
+  });
+
+  it("drops H. pylori antibiotic resistance gene rows that have no recoverable value", () => {
+    // When H. pylori is below detection, the gene-resistance grid (page 5)
+    // is all N/A. The class-level rows (Amoxicillin, Clarithromycin, etc.)
+    // come through with valueText="N/A"; the gene-level rows have no
+    // value at all and should NOT be emitted.
+    const ghosts = report.metrics.filter((x) =>
+      ["PBP1A T556S", "A2142G", "gyrA N87K", "A926G"].includes(x.name),
+    );
+    expect(ghosts).toHaveLength(0);
+  });
 });
 
 describe("gimap parseText (2024-12 fixture)", () => {

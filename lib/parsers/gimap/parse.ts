@@ -56,7 +56,16 @@ function findReportDate(text: string): string | null {
 
 interface WalkState {
   panel: string | null;
+  // Pending row pieces. The parser fills them as lines arrive and emits
+  // when all three are present. Layouts that hand us pieces in different
+  // orders (e.g. page 8 Caproate is value/analyte/range on three separate
+  // lines) all converge on the same pending-state model.
   pendingAnalyte: string | null;
+  pendingValue: string | null;
+  pendingRange: string | null;
+  // analyte+value+range pair where value and range arrived together on
+  // one line ("<dl  < 1.00e3" type rows). Distinct from pendingValue
+  // because once we have the pair, only an analyte is missing.
   pendingValueLine: { value: string; range: string } | null;
   // GI-MAP page 8 (SCFA/BCFA detail) prints two panels side-by-side via a
   // tab. When we detect a tab-split section header, we store the per-column
@@ -71,6 +80,8 @@ function walkLines(text: string): ExtractedMetric[] {
   const state: WalkState = {
     panel: null,
     pendingAnalyte: null,
+    pendingValue: null,
+    pendingRange: null,
     pendingValueLine: null,
     columnPanels: null,
   };
@@ -96,7 +107,18 @@ function walkLines(text: string): ExtractedMetric[] {
           state.columnPanels = sections.map((s) => s!.panel);
           state.panel = state.columnPanels[0];
           state.pendingAnalyte = null;
+          state.pendingValue = null;
+          state.pendingRange = null;
           state.pendingValueLine = null;
+          continue;
+        }
+        // [analyte] + [range] split — page 6 SCFA Summary (Acetate - %)
+        // and bile-acid pages occasionally print the analyte+range on one
+        // tab-split row and the value alone on the next. Buffer both and
+        // pair with the next value-only line.
+        if (halves.length === 2 && looksLikeAnalyteToken(halves[0]) && looksLikeRangeToken(halves[1])) {
+          state.pendingAnalyte = halves[0];
+          state.pendingRange = halves[1];
           continue;
         }
         // Two-column data row.
@@ -131,14 +153,63 @@ function processLine(
     state.panel = section.panel;
     state.columnPanels = null;
     state.pendingAnalyte = null;
+    state.pendingValue = null;
+    state.pendingRange = null;
     state.pendingValueLine = null;
-    const remainder = line.replace(section.pattern, "").replace(/Result\s+Reference/i, "").trim();
+    // Strip the section name, the trailing "Result Reference" column
+    // labels (with optional unit suffixes like "Result ng/g  Reference
+    // ng/g"), and the "Abbreviation Conjugation**" header used in bile
+    // acid tables. Whatever survives is real data on a section line.
+    const remainder = line
+      .replace(section.pattern, "")
+      .replace(/Result(\s+\S+)?\s+Reference(\s+\S+)?/i, "")
+      .replace(/Abbreviation\s+Conjugation\**/i, "")
+      .trim();
     if (remainder.length === 0) return;
     line = remainder;
   }
 
-  const tokens = tokenize(line);
+  let tokens = tokenize(line);
   if (tokens.length === 0) return;
+
+  // Bile-acid panels print [Analyte] [Abbreviation] [Conjugation U|C] [Result] [Reference].
+  // Strip the abbreviation and (optional) conjugation columns so the rest
+  // of the parser sees a clean [analyte, value, range] shape. The strip is
+  // panel-aware so non-bile-acid rows are untouched.
+  if (isBileAcidPanel(state.panel)) {
+    tokens = stripBileAcidColumns(tokens, state.pendingAnalyte != null);
+    if (tokens.length === 0) return;
+  }
+
+  // Single-token range line: "< 1.00e3", "7.15e-1 - 1.44e2", etc.
+  // Could complete a pending {analyte + value + range} triple (page 8
+  // Caproate) or be a stray range that we hold until both partners arrive.
+  if (tokens.length === 1 && looksLikeRangeToken(tokens[0])) {
+    state.pendingRange = tokens[0];
+    tryEmitTriple(out, seen, state);
+    return;
+  }
+
+  // [pendingAnalyte + pendingRange] paired with a value-only line. Accept
+  // any value-like first token, including length-1 lines like "70.1 H".
+  if (
+    state.pendingAnalyte &&
+    state.pendingRange &&
+    leadsWithValue(tokens)
+  ) {
+    state.pendingValue = tokens.join(" ");
+    tryEmitTriple(out, seen, state);
+    return;
+  }
+
+  // Single-token value line: "6.68e-1", "70.1 H". On its own (no pending
+  // state) we save it as pendingValue; the next analyte/range pair fills
+  // out the triple.
+  if (tokens.length === 1 && leadsWithValue(tokens)) {
+    state.pendingValue = tokens[0];
+    tryEmitTriple(out, seen, state);
+    return;
+  }
 
   if (isAnalyteOnlyRow(tokens)) {
     const analyte = tokens.join(" ").trim();
@@ -151,8 +222,8 @@ function processLine(
       });
       state.pendingValueLine = null;
     } else {
-      // Buffer; the next value-only line will pair with this.
       state.pendingAnalyte = analyte;
+      tryEmitTriple(out, seen, state);
     }
     return;
   }
@@ -192,7 +263,104 @@ function processLine(
     rangeRaw: range,
   });
   state.pendingAnalyte = null;
+  state.pendingValue = null;
+  state.pendingRange = null;
   state.pendingValueLine = null;
+}
+
+function tryEmitTriple(
+  out: ExtractedMetric[],
+  seen: Set<string>,
+  state: WalkState,
+): void {
+  if (state.pendingAnalyte && state.pendingValue && state.pendingRange) {
+    emit(out, seen, {
+      panel: state.panel,
+      analyte: state.pendingAnalyte,
+      valueRaw: state.pendingValue,
+      rangeRaw: state.pendingRange,
+    });
+    state.pendingAnalyte = null;
+    state.pendingValue = null;
+    state.pendingRange = null;
+  }
+}
+
+function isBileAcidPanel(panel: string | null): boolean {
+  return panel === "Primary Bile Acids" || panel === "Secondary Bile Acids";
+}
+
+// In the bile-acid panels, strip the abbreviation column (e.g. "CDCA",
+// "Total BA Primary") and the optional conjugation column ("U" / "C")
+// from the token list. Two cases:
+//  - Single-line row: analyte is at tokens[0], abbreviation immediately
+//    before the value token. Strip from inside.
+//  - Multi-line row (pendingAnalyte set on the previous line): abbreviation
+//    is at tokens[0]. Strip from the front.
+function stripBileAcidColumns(
+  tokens: string[],
+  hasPendingAnalyte: boolean,
+): string[] {
+  const valueIdx = tokens.findIndex((t) => leadsWithValue([t]));
+  if (valueIdx < 0) return tokens;
+
+  const result = [...tokens];
+  let nameEnd = valueIdx;
+
+  // Strip optional conjugation (single 'U' or 'C').
+  if (
+    nameEnd >= 1 &&
+    (result[nameEnd - 1] === "U" || result[nameEnd - 1] === "C")
+  ) {
+    result.splice(nameEnd - 1, 1);
+    nameEnd -= 1;
+  }
+
+  // Strip the abbreviation column.
+  if (
+    hasPendingAnalyte &&
+    nameEnd >= 1 &&
+    looksLikeBileAcidAbbreviation(result[0])
+  ) {
+    result.splice(0, 1);
+  } else if (
+    !hasPendingAnalyte &&
+    nameEnd >= 2 &&
+    looksLikeBileAcidAbbreviation(result[nameEnd - 1])
+  ) {
+    result.splice(nameEnd - 1, 1);
+  }
+
+  return result;
+}
+
+function looksLikeBileAcidAbbreviation(t: string): boolean {
+  if (!t || t.length > 30) return false;
+  // Multi-word: "Total BA Primary", "Total BA Secondary"
+  if (/^Total BA (Primary|Secondary)$/.test(t)) return true;
+  // Single token, mostly uppercase + digits + hyphens (CA, CDCA, GUDCA,
+  // 12-KLCA, ISO-LCA, AlloIso-LCA, 3-oxoDCA).
+  if (/\s/.test(t)) return false;
+  return /^[A-Za-z0-9][A-Za-z0-9\-*]*$/.test(t) && /[A-Z]/.test(t);
+}
+
+// True when a token is a likely standalone analyte name (multi-word, no
+// digits, doesn't start with a value sigil).
+function looksLikeAnalyteToken(t: string): boolean {
+  if (!t) return false;
+  if (leadsWithValue([t])) return false;
+  if (/^[<>]/.test(t)) return false;
+  if (/^\d/.test(t)) return false;
+  return /[A-Za-z]/.test(t);
+}
+
+// True when a token is a standalone reference range (no analyte, no value).
+// Examples: "< 1.00e3", "1.6e9 - 2.5e11", "38.3 - 68.0", "> 200".
+function looksLikeRangeToken(t: string): boolean {
+  if (!t) return false;
+  if (/^[<>]\s*-?\d/.test(t)) return true;
+  if (/^-?\d+\.?\d*(?:[eE][+-]?\d+)?\s*-\s*-?\d/.test(t)) return true;
+  return false;
 }
 
 interface EmitInput {
@@ -218,6 +386,13 @@ function emit(
 
   const value = classifyValue(input.valueRaw);
   const range = parseRange(input.rangeRaw);
+
+  // Drop rows where we recovered neither a numeric nor a qualitative
+  // value. They're just a row name with no signal — typical for the
+  // page-5 antibiotic resistance gene table when H. pylori is below
+  // detection (gene presence isn't measured, so values are blank).
+  // Better to omit than emit a ghost metric that pollutes /mappings.
+  if (value.numeric == null && value.text == null) return;
 
   out.push({
     name,

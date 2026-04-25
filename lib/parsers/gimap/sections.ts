@@ -9,66 +9,70 @@ export interface SectionSpec {
   panel: string;
 }
 
+// Section header patterns. All-caps in the GI-MAP PDF — case-sensitive
+// matches keep them from accidentally claiming Title-Case data rows
+// like "Primary Bile Acids - %" (a SCFA-summary row that shouldn't
+// route to the Primary Bile Acids panel).
 export const SECTION_SPECS: SectionSpec[] = [
-  { pattern: /^BACTERIAL PATHOGENS\b/i, panel: "Bacterial Pathogens" },
-  { pattern: /^PARASITIC PATHOGENS\b/i, panel: "Parasitic Pathogens" },
-  { pattern: /^VIRAL PATHOGENS\b/i, panel: "Viral Pathogens" },
+  { pattern: /^BACTERIAL PATHOGENS\b/, panel: "Bacterial Pathogens" },
+  { pattern: /^PARASITIC PATHOGENS\b/, panel: "Parasitic Pathogens" },
+  { pattern: /^VIRAL PATHOGENS\b/, panel: "Viral Pathogens" },
   {
-    pattern: /^H\.\s*PYLORI\s*&?\s*VIRULENCE FACTORS\b/i,
+    pattern: /^H\.\s*PYLORI\s*&?\s*VIRULENCE FACTORS\b/,
     panel: "H. pylori & Virulence Factors",
   },
-  { pattern: /^COMMENSAL BACTERIA\b/i, panel: "Commensal/Keystone Bacteria" },
-  { pattern: /^BACTERIAL PHYLA\b/i, panel: "Bacterial Phyla" },
+  { pattern: /^COMMENSAL BACTERIA\b/, panel: "Commensal/Keystone Bacteria" },
+  { pattern: /^BACTERIAL PHYLA\b/, panel: "Bacterial Phyla" },
   {
-    pattern: /^DYSBIOTIC\s*&?\s*OVERGROWTH BACTERIA\b/i,
+    pattern: /^DYSBIOTIC\s*&?\s*OVERGROWTH BACTERIA\b/,
     panel: "Dysbiotic & Overgrowth Bacteria",
   },
   {
-    pattern: /^COMMENSAL OVERGROWTH MICROBES\b/i,
+    pattern: /^COMMENSAL OVERGROWTH MICROBES\b/,
     panel: "Commensal Overgrowth Microbes",
   },
   {
-    pattern: /^INFLAMMATORY\s*&?\s*AUTOIMMUNE-?RELATED BACTERIA\b/i,
+    pattern: /^INFLAMMATORY\s*&?\s*AUTOIMMUNE-?RELATED BACTERIA\b/,
     panel: "Inflammatory & Autoimmune Bacteria",
   },
   {
-    pattern: /^COMMENSAL INFLAMMATORY\s*&?\s*AUTOIMMUNE-?RELATED BACTERIA\b/i,
+    pattern: /^COMMENSAL INFLAMMATORY\s*&?\s*AUTOIMMUNE-?RELATED BACTERIA\b/,
     panel: "Commensal Inflammatory Bacteria",
   },
-  { pattern: /^FUNGI\s*\/\s*YEAST\b/i, panel: "Fungi/Yeast" },
-  { pattern: /^VIRUSES\b/i, panel: "Viruses" },
-  { pattern: /^PROTOZOA\b/i, panel: "Parasites: Protozoa" },
-  { pattern: /^WORMS\b/i, panel: "Parasites: Worms" },
-  { pattern: /^DIGESTION\b/i, panel: "Intestinal Health: Digestion" },
-  { pattern: /^GI MARKERS\b/i, panel: "Intestinal Health: GI Markers" },
+  { pattern: /^FUNGI\s*\/\s*YEAST\b/, panel: "Fungi/Yeast" },
+  { pattern: /^VIRUSES\b/, panel: "Viruses" },
+  { pattern: /^PROTOZOA\b/, panel: "Parasites: Protozoa" },
+  { pattern: /^WORMS\b/, panel: "Parasites: Worms" },
+  { pattern: /^DIGESTION\b/, panel: "Intestinal Health: Digestion" },
+  { pattern: /^GI MARKERS\b/, panel: "Intestinal Health: GI Markers" },
   {
-    pattern: /^IMMUNE RESPONSE\b/i,
+    pattern: /^IMMUNE RESPONSE\b/,
     panel: "Intestinal Health: Immune Response",
   },
-  { pattern: /^INFLAMMATION\b/i, panel: "Intestinal Health: Inflammation" },
-  { pattern: /^ADD-ON TESTS\b/i, panel: "Intestinal Health: Add-On Tests" },
-  { pattern: /^PRIMARY BILE ACIDS\b/i, panel: "Primary Bile Acids" },
-  { pattern: /^SECONDARY BILE ACIDS\b/i, panel: "Secondary Bile Acids" },
+  { pattern: /^INFLAMMATION\b/, panel: "Intestinal Health: Inflammation" },
+  { pattern: /^ADD-ON TESTS\b/, panel: "Intestinal Health: Add-On Tests" },
+  { pattern: /^PRIMARY BILE ACIDS\b/, panel: "Primary Bile Acids" },
+  { pattern: /^SECONDARY BILE ACIDS\b/, panel: "Secondary Bile Acids" },
   {
-    pattern: /^SACCHAROLYTIC STRAIGHT CHAIN FATTY ACIDS\b/i,
+    pattern: /^SACCHAROLYTIC STRAIGHT CHAIN FATTY ACIDS\b/,
     panel: "Short Chain Fatty Acids (SCFA)",
   },
   {
-    pattern: /^PROTEOLYTIC BRANCHED CHAIN FATTY ACIDS\b/i,
+    pattern: /^PROTEOLYTIC BRANCHED CHAIN FATTY ACIDS\b/,
     panel: "Branched Chain Fatty Acids (BCFA)",
   },
   {
-    pattern: /^H\.\s*PYLORI ANTIBIOTIC RESISTANCE GENES?\b/i,
+    pattern: /^H\.\s*PYLORI ANTIBIOTIC RESISTANCE GENES?\b/,
     panel: "H. pylori Antibiotic Resistance",
   },
-  { pattern: /^BILE ACIDS\s*[-–]\s*SUMMARY\b/i, panel: "Bile Acids Summary" },
+  { pattern: /^BILE ACIDS\s*[-–]\s*SUMMARY\b/, panel: "Bile Acids Summary" },
   {
-    pattern: /^SHORT CHAIN FATTY ACIDS\s*[-–]\s*SUMMARY\b/i,
+    pattern: /^SHORT CHAIN FATTY ACIDS\s*[-–]\s*SUMMARY\b/,
     panel: "SCFA Summary",
   },
-  { pattern: /^BILE ACIDS\s*[-–]\s*RESULTS\b/i, panel: "Bile Acids" },
+  { pattern: /^BILE ACIDS\s*[-–]\s*RESULTS\b/, panel: "Bile Acids" },
   {
-    pattern: /^SHORT CHAIN FATTY ACIDS\s*[-–]\s*RESULTS\b/i,
+    pattern: /^SHORT CHAIN FATTY ACIDS\s*[-–]\s*RESULTS\b/,
     panel: "Short Chain Fatty Acids",
   },
 ];
@@ -76,7 +80,7 @@ export const SECTION_SPECS: SectionSpec[] = [
 // Lines that look like section headers / column-header rows and should not
 // be parsed as data rows.
 const HEADER_NOISE_RE = [
-  /^Result\s+Reference/i,
+  /^Result(\s+\S+)?\s+Reference(\s+\S+)?\s*$/i,
   /^Abbreviation\b/i,
   /^Conjugation/i,
   /^The assays were developed/i,
@@ -108,15 +112,19 @@ export function isNoiseLine(line: string): boolean {
 
 // All-caps banners that are umbrella section headers but don't change panel
 // (they precede a more-specific subsection like "BACTERIAL PATHOGENS").
+// Anchored to end-of-line — banners always sit alone on their line, and
+// without `$` the pattern would also match data rows that happen to start
+// with the banner text (e.g. case-insensitive "Helicobacter pylori 1.91e2 …"
+// would match `/^HELICOBACTER PYLORI\b/i` and the data row gets dropped).
 const UMBRELLA_BANNERS = [
-  /^PATHOGENS\b/,
-  /^OPPORTUNISTIC\/OVERGROWTH MICROBES\b/i,
-  /^HELICOBACTER PYLORI\b/i,
-  /^COMMENSAL\/KEYSTONE BACTERIA\b/i,
-  /^INTESTINAL HEALTH MARKERS\b/i,
+  /^PATHOGENS\s*$/,
+  /^OPPORTUNISTIC\/OVERGROWTH MICROBES\s*$/i,
+  /^HELICOBACTER PYLORI\s*$/i,
+  /^COMMENSAL\/KEYSTONE BACTERIA\s*$/i,
+  /^INTESTINAL HEALTH MARKERS\s*$/i,
   /^PARASITES\s*$/i,
-  /^SUMMARY INFO\b/i,
-  /^BILE ACIDS AND FATTY ACIDS OVERVIEW\b/i,
+  /^SUMMARY INFO\s*$/i,
+  /^BILE ACIDS AND FATTY ACIDS OVERVIEW\s*$/i,
 ];
 
 export function isUmbrellaBanner(line: string): boolean {
