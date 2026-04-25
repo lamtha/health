@@ -25,27 +25,15 @@ import {
   type ProviderColor,
 } from "@/lib/providers";
 import type { OverlayBand, OverlayMarker } from "@/lib/overlays";
+import {
+  pointKey,
+  type MetricChartPoint,
+} from "@/components/health/metric-chart-types";
 
-export interface MetricChartPoint {
-  reportId: number;
-  provider: string;
-  date: string;
-  timestamp: number;
-  value: number;
-  units: string | null;
-  flag: "high" | "low" | "ok" | null;
-  // Per-point ref range, in the same scale as `value` (converted when a
-  // per-metric unit spec applies). Used in the tooltip so the user can see
-  // the provider's own range for that reading.
-  refLow: number | null;
-  refHigh: number | null;
-}
-
-export function pointKey(
-  p: Pick<MetricChartPoint, "reportId" | "provider" | "timestamp">,
-): string {
-  return `${p.reportId}-${p.provider}-${p.timestamp}`;
-}
+export {
+  pointKey,
+  type MetricChartPoint,
+} from "@/components/health/metric-chart-types";
 
 interface Props {
   metricName: string;

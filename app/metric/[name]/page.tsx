@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { Flag } from "@/components/health/flag";
-import { pointKey } from "@/components/health/metric-chart";
+import { pointKey } from "@/components/health/metric-chart-types";
 import { MetricDetailShell } from "@/components/health/metric-detail-shell";
 import { PageHeader, Stat } from "@/components/health/page-header";
 import { TopBar } from "@/components/health/top-bar";

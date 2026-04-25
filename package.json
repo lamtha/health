@@ -28,6 +28,7 @@
     "db:studio": "drizzle-kit studio",
     "re-extract": "NODE_OPTIONS=--conditions=react-server tsx scripts/re-extract-all.ts",
     "bulk-map": "NODE_OPTIONS=--conditions=react-server tsx scripts/bulk-map-canonical.ts",
+    "compare-extract": "NODE_OPTIONS=--conditions=react-server tsx scripts/compare-extract.ts",
     "app:build-main": "tsc --project electron/tsconfig.json",
     "app:dev": "pnpm app:build-main && electron .",
     "app:rebuild-sys": "pnpm rebuild better-sqlite3",
