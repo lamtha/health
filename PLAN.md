@@ -1,6 +1,6 @@
 # Implementation Plan
 
-> Status: **v0.5 — Phases 0→6 shipped; Phase 7 distribution next.**
+> Status: **v0.5 — Phases 0→6 shipped; GI-MAP deterministic parser next, then Phase 7 distribution.**
 > Each phase lists: **Goal** · **Deliverables** · **Exit criteria**. Phases ship end-to-end; no phase "in progress" for weeks.
 
 ## Design reference
@@ -185,6 +185,26 @@ Adoption is folded into the phases that touch each screen (see phase notes). Pha
 - Entering an invalid key on first-run surfaces a red error before the dashboard loads. ✅
 - Forcing a bad PDF produces the friendly error dialog, not a stack trace or blank screen. ✅ (route + root error boundaries; main-process uncaughtException handler)
 - Onboarding screen reachable from the menu at any time. ✅
+
+---
+
+## Iteration: GI-MAP deterministic parser
+
+**Goal:** ingest GI-MAP PDFs without calling the Claude API. First slice of Phase 10 pulled forward — proves the deterministic-parser pattern on the highest-volume GI format we have, and defines the routing/fall-through layer that LabCorp and Quest will reuse.
+
+**Motivation:** every GI-MAP ingest currently ships PDF bytes to Claude. The layout is structured enough to parse deterministically; doing one format end-to-end now (rather than batching with LabCorp/Quest under Phase 10 later) gets immediate ingest savings on Paul's most common GI report and shapes the interface before we generalize.
+
+**Deliverables**
+- New `lib/parsers/` module with a `tryDeterministicExtract(pdfPath)` dispatcher and a `gimap` parser inside it. Same `ExtractionResult` shape as `lib/extract.ts` — drop-in replacement on a per-PDF basis.
+- `pdfjs-dist` added for PDF→text extraction (legacy build, no worker).
+- `lib/batch-runner.ts` runs the deterministic dispatcher first; falls back to Claude on detection miss or parser-throw. Saved item's `model` records which parser ran.
+- Sanitized-text fixtures under `tests/fixtures/gimap/` (PII redacted) drive a Vitest unit suite for detection and parsing. CI runs the suite.
+
+**Exit criteria**
+- All eight archived GI-MAP PDFs ingest end-to-end with `model = "deterministic-gimap"` and produce metric counts within 5% of the current Claude extraction.
+- Re-uploading any GI-MAP PDF after this iteration does not call the Claude API.
+- A non-GI-MAP PDF (one blood panel, one imaging report) still routes to Claude — the dispatcher's detection is correctly narrow.
+- Parser test suite runs in CI; a layout change that breaks parsing fails a test before it breaks an ingest.
 
 ---
 

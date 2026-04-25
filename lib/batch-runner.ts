@@ -7,6 +7,7 @@ import { and, eq, inArray, sql } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { extractReportFromPdf } from "@/lib/extract";
 import { findReportByHash, insertExtractedReport } from "@/lib/ingest";
+import { tryDeterministicExtract } from "@/lib/parsers";
 import { stagingDir } from "@/lib/paths";
 import { discardStaged, promoteStaged } from "@/lib/staging";
 import { uploadBatches, uploadBatchItems } from "@/db/schema";
@@ -127,7 +128,11 @@ async function processItem(item: ClaimedItem): Promise<void> {
     }
 
     const pdfPath = path.join(stagingDir(), item.stagingId, STAGING_PDF);
-    const result = await extractReportFromPdf(pdfPath);
+    // Deterministic parsers run first; they avoid Claude entirely on a
+    // detection match. A miss (or parser-throw inside the dispatcher)
+    // returns null and we fall back to Claude.
+    const deterministic = await tryDeterministicExtract(pdfPath);
+    const result = deterministic ?? (await extractReportFromPdf(pdfPath));
     const finalPath = await promoteStaged(item.stagingId, item.fileHash);
     const persisted = insertExtractedReport({
       filePath: finalPath,

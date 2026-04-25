@@ -1,0 +1,311 @@
+Patient: PATIENT NAME  Accession: ACCESSION-XYZ
+Collected: 12/2/2025  Received: 12/5/2025
+DOB: 1/1/1900  Completed: 12/22/2025
+Ordered by: REDACTED ORDERER
+REDACTED ADDRESS
+000.000.0000	spacer
+DNA STOOL ANALYSIS BY QUANTITATIVE PCR
+YOUR PERSONALIZED REPORT
+PATHOGENS
+The testing includes pathogens (bacterial, parasitic and viral) commonly known to cause gastroenteritis. Note that not
+all individuals with positive findings will present with symptoms. Many factors, including the health of the individual
+(such as immune health, digestive function, and microbiome balance), the transient nature of most pathogens, and the
+presence and expression of virulence factors, all contribute to pathogen virulence and individual symptoms.
+BACTERIAL PATHOGENS  Result  Reference
+Campylobacter  <dl  < 1.00e3
+C. difficile  Toxin A  <dl  < 1.00e3
+C. difficile  Toxin B  <dl  < 1.00e3
+E. coli  - EPEC/EHEC  <dl  < 1.00e3
+E. coli  O157  <dl  < 1.00e3
+Enteroinvasive  E. coli/Shigella  <dl  < 1.00e3
+Enterotoxigenic  E. coli  LT/ST  <dl  < 1.00e3
+Shiga-like Toxin  E. coli  stx1  <dl  < 1.00e3
+Shiga-like Toxin  E. coli  stx2  <dl  < 1.00e3
+Salmonella  <dl  < 1.00e4
+Vibrio cholerae  <dl  < 1.00e5
+Yersinia enterocolitica  <dl  < 1.00e5
+PARASITIC PATHOGENS
+Cryptosporidium  <dl  < 1.00e6
+Entamoeba histolytica  <dl  < 1.00e4
+Giardia  <dl  < 5.00e3
+VIRAL PATHOGENS
+Adenovirus 40/41  <dl  < 1.00e10
+Norovirus GI/II  <dl  < 1.00e7
+KEY:  Results are reported as genome equivalents per gram of stool, which is a standard method for estimating the number of
+microbes measured per gram of stool, based on qPCR analysis of DNA samples.
+7
+Results are expressed in standard scientific notation. For example, a reported result of 3.5e7 is equivalent to 3.5 x 10
+microbes per gram, which equals 35,000,000 (35 million) microbes per gram of stool.
+< dl represents results below detectable limit.
+The assays were developed and/or the performance characteristics	CLIA# 11D-2097795
+determined by Diagnostic Solutions Laboratory.	Medical Director - Diane Farhi, MD
+1
+
+Patient: PATIENT NAME	Accession: ACCESSION-XYZ
+HELICOBACTER PYLORI
+H. PYLORI & VIRULENCE FACTORS  Result  Reference
+Helicobacter pylori  1.91e2  < 1.00e3
+Virulence Factor, babA  N/A  Negative
+Virulence Factor, cagA  N/A  Negative
+Virulence Factor, dupA  N/A  Negative
+Virulence Factor, iceA
+N/A  Negative
+Virulence Factor, oipA  N/A  Negative
+Virulence Factor, vacA
+N/A  Negative
+Virulence Factor, virB  N/A  Negative
+Virulence Factor, virD
+N/A  Negative
+COMMENSAL/KEYSTONE BACTERIA
+COMMENSAL BACTERIA  Result  Reference
+1.07e10  1.6e9 - 2.5e11org/g 1.6e9 - 2.5e11
+Bacteroides fragilis
+1.02e10  > 6.7e7org/g > 6.7e7
+Bifidobacterium  spp.
+Enterococcus  spp.  1.40e7  1.9e5 - 2.0e8org/g 1.9e5 - 2.0e8
+Escherichia  spp.  9.60e7  3.7e6 - 3.8e9org/g 3.7e6 - 3.8e9
+Lactobacillus  spp.  1.53e7  8.6e5 - 6.2e8org/g 8.6e5 - 6.2e8
+Enterobacter  spp.  6.46e8 H 6.46e8  1.0e6 - 5.0e7
+Akkermansia muciniphila  2.92e5  1.0e1 - 8.2e6org/g 1.0e1 - 8.2e6
+Faecalibacterium prausnitzii  <1.00e2 <dl L  1.0e3 - 5.0e8org/g 1.0e3 - 5.0e8
+Roseburia  spp.  5.35e9  5.0e7 - 2.0e10org/g 5.0e7 - 2.0e10
+BACTERIAL PHYLA
+Bacteroidetes  3.02e12  8.6e11 - 3.3e12
+Firmicutes  2.13e11  5.7e10 - 3.0e11
+Firmicutes:Bacteroidetes Ratio  0.07  < 1.0
+The assays were developed and/or the performance characteristics	CLIA# 11D-2097795
+determined by Diagnostic Solutions Laboratory.	Medical Director - Diane Farhi, MD
+2
+
+Patient: PATIENT NAME	Accession: ACCESSION-XYZ
+OPPORTUNISTIC/OVERGROWTH MICROBES
+DYSBIOTIC & OVERGROWTH BACTERIA  Result  Reference
+<dl  < 1.76e6
+Bacillus  spp.
+<dl  < 1.00e4
+Enterococcus faecalis
+Enterococcus faecium  <dl  < 1.00e4
+Morganella  spp.  <dl  < 1.00e3
+Pseudomonas  spp.  <dl  < 1.00e4
+Pseudomonas aeruginosa  <dl  < 5.00e2
+Staphylococcus  spp.  <dl  < 1.00e4
+Staphylococcus aureus  4.32e0  < 5.00e2
+Streptococcus  spp.  5.88e3  High ↑  < 1.00e3
+COMMENSAL OVERGROWTH MICROBES
+2.20e9  High ↑  < 7.98e8
+Desulfovibrio  spp.
+5.35e7  < 3.38e8
+Methanobacteriaceae  (family)
+INFLAMMATORY & AUTOIMMUNE-RELATED BACTERIA
+Citrobacter  spp.  <dl  < 5.00e6
+Citrobacter freundii  <dl  < 5.00e5
+Klebsiella  spp.  <dl  < 5.00e3
+Klebsiella pneumoniae  <dl  < 5.00e4
+M. avium subsp. paratuberculosis  <dl  < 5.00e3
+Proteus  spp.  <dl  < 5.00e4
+Proteus mirabilis  <dl  < 1.00e3
+COMMENSAL INFLAMMATORY & AUTOIMMUNE-RELATED BACTERIA
+Enterobacter  spp.  6.46e8  High ↑  < 5.00e7
+Escherichia  spp.  9.60e7  < 3.80e9
+Fusobacterium  spp.  9.00e6  < 1.00e8
+Prevotella  spp.  3.18e7  < 1.00e8
+FUNGI/YEAST
+FUNGI/YEAST  Result  Reference
+<dl  < 5.00e3
+Candida  spp.
+Candida albicans  <dl  < 5.00e2
+Geotrichum  spp.  <dl  < 3.00e2
+Microsporidium  spp.  <dl  < 5.00e3
+Rhodotorula  spp.  <dl  < 1.00e3
+VIRUSES
+VIRUSES  Result  Reference
+Cytomegalovirus  <dl  < 1.00e5
+Epstein-Barr Virus  <dl  < 1.00e7
+The assays were developed and/or the performance characteristics	CLIA# 11D-2097795
+determined by Diagnostic Solutions Laboratory.	Medical Director - Diane Farhi, MD
+3
+
+Patient: PATIENT NAME	Accession: ACCESSION-XYZ
+PARASITES
+PROTOZOA  Result  Reference
+<dl  < 2.00e3
+Blastocystis hominis
+<dl  < 1.00e5
+Chilomastix mesnili
+Cyclospora  spp.  <dl  < 5.00e4
+Dientamoeba fragilis  <dl  < 1.00e5
+Endolimax nana  <dl  < 1.00e4
+Entamoeba coli  <dl  < 5.00e6
+Pentatrichomonas hominis  <dl  < 1.00e2
+WORMS
+Ancylostoma duodenale  Not Detected  Not Detected
+Ascaris lumbricoides  Not Detected  Not Detected
+Not Detected  Not Detected
+Necator americanus
+Not Detected  Not Detected
+Trichuris trichiura
+Taenia  spp.  Not Detected  Not Detected
+INTESTINAL HEALTH MARKERS
+DIGESTION  Result  Reference
+Steatocrit   <dl  < 15 %
+Elastase-1   >750  > 200 ug/g
+GI MARKERS
+β-Glucuronidase   536  < 2486 U/mL
+Occult Blood - FIT   1  < 10 ug/g
+IMMUNE RESPONSE
+Secretory IgA   1574  510 - 2010 ug/g
+Anti-gliadin IgA   33  < 175 U/L
+Eosinophil Activation Protein Eosinophil Activation Protein (EDN,
+0.18  < 2.34 ug/g
+(EDN, EPX) EPX)
+INFLAMMATION
+Calprotectin   40  < 173 ug/g
+ADD-ON TESTS
+Zonulin   272.1 H  < 175 ng/g
+The assays were developed and/or the performance characteristics	CLIA# 11D-2097795
+determined by Diagnostic Solutions Laboratory.	Medical Director - Diane Farhi, MD
+4
+
+Patient: PATIENT NAME	Accession: ACCESSION-XYZ
+H. PYLORI ANTIBIOTIC RESISTANCE GENES
+Result  Reference	Result  Reference
+Amoxicillin  N/A  Negative	Clarithromycin  N/A  Negative
+Genes associated with amoxicillin resistance	Genes associated with clarithromycin resistance
+N/A	N/A
+PBP1A S414R  	A2142C
+PBP1A T556S  N/A	A2142G  N/A
+N/A	N/A
+PBP1A N562Y  	A2143G
+Result  Reference	Result  Reference
+Fluoroquinolones  N/A  Negative	Tetracycline  N/A  Negative
+Genes associated with fluoroquinolone resistance	Genes associated with tetracycline resistance
+gyrA N87K  N/A	A926G  N/A
+N/A	N/A
+gyrA D91N  	AGA926-928TTC
+gyrA D91G  N/A
+N/A
+gyrB S479N
+gyrB R484K  N/A
+The assays were developed and/or the performance characteristics	CLIA# 11D-2097795
+determined by Diagnostic Solutions Laboratory.	Medical Director - Diane Farhi, MD
+5
+
+Patient: PATIENT NAME  Accession: ACCESSION-XYZ
+BILE ACIDS - SUMMARY
+The Bile Acids Panel  assesses fecal concentrations of primary and secondary bile acids and provides
+insights into microbiome diversity, digestive function, motility, and various gut-related conditions.
+SUMMARY INFO
+Total Bile Acids - ng/g  4.90e4 L  2.37e5 - 6.29e6
+Secondary Bile Acids- %  95.6 L  > 90.5
+Primary Bile Acids - %  4.4 H  < 7.8
+48 %
+10 %
+29 %
+15 %
+0.3
+LCA*/DCA Ratio
+17 %
+27 %	Lithocholic Acid / Deoxycholic Acid Ratio
+46 %  8 %
+based on absolute values.
+Reference set at 50th percentile.
+*LCA value is the summation of LCA + Allo-LCA
+SHORT CHAIN FATTY ACIDS - SUMMARY
+The Postbiotic Fatty Acid Metabolite Panel  assesses fecal concentrations of straight chain and branched
+chain fatty acids. These metabolites provide a variety of beneficial effects for intestinal health, anti-
+inflammation, metabolism and immunity, and give dietary insight.
+SUMMARY INFO
+Major Straight Chain Fatty Acids - μg/g
+4.42e3 L  3.63e3 - 1.95e4
+Acetate - %  	38.3 - 68.0
+70.1 H
+Butyrate - %  8.4 L  7.7 - 32.6
+Propionate - %  19.2  14.1 - 33.6
+Valerate - %  2.3  0.5 - 6.2
+70 %	52 %
+7.7
+2 %
+3 %
+SCFA/BCFA Ratio
+Ratio of total straight chain fatty acids (SCFA)
+19 %	8 %	25 %	20 %
+to total branched chain fatty acids (BCFA).
+Reference set at 50th percentile.
+The assays were developed and/or the performance characteristics	CLIA# 11D-2097795
+determined by Diagnostic Solutions Laboratory.	Medical Director - Diane Farhi, MD
+6
+
+Patient: PATIENT NAME  Accession: ACCESSION-XYZ
+BILE ACIDS - RESULTS
+PRIMARY BILE ACIDS  Abbreviation  Conjugation**  Result ng/g  Reference ng/g
+Total Primary Bile Acids  Total BA Primary  2.17e3 L  3.50e3 - 7.90e4
+Cholic Acid  CA  U  3.99e2  < 5.92e4
+Chenodeoxycholic Acid  CDCA  U  1.73e3 L  2.16e3 - 6.87e4
+Taurochenodeoxycholic Acid  TCDCA  C  4.39e1  < 4.14e2
+Taurocholic Acid  TCA  C  <dl  < 5.19e2
+Glycochenodeoxycholic Acid  GCDCA  C  <dl L  1.18e1 - 8.11e2
+Glycocholic Acid  GCA  C  <dl  < 7.55e2
+Hyocholic Acid  HCA  U  <dl  < 5.50e3
+SECONDARY BILE ACIDS  Abbreviation  Conjugation**  Result ng/g  Reference ng/g
+Total Secondary Bile Acids  Total BA Secondary  4.68e4 L  1.97e5 - 6.23e6
+Deoxycholic Acid  DCA  U  1.42e4 L  2.24e3 - 2.33e6
+Lithocholic Acid*  LCA  U  4.76e3 L  6.12e3 - 1.37e6
+Isolithocholic Acid  ISO-LCA  U  7.47e3 L  2.21e3 - 5.36e5
+12-Ketolithocholic Acid  12-KLCA  U  7.95e3 L  1.87e3 - 5.30e5
+3-oxoDeoxycholic Acid  3-oxoDCA  U  <dl L  3.53e2 - 1.12e5
+Ursodeoxycholic Acid  UDCA  U  <dl  < 5.77e4
+7-Ketolithocholic Acid  7-KLCA  U  <dl  < 8.94e3
+7-Ketodeoxycholic Acid  7-KDCA  U  1.67e2  < 1.01e4
+Dehydrolithocholic Acid  DHLCA  U  6.18e3  < 4.52e4
+Hyodeoxycholic Acid  HDCA  U  5.61e3  < 5.27e4
+Alloisolithocholic Acid  AlloIso-LCA  U  <dl  < 7.53e4
+3-Dehydrocholic Acid  3-DHCA  U  <dl  < 5.85e2
+Glycolithocholic Acid  GLCA  C  <dl  < 2.20e2
+Glycoursodeoxycholic Acid  GUDCA  C  3.20e2 H  < 3.08e2
+Glycodeoxycholic Acid  	< 5.40e2
+GDCA  C  <dl
+Taurolithocholic Acid  TLCA  C  <dl  < 2.68e2
+Tauroursodeoxycholic Acid  TUDCA  C  <dl  < 1.28e2
+Taurodeoxycholic Acid  TDCA  C  9.96e1  < 8.56e2
+*LCA value is the summation of LCA + Allo-LCA | ** C = Conjugated | U = Unconjugated
+The assays were developed and/or the performance characteristics	CLIA# 11D-2097795
+determined by Diagnostic Solutions Laboratory.	Medical Director - Diane Farhi, MD
+7
+
+Patient: PATIENT NAME  Accession: ACCESSION-XYZ
+SHORT CHAIN FATTY ACIDS - RESULTS
+Total Short Chain Fatty Acids - μg/g  4.99e3 L  4.23e3 - 2.10e4
+SACCHAROLYTIC STRAIGHT CHAIN FATTY ACIDS (SCFA)	PROTEOLYTIC BRANCHED CHAIN FATTY ACIDS (BCFA)
+Result μg/g  Reference μg/g	Result μg/g  Reference μg/g
+Total SCFA  4.42e3 L  3.65e3 - 1.95e4	Total BCFA  5.72e2  1.65e2 - 1.67e3
+Acetate  3.10e3 L  2.09e3 - 9.72e3	Iso-butyrate  1.85e2  5.65e1 - 5.64e2
+Butyrate  3.70e2 L  3.94e2 - 5.79e3	Iso-valerate  2.11e2  4.45e1 - 6.58e2
+Propionate  8.47e2 L  5.91e2 - 5.45e3	2-Methylbutyrate  1.76e2  3.82e1 - 4.61e2
+Valerate  1.02e2 L  4.33e1 - 7.73e2	Iso-caproate  1.27e-1  < 9.93e0
+6.68e-1
+Caproate
+7.15e-1 - 1.44e2
+L
+BILE ACIDS AND FATTY ACIDS OVERVIEW
+Primary bile acids are synthesized from
+cholesterol in the liver and conjugated with
+either taurine or glycine. They are stored in the
+gallbladder and released during digestion to
+assist with the absorption of fat and fat-soluble
+vitamins.
+95% of primary bile acids are reabsorbed via
+the portal vein, while 5% are metabolized by
+gut bacteria to produce secondary bile acids.
+Saccharolytic short chain fatty acids (SCFAs)
+are primarily metabolites of dietary fiber
+fermentation in the gut while proteolytic
+branched chain fatty acids (BCFAs) are
+metabolites of protein fermentation.
+Acetate, propionate, and butyrate are three
+major SCFAs, which account for 90% of the
+SCFAs produced by gut microbiota. SCFAs
+are known to have numerous health effects
+and can enhance fecal excretion of bile acids.
+The assays were developed and/or the performance characteristics	CLIA# 11D-2097795
+determined by Diagnostic Solutions Laboratory.	Medical Director - Diane Farhi, MD
+8
