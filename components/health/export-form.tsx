@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { ExportCategoryFilter } from "@/components/health/export-category-filter";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { CATEGORY_LABELS } from "@/db/seeds/taxonomy";
@@ -10,6 +11,8 @@ import type { ExportCandidate } from "@/lib/export";
 
 export interface ExportFormProps {
   candidates: ExportCandidate[];
+  categoryCounts: Record<string, number>;
+  tagCounts: Record<string, number>;
   defaultFrom: string;
   defaultTo: string;
   preselectedIds: number[];
@@ -29,6 +32,8 @@ function todayIso(): string {
 
 export function ExportForm({
   candidates,
+  categoryCounts,
+  tagCounts,
   defaultFrom,
   defaultTo,
   preselectedIds,
@@ -40,6 +45,10 @@ export function ExportForm({
     () => new Set(preselectedIds),
   );
   const [query, setQuery] = useState("");
+  const [activeCategories, setActiveCategories] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [activeTags, setActiveTags] = useState<Set<string>>(() => new Set());
 
   function applyPreset(p: Preset) {
     setPreset(p);
@@ -55,21 +64,83 @@ export function ExportForm({
     setTo(now);
   }
 
+  const chipFiltered = useMemo(() => {
+    if (activeCategories.size === 0 && activeTags.size === 0) return candidates;
+    return candidates.filter((c) => {
+      if (activeCategories.has(c.category)) return true;
+      for (const t of c.tags) if (activeTags.has(t)) return true;
+      return false;
+    });
+  }, [candidates, activeCategories, activeTags]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return candidates;
-    return candidates.filter(
+    if (!q) return chipFiltered;
+    return chipFiltered.filter(
       (c) =>
         c.canonicalName.toLowerCase().includes(q) ||
         c.categoryLabel.toLowerCase().includes(q),
     );
-  }, [candidates, query]);
+  }, [chipFiltered, query]);
+
+  const chipsActive = activeCategories.size > 0 || activeTags.size > 0;
 
   function toggle(id: number) {
     setSelected((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
+      return next;
+    });
+  }
+
+  function handleToggleCategory(slug: string) {
+    const wasActive = activeCategories.has(slug);
+    setActiveCategories((prev) => {
+      const next = new Set(prev);
+      if (wasActive) next.delete(slug);
+      else next.add(slug);
+      return next;
+    });
+    const matchingIds = candidates
+      .filter((c) => c.category === slug)
+      .map((c) => c.id);
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (wasActive) for (const id of matchingIds) next.delete(id);
+      else for (const id of matchingIds) next.add(id);
+      return next;
+    });
+  }
+
+  function handleToggleTag(slug: string) {
+    const wasActive = activeTags.has(slug);
+    setActiveTags((prev) => {
+      const next = new Set(prev);
+      if (wasActive) next.delete(slug);
+      else next.add(slug);
+      return next;
+    });
+    const matchingIds = candidates
+      .filter((c) => c.tags.includes(slug))
+      .map((c) => c.id);
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (wasActive) for (const id of matchingIds) next.delete(id);
+      else for (const id of matchingIds) next.add(id);
+      return next;
+    });
+  }
+
+  function clearAllChips() {
+    setActiveCategories(new Set());
+    setActiveTags(new Set());
+  }
+
+  function selectAllVisible() {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      for (const c of filtered) next.add(c.id);
       return next;
     });
   }
@@ -140,23 +211,34 @@ export function ExportForm({
             Metrics
           </div>
           <div className="font-mono text-[11px] text-muted-foreground">
-            {selected.size} selected · {candidates.length} available in window
+            {selected.size} selected ·{" "}
+            {chipsActive
+              ? `${chipFiltered.length} of ${candidates.length} visible`
+              : `${candidates.length} available in window`}
           </div>
           <div className="ml-auto flex items-center gap-2">
             <Button
               size="sm"
               variant="ghost"
-              onClick={() =>
-                setSelected(new Set(candidates.filter((c) => c.flaggedInWindow > 0).map((c) => c.id)))
-              }
+              onClick={selectAllVisible}
+              disabled={filtered.length === 0}
             >
-              Select flagged
+              Select all
             </Button>
             <Button size="sm" variant="ghost" onClick={() => setSelected(new Set())}>
               Clear
             </Button>
           </div>
         </div>
+        <ExportCategoryFilter
+          categoryCounts={categoryCounts}
+          tagCounts={tagCounts}
+          activeCategories={activeCategories}
+          activeTags={activeTags}
+          onToggleCategory={handleToggleCategory}
+          onToggleTag={handleToggleTag}
+          onClearAll={clearAllChips}
+        />
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}

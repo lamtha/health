@@ -10,6 +10,7 @@ import {
   reports,
 } from "@/db/schema";
 import { canonicalUnit } from "@/lib/units";
+import { coerceTags } from "@/lib/queries";
 import { CATEGORY_LABELS } from "@/db/seeds/taxonomy";
 
 export interface ExportObservation {
@@ -266,6 +267,7 @@ export interface ExportCandidate {
   canonicalName: string;
   category: string;
   categoryLabel: string;
+  tags: string[];
   observationsInWindow: number;
   flaggedInWindow: number;
 }
@@ -279,6 +281,7 @@ export function getExportCandidates(
       id: canonicalMetricsTable.id,
       canonicalName: canonicalMetricsTable.canonicalName,
       category: canonicalMetricsTable.category,
+      tags: canonicalMetricsTable.tags,
       metricId: metricsTable.id,
       flag: metricsTable.flag,
     })
@@ -306,6 +309,7 @@ export function getExportCandidates(
         category: r.category,
         categoryLabel:
           CATEGORY_LABELS[r.category as keyof typeof CATEGORY_LABELS] ?? r.category,
+        tags: coerceTags(r.tags),
         observationsInWindow: 0,
         flaggedInWindow: 0,
       };
@@ -317,4 +321,24 @@ export function getExportCandidates(
   return [...byId.values()].sort((a, b) =>
     a.canonicalName.localeCompare(b.canonicalName),
   );
+}
+
+export interface ExportCounts {
+  categoryCounts: Record<string, number>;
+  tagCounts: Record<string, number>;
+}
+
+// Chip counts for the /export filter strip. One unit per candidate
+// (canonical metric with ≥1 obs in window), matching the dashboard's
+// "distinct groups" counting model.
+export function computeExportCounts(candidates: ExportCandidate[]): ExportCounts {
+  const categoryCounts: Record<string, number> = {};
+  const tagCounts: Record<string, number> = {};
+  for (const c of candidates) {
+    categoryCounts[c.category] = (categoryCounts[c.category] ?? 0) + 1;
+    for (const t of c.tags) {
+      tagCounts[t] = (tagCounts[t] ?? 0) + 1;
+    }
+  }
+  return { categoryCounts, tagCounts };
 }

@@ -76,7 +76,7 @@ function computeTrend(hist: number[]): "up" | "down" | "flat" {
 // declared with mode: "json". Defensively coerce in case of a stray raw
 // string (e.g. a future schema change) — the cost is one runtime check
 // that proves harmless even when tags is already an array.
-function coerceTags(raw: unknown): string[] {
+export function coerceTags(raw: unknown): string[] {
   if (Array.isArray(raw)) return raw.filter((t): t is string => typeof t === "string");
   if (typeof raw === "string" && raw.trim().startsWith("[")) {
     try {

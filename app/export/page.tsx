@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ExportForm } from "@/components/health/export-form";
 import { PageHeader, Stat } from "@/components/health/page-header";
 import { TopBar } from "@/components/health/top-bar";
-import { getExportCandidates } from "@/lib/export";
+import { computeExportCounts, getExportCandidates } from "@/lib/export";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +22,7 @@ export default function ExportPage() {
   const from = aYearAgoIso();
   const to = todayIso();
   const candidates = getExportCandidates(from, to);
+  const { categoryCounts, tagCounts } = computeExportCounts(candidates);
 
   // Pre-select flagged metrics from the past year — a sensible starting
   // point for a clinician export.
@@ -31,9 +32,9 @@ export default function ExportPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <TopBar current="dashboard" />
+      <TopBar current="export" />
       <PageHeader
-        crumbs={["Dashboard", "Export"]}
+        crumbs={["Export"]}
         title="Export for doctor"
         subtitle="Pick a window and a set of canonical metrics. PDF and CSV download directly."
         stats={
@@ -61,6 +62,8 @@ export default function ExportPage() {
       <div className="px-8 pb-10">
         <ExportForm
           candidates={candidates}
+          categoryCounts={categoryCounts}
+          tagCounts={tagCounts}
           defaultFrom={from}
           defaultTo={to}
           preselectedIds={preselected}

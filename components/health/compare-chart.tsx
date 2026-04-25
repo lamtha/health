@@ -85,6 +85,11 @@ export function CompareChart({
             {series.units ?? "—"} · {series.points.length} obs ·{" "}
             {series.providers.length} provider
             {series.providers.length === 1 ? "" : "s"}
+            {series.nonNumericCount > 0 && (
+              <span className="ml-1">
+                · {series.nonNumericCount} non-numeric
+              </span>
+            )}
             {series.unitsMismatch && <span className="ml-1 text-flag-high">· units vary</span>}
           </div>
         </div>
@@ -94,8 +99,10 @@ export function CompareChart({
       </CardHeader>
       <div className="p-2">
         {data.length === 0 ? (
-          <div className="grid h-[144px] place-items-center text-[12px] text-muted-foreground">
-            No numeric data
+          <div className="grid h-[144px] place-items-center px-4 text-center text-[12px] text-muted-foreground">
+            {series.nonNumericCount > 0
+              ? `All ${series.nonNumericCount} observation${series.nonNumericCount === 1 ? "" : "s"} non-numeric (e.g. "<dl", "Not Detected")`
+              : "No numeric data"}
           </div>
         ) : (
           <ResponsiveContainer width="100%" height={144}>

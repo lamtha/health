@@ -7,6 +7,7 @@ const TABS = [
   { id: "dashboard", label: "Dashboard", href: "/" },
   { id: "reports", label: "Reports", href: "/reports" },
   { id: "compare", label: "Compare", href: "/compare" },
+  { id: "export", label: "Export", href: "/export" },
   { id: "interventions", label: "Interventions", href: "/interventions" },
   { id: "uploads", label: "Upload", href: "/uploads" },
   { id: "settings", label: "Settings", href: "/settings" },

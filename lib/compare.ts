@@ -33,6 +33,9 @@ export interface CompareSeries {
   providers: string[];
   latest: ComparePoint | null;
   latestFlag: "high" | "low" | "ok" | null;
+  // Rows that exist for this canonical but can't be plotted because the
+  // provider reported a non-numeric value (e.g. "<dl", "Not Detected").
+  nonNumericCount: number;
 }
 
 export interface CompareResult {
@@ -133,8 +136,13 @@ export function getCompareSeries(canonicalIds: number[]): CompareResult {
     const rows = byCanonical.get(id) ?? [];
 
     const raw: ComparePoint[] = [];
+    let nonNumericCount = 0;
     for (const r of rows) {
-      if (r.valueNumeric == null || !r.reportDate) continue;
+      if (r.valueNumeric == null) {
+        nonNumericCount += 1;
+        continue;
+      }
+      if (!r.reportDate) continue;
       const ts = Date.parse(r.reportDate);
       if (Number.isNaN(ts)) continue;
       raw.push({
@@ -191,6 +199,7 @@ export function getCompareSeries(canonicalIds: number[]): CompareResult {
       providers,
       latest,
       latestFlag: latest?.flag ?? null,
+      nonNumericCount,
     });
   }
 
