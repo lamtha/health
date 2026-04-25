@@ -118,7 +118,7 @@ graph TB
 
 ## Data Model
 
-`Report` + `Metric` are the spine; everything else is grouping (`Panel`), aliasing (`CanonicalMetric` + `MetricAlias`), auditing (`Extraction`), or overlay (`Intervention` + `Event`).
+`Report` + `Metric` are the spine. Around it: grouping (`Panel`), aliasing (`CanonicalMetric` + `MetricAlias`), audit/replay (`Extraction`), overlay (`Intervention` + `Event`), and the upload pipeline (`UploadBatch` + `UploadBatchItem`) that orchestrates ingest of one or many PDFs.
 
 ```mermaid
 erDiagram
@@ -130,6 +130,10 @@ erDiagram
     CANONICAL_METRIC ||--o{ METRIC_ALIAS : "has alias"
     INTERVENTION ||--o{ EVENT : "has start/stop/change events"
     EVENT }o--|| REPORT : "may reference"
+    UPLOAD_BATCH ||--o{ UPLOAD_BATCH_ITEM : groups
+    UPLOAD_BATCH_ITEM |o--o| REPORT : "saved as"
+    UPLOAD_BATCH_ITEM |o--o{ REPORT : "duplicate of"
+    UPLOAD_BATCH_ITEM |o--o| EXTRACTION : produced
 
     REPORT {
         int id PK
@@ -180,8 +184,12 @@ erDiagram
     EXTRACTION {
         int id PK
         int report_id FK
-        string model "e.g. claude-opus-4-7"
-        json raw_json "full Claude output"
+        string extractor_kind "claude | deterministic"
+        string model "engine identifier — e.g. claude-sonnet-4-6, gimap"
+        int extractor_version "nullable; deterministic parser version (null for Claude)"
+        int metric_count "rows this extraction produced"
+        int elapsed_ms "wall time of the extraction call"
+        json raw_json "full extractor output for replay"
         datetime created_at
     }
 
@@ -204,11 +212,34 @@ erDiagram
         int intervention_id FK "nullable; set for start/stop/change, null for singleton"
         datetime created_at
     }
+
+    UPLOAD_BATCH {
+        int id PK
+        int total_count
+        datetime created_at
+    }
+
+    UPLOAD_BATCH_ITEM {
+        int id PK
+        int batch_id FK
+        string original_filename
+        int size_bytes
+        string file_hash "matches reports.file_hash on dedupe"
+        string staging_id "nullable; cleared once promoted or discarded"
+        string status "queued | extracting | saved | duplicate | error"
+        int report_id FK "nullable; set when status=saved"
+        int duplicate_report_id FK "nullable; set when status=duplicate"
+        int extraction_id FK "nullable; the extraction this run produced (status=saved)"
+        string error_message "nullable; set when status=error"
+        datetime created_at
+        datetime updated_at
+    }
 ```
 
 Notes:
-- **`file_hash` on Report** makes ingest idempotent — re-running the CLI never duplicates a report.
-- **`Extraction.raw_json`** is the audit/replay record. We can re-derive `Metric` rows without re-calling the API.
+- **`file_hash` on Report** makes ingest idempotent — re-uploading the same PDF is detected as a duplicate.
+- **`Extraction`** is the audit/replay record. `extractor_kind` distinguishes the two extraction paths (`claude` for the Anthropic API, `deterministic` for the local parsers in `lib/parsers/*`); `model` names the specific engine; `extractor_version` lets us re-extract reports parsed by an older deterministic parser when its rules improve. `raw_json` lets us re-derive `Metric` rows without re-calling the upstream.
+- **`UploadBatch` + `UploadBatchItem`** orchestrate the upload pipeline. A batch is one drag-and-drop session (or a single-file upload — still a batch of one). Each item carries enough state to render the live `/uploads/[id]` status table without joining: file metadata, current status, terminal links. *Display* fields (provider, category, report date, model, extractor info) are intentionally **not** denormalized onto the item — the `/uploads/[id]` query joins through `report_id` (or `duplicate_report_id`) to `REPORTS`, and through `extraction_id` to `EXTRACTIONS`. This keeps the source of truth single and avoids the snapshot going stale on later re-extracts.
 - **`CanonicalMetric`** holds the taxonomy (category + cross-cutting tag array). Seeded at install; extended via `/mappings` when Paul confirms a new raw name.
 - **`MetricAlias`** resolves raw metric names at ingest time (provider-scoped first, `provider = ""` global fallback). Fail-open: a miss leaves `metrics.canonical_metric_id` null and the row queues at `/mappings` for review.
 - **`Intervention`** is the "thing you started" (Berberine, Low-FODMAP, a med course). A band on charts spans `started_on → stopped_on` (or to today if active). Dose / name changes are recorded as `kind:change` events on the same intervention.
