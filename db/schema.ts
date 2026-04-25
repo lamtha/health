@@ -90,7 +90,22 @@ export const extractions = sqliteTable("extractions", {
   reportId: integer("report_id")
     .notNull()
     .references(() => reports.id, { onDelete: "cascade" }),
+  // "claude" | "deterministic". Distinguishes the cloud Anthropic API from
+  // a local rule-based parser in lib/parsers/*.
+  extractorKind: text("extractor_kind").notNull().default("claude"),
+  // Engine identifier — for claude, the model id ("claude-sonnet-4-6");
+  // for deterministic, the parser name ("gimap"). Kept as free text so
+  // future parsers slot in without a migration.
   model: text("model").notNull(),
+  // Deterministic parser version. Lets us re-extract reports parsed by an
+  // older parser when its rules improve. Null for Claude.
+  extractorVersion: integer("extractor_version"),
+  // Number of metric rows this extraction produced. Snapshot at insert;
+  // doesn't track later metric edits but those don't happen today.
+  metricCount: integer("metric_count").notNull().default(0),
+  // Wall time of the extraction call in ms. Null for historical rows
+  // pre-dating this column.
+  elapsedMs: integer("elapsed_ms"),
   rawJson: text("raw_json", { mode: "json" }).notNull(),
   createdAt: text("created_at")
     .notNull()
@@ -233,12 +248,15 @@ export const uploadBatchItems = sqliteTable("upload_batch_items", {
     () => reports.id,
     { onDelete: "set null" },
   ),
-  provider: text("provider"),
-  category: text("category"),
-  reportDate: text("report_date"),
-  metricCount: integer("metric_count"),
-  model: text("model"),
-  elapsedMs: integer("elapsed_ms"),
+  // The extraction this run produced. Null until the item reaches "saved";
+  // also null for re-extracts (those produce extraction rows with no
+  // batch-item link). Display fields (provider, category, report_date,
+  // model, metric_count, elapsed_ms) are intentionally not denormalized
+  // here — derive via report_id/duplicate_report_id → reports and
+  // extraction_id → extractions.
+  extractionId: integer("extraction_id").references(() => extractions.id, {
+    onDelete: "set null",
+  }),
   errorMessage: text("error_message"),
   createdAt: text("created_at")
     .notNull()

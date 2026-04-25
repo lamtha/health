@@ -6,6 +6,7 @@ import * as gimap from "./gimap";
 
 export interface DeterministicParser {
   name: string;
+  version: number;
   detect: (text: string) => boolean;
   parseText: (text: string) => ExtractedReport;
 }
@@ -34,8 +35,15 @@ export async function tryDeterministicExtract(
       const report = parser.parseText(pdfText.text);
       return {
         report,
-        raw: { kind: "deterministic", parser: parser.name, version: 1, report },
-        model: `deterministic-${parser.name}`,
+        raw: {
+          kind: "deterministic",
+          parser: parser.name,
+          version: parser.version,
+          report,
+        },
+        model: parser.name,
+        kind: "deterministic",
+        version: parser.version,
         elapsedMs: Date.now() - started,
       };
     } catch (err) {

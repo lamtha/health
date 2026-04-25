@@ -29,7 +29,13 @@ export type ExtractedReport = z.infer<typeof ExtractedReport>;
 export interface ExtractionResult {
   report: ExtractedReport;
   raw: unknown;
+  // Engine identifier — claude model id ("claude-sonnet-4-6") or
+  // deterministic parser name ("gimap").
   model: string;
+  // Distinguishes the cloud Anthropic API path from a local parser.
+  kind: "claude" | "deterministic";
+  // Deterministic parser version. Null for claude (model id is enough).
+  version: number | null;
   elapsedMs: number;
 }
 
@@ -211,6 +217,8 @@ export async function extractReportFromPdf(pdfPath: string): Promise<ExtractionR
     report,
     raw: parsed,
     model: DEFAULT_MODEL,
+    kind: "claude",
+    version: null,
     elapsedMs,
   };
 }

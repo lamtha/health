@@ -271,6 +271,10 @@ function ExtractionCard({
     | {
         id: number;
         model: string;
+        extractorKind: "claude" | "deterministic";
+        extractorVersion: number | null;
+        elapsedMs: number | null;
+        metricCount: number;
         createdAt: string;
         lowConfidenceCount: number;
         rawMetricCount: number;
@@ -286,10 +290,30 @@ function ExtractionCard({
       <div className="space-y-1.5 p-4 text-[13px] text-foreground">
         {latest ? (
           <>
-            <div>{latest.model}</div>
+            <div className="flex items-center gap-2">
+              <span>{latest.model}</span>
+              {latest.extractorVersion != null && (
+                <span className="font-mono text-[11px] text-muted-foreground">
+                  v{latest.extractorVersion}
+                </span>
+              )}
+              <span
+                className={cn(
+                  "rounded-sm border px-1.5 py-px font-mono text-[10px] uppercase tracking-wider",
+                  latest.extractorKind === "deterministic"
+                    ? "border-flag-ok/40 text-flag-ok"
+                    : "border-border text-muted-foreground",
+                )}
+              >
+                {latest.extractorKind === "deterministic" ? "offline" : "claude"}
+              </span>
+            </div>
             <div className="font-mono text-[11px] text-muted-foreground">
               {formatDate(latest.createdAt)} · {latest.rawMetricCount} metrics ·{" "}
               {latest.lowConfidenceCount} low-confidence
+              {latest.elapsedMs != null
+                ? ` · ${(latest.elapsedMs / 1000).toFixed(1)}s`
+                : ""}
             </div>
             {extractionCount > 1 && (
               <div className="font-mono text-[11px] text-muted-foreground">

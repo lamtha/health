@@ -29,6 +29,14 @@ export interface ReExtractResult {
   mode: "live" | "replay";
 }
 
+interface AppendExtractionInput {
+  model: string;
+  extractorKind: "claude" | "deterministic";
+  extractorVersion: number | null;
+  elapsedMs: number;
+  rawJson: unknown;
+}
+
 function replacePanelsAndMetrics(
   reportId: number,
   extraction: ExtractedReportT,
@@ -36,12 +44,12 @@ function replacePanelsAndMetrics(
 function replacePanelsAndMetrics(
   reportId: number,
   extraction: ExtractedReportT,
-  appendExtraction: { model: string; rawJson: unknown },
+  appendExtraction: AppendExtractionInput,
 ): { panelCount: number; metricCount: number; extractionId: number };
 function replacePanelsAndMetrics(
   reportId: number,
   extraction: ExtractedReportT,
-  appendExtraction?: { model: string; rawJson: unknown },
+  appendExtraction?: AppendExtractionInput,
 ): {
   panelCount: number;
   metricCount: number;
@@ -100,6 +108,10 @@ function replacePanelsAndMetrics(
         .values({
           reportId,
           model: appendExtraction.model,
+          extractorKind: appendExtraction.extractorKind,
+          extractorVersion: appendExtraction.extractorVersion,
+          elapsedMs: appendExtraction.elapsedMs,
+          metricCount,
           rawJson: appendExtraction.rawJson,
         })
         .returning()
@@ -164,6 +176,9 @@ export async function reExtractReport(
 
   const persisted = replacePanelsAndMetrics(reportId, parsed, {
     model: result.model,
+    extractorKind: result.kind,
+    extractorVersion: result.version,
+    elapsedMs: result.elapsedMs,
     rawJson: result.raw,
   });
 

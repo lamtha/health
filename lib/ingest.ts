@@ -15,6 +15,7 @@ import {
 
 export interface PersistedReport {
   reportId: number;
+  extractionId: number;
   panelCount: number;
   metricCount: number;
   duplicatesDropped: number;
@@ -88,6 +89,9 @@ export function insertExtractedReport(params: {
   extraction: ExtractedReport;
   rawJson: unknown;
   model: string;
+  extractorKind: "claude" | "deterministic";
+  extractorVersion: number | null;
+  elapsedMs: number;
 }): PersistedReport {
   return db.transaction((tx) => {
     const [report] = tx
@@ -102,13 +106,21 @@ export function insertExtractedReport(params: {
       .returning()
       .all();
 
-    tx.insert(extractions)
+    const [extraction] = tx
+      .insert(extractions)
       .values({
         reportId: report.id,
         model: params.model,
+        extractorKind: params.extractorKind,
+        extractorVersion: params.extractorVersion,
+        elapsedMs: params.elapsedMs,
+        // metric_count is set via UPDATE after metrics are inserted (we
+        // don't know the post-dedupe count until we walk them).
+        metricCount: 0,
         rawJson: params.rawJson,
       })
-      .run();
+      .returning()
+      .all();
 
     const { unique, droppedCount, refDisagreements } = dedupeWithinReport(
       params.extraction.metrics,
@@ -156,8 +168,14 @@ export function insertExtractedReport(params: {
       metricCount += 1;
     }
 
+    tx.update(extractions)
+      .set({ metricCount })
+      .where(eq(extractions.id, extraction.id))
+      .run();
+
     return {
       reportId: report.id,
+      extractionId: extraction.id,
       panelCount: panelIdByName.size,
       metricCount,
       duplicatesDropped: droppedCount,

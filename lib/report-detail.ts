@@ -36,6 +36,10 @@ export interface ReportPanel {
 export interface ReportExtractionInfo {
   id: number;
   model: string;
+  extractorKind: "claude" | "deterministic";
+  extractorVersion: number | null;
+  elapsedMs: number | null;
+  metricCount: number;
   createdAt: string;
   lowConfidenceCount: number;
   rawMetricCount: number;
@@ -158,6 +162,11 @@ export function getReportDetail(id: number): ReportDetail | null {
     latest = {
       id: e.id,
       model: e.model,
+      extractorKind:
+        e.extractorKind === "deterministic" ? "deterministic" : "claude",
+      extractorVersion: e.extractorVersion ?? null,
+      elapsedMs: e.elapsedMs ?? null,
+      metricCount: e.metricCount,
       createdAt: e.createdAt,
       lowConfidenceCount,
       rawMetricCount: rawMetrics.length,

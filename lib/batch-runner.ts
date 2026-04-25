@@ -10,7 +10,12 @@ import { findReportByHash, insertExtractedReport } from "@/lib/ingest";
 import { tryDeterministicExtract } from "@/lib/parsers";
 import { stagingDir } from "@/lib/paths";
 import { discardStaged, promoteStaged } from "@/lib/staging";
-import { uploadBatches, uploadBatchItems } from "@/db/schema";
+import {
+  extractions,
+  reports,
+  uploadBatches,
+  uploadBatchItems,
+} from "@/db/schema";
 
 const CONCURRENCY = 3;
 const STAGING_PDF = "source.pdf";
@@ -117,9 +122,6 @@ async function processItem(item: ClaimedItem): Promise<void> {
           status: "duplicate",
           stagingId: null,
           duplicateReportId: dupe.id,
-          provider: dupe.provider,
-          category: dupe.category,
-          reportDate: dupe.reportDate ?? null,
           updatedAt: sql`(CURRENT_TIMESTAMP)`,
         })
         .where(eq(uploadBatchItems.id, item.id))
@@ -140,6 +142,9 @@ async function processItem(item: ClaimedItem): Promise<void> {
       extraction: result.report,
       rawJson: result.raw,
       model: result.model,
+      extractorKind: result.kind,
+      extractorVersion: result.version,
+      elapsedMs: result.elapsedMs,
     });
 
     db.update(uploadBatchItems)
@@ -147,12 +152,7 @@ async function processItem(item: ClaimedItem): Promise<void> {
         status: "saved",
         stagingId: null,
         reportId: persisted.reportId,
-        provider: result.report.provider,
-        category: result.report.category,
-        reportDate: result.report.reportDate ?? null,
-        metricCount: persisted.metricCount,
-        model: result.model,
-        elapsedMs: result.elapsedMs,
+        extractionId: persisted.extractionId,
         updatedAt: sql`(CURRENT_TIMESTAMP)`,
       })
       .where(eq(uploadBatchItems.id, item.id))
@@ -170,9 +170,6 @@ async function processItem(item: ClaimedItem): Promise<void> {
           status: "duplicate",
           stagingId: null,
           duplicateReportId: landed.id,
-          provider: landed.provider,
-          category: landed.category,
-          reportDate: landed.reportDate ?? null,
           errorMessage: null,
           updatedAt: sql`(CURRENT_TIMESTAMP)`,
         })
@@ -253,9 +250,49 @@ export function getBatch(batchId: number): BatchView | null {
     .orderBy(uploadBatchItems.id)
     .all();
 
+  // Hydrate the display fields the view exposes (provider, category,
+  // report_date, metric_count) from the linked report + extraction. They
+  // are no longer denormalized onto the item — the source of truth is
+  // reports + extractions.
+  const reportIdSet = new Set<number>();
+  const extractionIdSet = new Set<number>();
+  for (const r of rows) {
+    const rid = r.reportId ?? r.duplicateReportId;
+    if (rid != null) reportIdSet.add(rid);
+    if (r.extractionId != null) extractionIdSet.add(r.extractionId);
+  }
+  const reportsById = new Map<number, typeof reports.$inferSelect>();
+  if (reportIdSet.size > 0) {
+    const ids = [...reportIdSet];
+    for (const row of db
+      .select()
+      .from(reports)
+      .where(inArray(reports.id, ids))
+      .all()) {
+      reportsById.set(row.id, row);
+    }
+  }
+  const extractionsById = new Map<number, typeof extractions.$inferSelect>();
+  if (extractionIdSet.size > 0) {
+    const ids = [...extractionIdSet];
+    for (const row of db
+      .select()
+      .from(extractions)
+      .where(inArray(extractions.id, ids))
+      .all()) {
+      extractionsById.set(row.id, row);
+    }
+  }
+
   const counts: Record<string, number> = {};
   const items: BatchItemView[] = rows.map((it) => {
     counts[it.status] = (counts[it.status] ?? 0) + 1;
+    const rid = it.reportId ?? it.duplicateReportId;
+    const linkedReport = rid != null ? reportsById.get(rid) ?? null : null;
+    const linkedExtraction =
+      it.extractionId != null
+        ? extractionsById.get(it.extractionId) ?? null
+        : null;
     return {
       id: it.id,
       originalFilename: it.originalFilename,
@@ -264,10 +301,10 @@ export function getBatch(batchId: number): BatchView | null {
       status: it.status,
       reportId: it.reportId,
       duplicateReportId: it.duplicateReportId,
-      provider: it.provider,
-      category: it.category,
-      reportDate: it.reportDate,
-      metricCount: it.metricCount,
+      provider: linkedReport?.provider ?? null,
+      category: linkedReport?.category ?? null,
+      reportDate: linkedReport?.reportDate ?? null,
+      metricCount: linkedExtraction?.metricCount ?? null,
       errorMessage: it.errorMessage,
     };
   });
