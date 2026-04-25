@@ -17,6 +17,7 @@ import {
   parseExtractionFromRaw,
   type ExtractedReport as ExtractedReportT,
 } from "@/lib/extract";
+import { tryDeterministicExtract } from "@/lib/parsers";
 
 export interface ReExtractResult {
   reportId: number;
@@ -117,9 +118,21 @@ function replacePanelsAndMetrics(
   });
 }
 
+export interface ReExtractOptions {
+  // "auto" (default): try deterministic, fall through to Claude on miss.
+  //   Same behavior as the upload pipeline (lib/batch-runner.ts).
+  // "offline": deterministic only — throw if no parser matches. Used by
+  //   the modal's Offline option, where the value prop is privacy: the
+  //   PDF must not leave the machine, so a silent Claude fallback is wrong.
+  // "claude": always Claude, regardless of available parsers.
+  parser?: "auto" | "offline" | "claude";
+}
+
 export async function reExtractReport(
   reportId: number,
+  opts: ReExtractOptions = {},
 ): Promise<ReExtractResult> {
+  const mode = opts.parser ?? "auto";
   const report = db
     .select()
     .from(reports)
@@ -132,7 +145,21 @@ export async function reExtractReport(
     );
   }
 
-  const result = await extractReportFromPdf(report.filePath);
+  let result;
+  if (mode === "claude") {
+    result = await extractReportFromPdf(report.filePath);
+  } else {
+    const deterministic = await tryDeterministicExtract(report.filePath);
+    if (deterministic) {
+      result = deterministic;
+    } else if (mode === "offline") {
+      throw new Error(
+        "No deterministic parser matched this PDF. Pick the Claude API option to send it to Anthropic.",
+      );
+    } else {
+      result = await extractReportFromPdf(report.filePath);
+    }
+  }
   const parsed = ExtractedReport.parse(result.report);
 
   const persisted = replacePanelsAndMetrics(reportId, parsed, {
