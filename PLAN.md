@@ -300,3 +300,14 @@ Adoption is folded into the phases that touch each screen (see phase notes). Pha
 - **Clinician export** is a Phase 4 deliverable.
 - **Design system adoption** folds into the phase that needs each screen (not a standalone phase). Phase 1 does a "Visual foundations" slice up front so later phases inherit the tokens, fonts, and shadcn primitives. `./design/` is the reference; JSX is ported to typed TSX as we go.
 - **Distribution** — Electron wrapper around the existing Next.js app; macOS (Apple Silicon) first, Windows contributor-built later. F&F signed DMG precedes any public release. Packaging (Phases 5–7) sequences *after* Phase 4 so distributed users get unified metrics + clinician export in the first release. (2026-04-18)
+
+
+## GI diagnostic review (2026-10-27)
+
+- [x] Inventory current database read-only and compare archive file hashes.
+- [x] Add a local Diagnostic page with source-backed facts and fresh Q&A, stored separately from lab records.
+- [x] Provide original-source links and a prioritized UI upload list.
+- [x] Add an evidence-weighed working assessment with linked facts, uncertainties and clinician-facing diagnostic priorities.
+- [ ] Continue the guided interview and revise the working assessment as new evidence arrives.
+- [ ] Review bounded-result handling in existing metric charts/statistics before treating assay limits as exact values.
+- [ ] Prepare access-controlled online doctor sharing after the review is ready.

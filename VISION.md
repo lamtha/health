@@ -64,3 +64,8 @@ This app collapses that fragmentation.
 - **Interventions** ship in Phase 4, not MVP.
 - **Re-parsing** appends a new `Extraction` row rather than overwriting.
 - **Distribution** — macOS first (Apple Silicon, Paul's target), Windows contributor-built later. Electron wrapping the existing Next.js app. F&F signed DMG precedes any public beta. (Decided 2026-04-18.)
+
+
+## Fresh GI diagnostic review (2026-10-27)
+
+Support a clinician-facing, evidence-led review and fresh interview, explicitly separating report measurements, recorded history, patient answers and hypotheses. The current request excludes prior chat history. Missing reports are uploaded by the user through the existing UI; data errors are addressed in application code, not direct database edits. The user intends eventual online sharing with their doctor; access-controlled hosting is a later step, not implemented or published here.

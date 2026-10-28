@@ -8,6 +8,7 @@ const TABS = [
   { id: "reports", label: "Reports", href: "/reports" },
   { id: "compare", label: "Compare", href: "/compare" },
   { id: "export", label: "Export", href: "/export" },
+  { id: "diagnostic", label: "Diagnostic", href: "/diagnostic" },
   { id: "interventions", label: "Interventions", href: "/interventions" },
   { id: "uploads", label: "Upload", href: "/uploads" },
   { id: "settings", label: "Settings", href: "/settings" },

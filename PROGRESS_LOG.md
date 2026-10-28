@@ -315,3 +315,6 @@ Closed the remaining Phase 6 deliverables in a five-slice run that also stood up
 - `pnpm test` — 6 test files, 27 tests passing (5 validate-key · 6 logs · 5 error-details · 4 mask-key · 2 api/search · 5 smoke).
 - CI green after the pnpm-version fix.
 - Manual packaged-build walkthrough (first-run validation, Settings dialog, Reveal folder, Welcome menu, crash dialog) still owed to Paul — the smoke layer only exercises the Next side, not the Electron bridge.
+
+- 2026-10-28: Added the local Diagnostic review feature: a versioned file-backed schema, source-linked observations and interview answers, a separate working assessment and roadmap, tracking/medication views, print and JSON export, and hash-verified PDF/CSV/HTML source delivery. Citation validation and synthetic API tests cover the reader and endpoints. Personal review content remains in the ignored per-user data directory; the feature does not write to the patient database.
+Validation: the exact staged source snapshot passed TypeScript no-emit, repository lint, and all 135 tests across 15 test files. Personal data and unrelated working changes were excluded.

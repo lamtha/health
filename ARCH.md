@@ -516,3 +516,12 @@ The Next.js UI will render a new tab that composes sidecar responses with existi
 - **Canonical metric taxonomy** — 18 categories + 8 cross-cutting tags, hand-authored as a TS seed file and applied idempotently at migrate time (packaged app) or via `pnpm db:seed` (dev). Extensions via `/mappings` at runtime. (Phase 4 shipped 2026-04-18.)
 - **Units normalization** — store raw units from each report (lossless) and normalize at chart/display time. Two-layer approach in `lib/units.ts`: (1) string aliases collapse spelling/notation variants (mcg ≡ µ ≡ μ, IU/L ≡ U/L, Thousand/uL ≡ x10E3/uL) to one canonical key; (2) per-canonical-metric numeric factor tables rescale values + ref ranges to one display unit (e.g. cells/µL → k/µL ×0.001 for absolute differentials). Plotted values are converted; original value + original unit are preserved on every point for the raw-data table. Rows with no known conversion fail loud (excluded with a warning, listed by date + provider). (2026-04-20.)
 - **Interventions as first-class entity** — separate table with its own lifecycle (create / stop / change), events widened to `start|stop|change|singleton` with optional FK, cascade on delete. Drives chart bands + timeline pages. (Phase 4 shipped 2026-04-18.)
+
+
+## Diagnostic review document (2026-10-27)
+
+The Diagnostic section presents a separately stored, per-user clinician review document with measured findings, clinical-note history, current interview answers, unresolved questions and source citations. It reads a versioned JSON file beside the database; it never imports or modifies laboratory rows. Cited PDFs and the Guava CSV are served by allowlisted source ID and verified against their reviewed SHA-256. Citations validate PDF page numbers or CSV logical-record numbers, and interview references validate question IDs. Guava coverage distinguishes timestamped tracking from date-only and undated records. Source archives remain read-only. This local implementation is not a hosted sharing service.
+
+The diagnostic review also includes a Guava medication reconstruction: recent timed logs, earlier/list-only entries, original quantity units and instructions, and validated CSV-record citations. It does not infer active use from a medication-list entry or missing doses from absent logs.
+
+The review can include a separate working assessment with supporting observations, uncertainty and next diagnostic decisions. Its observation, interview and guidance references are validated; interpretations are never promoted to imported lab findings.
