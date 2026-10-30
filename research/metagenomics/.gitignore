@@ -10,6 +10,7 @@ incomming/
 workspace.json
 followup.json
 carrier_normalization.json
+bile_sulphur.json
 *.fastq
 *.fastq.gz
 *.fq

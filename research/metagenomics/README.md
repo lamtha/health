@@ -144,3 +144,5 @@ competitive-hit thresholds, partial-reference handling, public panel hashes and
 ZIP exclusions. It does not download the large databases or run patient data.
 The generalized initializer is tested with synthetic inputs; a fresh multi-hour
 full metagenomics run is not part of this code-publication check.
+
+The optional [bile–taurine–sulphide module](bile_sulphur/README.md) adds carrier-normalized Bilophila/Bt genes, metalloBSH catalytic-site checks and local pathway-linkage evidence.
