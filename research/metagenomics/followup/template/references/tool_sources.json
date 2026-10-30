@@ -1,0 +1,12 @@
+{
+  "megahit-v1.2.9.tar.gz": {
+    "url": "https://github.com/voutcn/megahit/archive/refs/tags/v1.2.9.tar.gz",
+    "bytes": 268591,
+    "sha256": "09026eb07cc4e2d24f58b0a13f7a826ae8bb73da735a47cb1cbe6e4693118852"
+  },
+  "sratoolkit.3.4.1-mac-arm64.tar.gz": {
+    "url": "https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/3.4.1/sratoolkit.3.4.1-mac-arm64.tar.gz",
+    "bytes": 63984188,
+    "sha256": "b38ec90f9c99805533c90684310b0495288890559c5af194f1074b72f4e95255"
+  }
+}

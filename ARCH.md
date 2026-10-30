@@ -455,6 +455,10 @@ workspace outside Git, downloads public references and computes locally without
 sending sample data to external services. It does not access the application
 database or extraction API and is excluded from the desktop bundle. Only code,
 synthetic tests, public references and generic protocol templates are versioned.
+Its optional follow-up module reuses that private boundary for gene recovery,
+assembly/linkage checks and predeclared public-control comparisons. Cohort
+selection, measured tables, reconstructed sequences and interpretation remain
+private run state; no research module writes to the app or extraction service.
 
 The MVP is built so the sidecar can slot in without schema migration or core rewrites.
 

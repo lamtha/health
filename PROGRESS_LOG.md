@@ -339,3 +339,28 @@ tests required local-port access). Public reference hashes and the proposed
 source files were checked before publication; no personal inputs or results were
 used as committed test fixtures. The full database-scale workflow was not rerun
 as part of this code-publication change.
+
+## Metagenomics gene-recovery and comparison extension (2026-10-30)
+
+Added an optional module under `research/metagenomics/followup/` for masked gene
+recovery, transferred catalytic-site audits, whole-sample assembly, paired-read
+and contig linkage, read-back validation, and exact-reference public-control
+comparisons. It extends the existing private workspace with immutable settings
+and a preselected donor manifest. Common read length/depth, duplicate-pair
+sensitivity and technical resampling are explicit. Partial sequence, candidate
+ORFs, reference-source organisms and functional activity remain distinct.
+
+The publication contains reusable algorithms, generic protocol/review templates,
+two accession-pinned public microbial reference additions, public tool-source
+pins and synthetic tests. It excludes case-specific narrative generation,
+measurements, patient metadata, identifiers, original input hashes, private
+cohort selection and reconstructed sequences. Private result packaging has an
+explicit allowlist and requires reviewed interpretation. No application API,
+database schema or desktop packaging behavior changed.
+
+Validation: 13 new synthetic follow-up tests and all 12 parent research tests
+passed. Python/shell syntax and public reference hashes were checked. TypeScript,
+repository lint, Electron main compilation and all 135 existing application tests
+passed; the six local-server smoke tests required local-port access. Public
+package versions were checked for Linux/Python 3.11 CI compatibility. The full
+read/database-scale analysis was not rerun for this code-publication change.

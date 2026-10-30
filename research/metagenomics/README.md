@@ -11,6 +11,11 @@ or reconstructed sample sequences. Tests generate synthetic inputs in temporary
 directories. Analysis outputs, including aggregate tables and ZIPs, remain
 personal information and must not be committed.
 
+For catalytic-site inspection, local assembly/linkage checks and exact-reference
+comparisons against preselected public controls, use the optional
+[gene-recovery and comparison extension](followup/README.md). It reuses the private
+workspace and adds no application or cloud-analysis dependency.
+
 ## Start a private run
 
 The supplied environment locks target macOS ARM with Rosetta: the analysis tools

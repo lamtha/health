@@ -284,6 +284,9 @@ Adoption is folded into the phases that touch each screen (see phase notes). Pha
   configurable private workspaces, public reference provenance, synthetic tests
   and explicit separation of evidence, inference and biological absence.
   Application/HTTP-sidecar integration remains outside this research-code release.
+- [x] Extend research tools with reusable catalytic-site recovery, assembly/linkage
+  audits and exact-reference public-control comparisons, with frozen private
+  settings, synthetic verification and no committed personal run artifacts.
 
 - **Extraction quality** — periodically spot-check a random report; log low-confidence extractions for review.
 - **Backup** — the SQLite DB is the crown jewel. Dev: `./data/health.db`. Packaged app: `~/Library/Application Support/Health/health.db`. Document a simple backup cadence.
