@@ -1,0 +1,29 @@
+[
+  {
+    "protein": "ABQ01980.1",
+    "gene": "bsh_L_acidophilus",
+    "uid": "A5HKP3",
+    "pathway": "conventional_bile_salt_hydrolysis",
+    "substrate": "conjugated bile acids",
+    "pub": "https://pubmed.ncbi.nlm.nih.gov/18388461/",
+    "notes": "Conventional N-terminal nucleophile BSH; specificity and activity are substrate-dependent; separate from Bilophila metalloBSH"
+  },
+  {
+    "protein": "AAF67801.1",
+    "gene": "bsh_B_longum",
+    "uid": "Q9KK62",
+    "pathway": "conventional_bile_salt_hydrolysis",
+    "substrate": "conjugated bile acids",
+    "pub": "https://pubmed.ncbi.nlm.nih.gov/10831430/",
+    "notes": "Conventional N-terminal nucleophile BSH; specificity and activity are substrate-dependent; separate from Bilophila metalloBSH"
+  },
+  {
+    "protein": "AAC43454.1",
+    "gene": "cbh_C_perfringens",
+    "uid": "P54965",
+    "pathway": "conventional_bile_salt_hydrolysis",
+    "substrate": "conjugated bile acids",
+    "pub": "https://pubmed.ncbi.nlm.nih.gov/7618863/",
+    "notes": "Conventional N-terminal nucleophile BSH; specificity and activity are substrate-dependent; separate from Bilophila metalloBSH"
+  }
+]

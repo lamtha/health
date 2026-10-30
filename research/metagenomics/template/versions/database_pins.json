@@ -1,0 +1,32 @@
+{
+  "host": {
+    "url": "https://genome-idx.s3.amazonaws.com/bt/GRCh38_noalt_decoy_as.zip",
+    "bytes": 3756645303,
+    "sha256": "af3ec4fa73e5d7cdd4b1cf4b2f47c72432c43d7889517162be06de0425c51c15",
+    "md5": "c0721f03ba76f799824759fb0ee6b0d1"
+  },
+  "kraken": {
+    "url": "https://genome-idx.s3.amazonaws.com/kraken/k2_pluspf_16_GB_20260626.tar.gz",
+    "bytes": 11961082009,
+    "sha256": "08647521ccc6663d9a0dcb38b3bc3cc0f99b2e3dadbb98271f689e7d65f7a877",
+    "md5": "da469f587c8404e686bf1248e130f8da"
+  },
+  "metaphlan": {
+    "url": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vJun23_CHOCOPhlAnSGB_202403.tar",
+    "bytes": 3316336640,
+    "sha256": "a32901406fa9dec50329439724abac78dd4f95badbd53ad490cfce7f4c68cd83",
+    "md5": "d985de75a217cd319e721863f68e7d33"
+  },
+  "chocophlan": {
+    "url": "https://g-227ca.190ebd.75bc.data.globus.org/humann_data/chocophlan/full_chocophlan.v201901_v31.tar.gz",
+    "bytes": 16502062909,
+    "sha256": "7ed1b9e159838d125462f4723f98887fcb27f8e3e90f3490768c986d65d55f7b",
+    "md5": "6b5fa299766193bda6e73db93bf5982b"
+  },
+  "uniref90": {
+    "url": "https://cmprod1.cibio.unitn.it/databases/HUMAnN/uniref90_annotated_v201901b_full.tar.gz",
+    "bytes": 20579913329,
+    "sha256": "1fe799bb8824b0a9720c10887ee2ef2c3386462ed4a89bd8941c0a8b2cac07d2",
+    "md5": "da9359b6f09ff8ae49f01d0e4cf7281e"
+  }
+}

@@ -318,3 +318,24 @@ Closed the remaining Phase 6 deliverables in a five-slice run that also stood up
 
 - 2026-10-28: Added the local Diagnostic review feature: a versioned file-backed schema, source-linked observations and interview answers, a separate working assessment and roadmap, tracking/medication views, print and JSON export, and hash-verified PDF/CSV/HTML source delivery. Citation validation and synthetic API tests cover the reader and endpoints. Personal review content remains in the ignored per-user data directory; the feature does not write to the patient database.
 Validation: the exact staged source snapshot passed TypeScript no-emit, repository lint, and all 135 tests across 15 test files. Personal data and unrelated working changes were excluded.
+
+## Local metagenomics research workflow (2026-10-29)
+
+Added a standalone research workflow for paired FASTQ validation/QC, local host
+depletion, Kraken/Bracken and MetaPhlAn taxonomy, HUMAnN species-stratified functions,
+and publication-curated targeted reference mapping. It includes a gap-fill-off
+comparison, reference-accession bridges, evidence-quality tables and reproducible
+software/database pins. The initializer requires a new private workspace outside
+Git; input files are linked without modification. Public sources contain no
+personal results, sample identifiers, collection metadata or original input hashes.
+Synthetic tests cover the privacy boundary, pairing/integrity failures, changed
+inputs, mapping thresholds, partial references, reference hashes and ZIP exclusions.
+The research code is excluded from desktop packaging and has no app/database/API
+integration. Generated result ZIPs remain private research reports.
+
+Validation: 12 synthetic research tests passed, as did TypeScript, lint, the
+Electron main build and all 135 existing application tests (the six server smoke
+tests required local-port access). Public reference hashes and the proposed
+source files were checked before publication; no personal inputs or results were
+used as committed test fixtures. The full database-scale workflow was not rerun
+as part of this code-publication change.

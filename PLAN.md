@@ -280,6 +280,11 @@ Adoption is folded into the phases that touch each screen (see phase notes). Pha
 
 ## Cross-cutting / ongoing
 
+- [x] Publish the standalone local shotgun-metagenomics research workflow with
+  configurable private workspaces, public reference provenance, synthetic tests
+  and explicit separation of evidence, inference and biological absence.
+  Application/HTTP-sidecar integration remains outside this research-code release.
+
 - **Extraction quality** — periodically spot-check a random report; log low-confidence extractions for review.
 - **Backup** — the SQLite DB is the crown jewel. Dev: `./data/health.db`. Packaged app: `~/Library/Application Support/Health/health.db`. Document a simple backup cadence.
 - **Memory/notes** — keep VISION/ARCH/PLAN in sync as decisions are made across sessions.

@@ -1,0 +1,182 @@
+[
+  {
+    "protein": "AAA70107.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=U16723.1&seq_start=235&seq_stop=1548&strand=1&rettype=fasta&retmode=text",
+    "sha256": "9ca1599f9b718adf4f50df898ab8aeb4b97f90ba8def3f607b39b735fd639b8d"
+  },
+  {
+    "protein": "AAA70108.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=U16723.1&seq_start=1567&seq_stop=2712&strand=1&rettype=fasta&retmode=text",
+    "sha256": "ce82cfb003eea56c9b13552b2e6db1b667ed4af9049faf20f5923398a271e9df"
+  },
+  {
+    "protein": "AAA99275.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=M57706.1&seq_start=310&seq_stop=1353&strand=1&rettype=fasta&retmode=text",
+    "sha256": "4dc7eb7ac68a1878d503cac5bdc44430d17e353178d0e2ecc32383429d57a8ba"
+  },
+  {
+    "protein": "AAA99276.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=M57706.1&seq_start=1357&seq_stop=2175&strand=1&rettype=fasta&retmode=text",
+    "sha256": "c321a7cd96e8741c499559719c252905d182c18d8a40efd5fe42d550bf6d5548"
+  },
+  {
+    "protein": "AAA99277.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=M57706.1&seq_start=2186&seq_stop=3199&strand=1&rettype=fasta&retmode=text",
+    "sha256": "03f2d1941323ca5233066fc019f2f9b7b55456687e91ea6f954cc4724e102032"
+  },
+  {
+    "protein": "AAC36934.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=L32188.1&seq_start=617&seq_stop=2893&strand=1&rettype=fasta&retmode=text",
+    "sha256": "2bb6e4b6193537dab509d14cd2720c76de5c3549db03fb5eb055e876ea8d151f"
+  },
+  {
+    "protein": "AAC36935.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=L32188.1&seq_start=2908&seq_stop=3486&strand=1&rettype=fasta&retmode=text",
+    "sha256": "486b413917a6a6e64f93b1e277a7d3b05eff506aaf936b23a1dd8229e7071e81"
+  },
+  {
+    "protein": "AAC36936.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=L32188.1&seq_start=3483&seq_stop=4247&strand=1&rettype=fasta&retmode=text",
+    "sha256": "25bf721faddd8cfaef76c8ef1fd051a78f54a08b384e387452ee2aff6adbb9a9"
+  },
+  {
+    "protein": "AAT48167.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=U00096.3&seq_start=3255341&seq_stop=3256651&strand=2&rettype=fasta&retmode=text",
+    "sha256": "a1c63505cb0c99707c1c6d6495e21d796a774bbcf43a7b20ce169cd1889b804f"
+  },
+  {
+    "protein": "AAC74986.2",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=U00096.3&seq_start=1998494&seq_stop=1999480&strand=2&rettype=fasta&retmode=text",
+    "sha256": "7dd28c9285818a35c513aa6b32374cf57046cd502be91cf8b273839bf3b81878"
+  },
+  {
+    "protein": "AAA24676.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=K00032.1&seq_start=539&seq_stop=1954&strand=1&rettype=fasta&retmode=text",
+    "sha256": "d2a33e868959a531b7093a26e12e86c4af55f3c9550861f6314cf0130d93a64e"
+  },
+  {
+    "protein": "AAC75574.2",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=U00096.3&seq_start=2652494&seq_stop=2653339&strand=1&rettype=fasta&retmode=text",
+    "sha256": "626eb6f689a82bba5daa3f3086c38d7346f5535881753b7473346a00cbe75fed"
+  },
+  {
+    "protein": "AAA24099.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=M60722.1&seq_start=3015&seq_stop=4187&strand=1&rettype=fasta&retmode=text",
+    "sha256": "8ba94f7e70773372c5def17e3152ce4f7d0f933cf91d96193b81ae9d988200ea"
+  },
+  {
+    "protein": "AAA24158.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=M12858.1&seq_start=499&seq_stop=1686&strand=1&rettype=fasta&retmode=text",
+    "sha256": "3d94792ceeafb6d71d0e05b7ae058f6e5f2a61cdf7af577dccd0427128669f0e"
+  },
+  {
+    "protein": "EDN77080.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AAYG02000020.1&seq_start=137968&seq_stop=140139&strand=2&rettype=fasta&retmode=text",
+    "sha256": "ad07b3dfb391a2a88ff1b37d4cff4ddeff066109f468072779c3cea616defaca"
+  },
+  {
+    "protein": "EDN75850.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AAYG02000034.1&seq_start=25550&seq_stop=26857&strand=1&rettype=fasta&retmode=text",
+    "sha256": "bb4e3551fb3bdb2d6b332bea2eef8757cb416caf151b1cc0e1f4123318f075a6"
+  },
+  {
+    "protein": "EDN78794.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AAYG02000007.1&seq_start=27981&seq_stop=34487&strand=2&rettype=fasta&retmode=text",
+    "sha256": "6616828e3a32a429a1ebf456939f77fe31062a96d2c2413f88547af39dc9dbf4"
+  },
+  {
+    "protein": "AAO76743.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AE015928.1&seq_start=2025669&seq_stop=2027198&strand=1&rettype=fasta&retmode=text",
+    "sha256": "2956fb498d7ac361ea6fc31d945c255bc19dd3ce55e381c3f8abfec720f42948"
+  },
+  {
+    "protein": "AAO76729.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AE015928.1&seq_start=1996551&seq_stop=1998053&strand=1&rettype=fasta&retmode=text",
+    "sha256": "af4adc96569fc3d179678ce74364e1dffb03ee740794cce545d4962e22fd0d4f"
+  },
+  {
+    "protein": "AAO78163.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AE015928.1&seq_start=3878142&seq_stop=3879668&strand=2&rettype=fasta&retmode=text",
+    "sha256": "6ed84c5476722e372669e8e7b3cd5ee267ea0aaebd9659ff8cbefa1a63ae8a73"
+  },
+  {
+    "protein": "AAO78901.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AE015928.1&seq_start=4932050&seq_stop=4933606&strand=2&rettype=fasta&retmode=text",
+    "sha256": "e3bfeb29b32a68c540ba5d3db3f458a2f98f6687fb5f65375c954aa6d26d0d70"
+  },
+  {
+    "protein": "AAO77025.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AE015928.1&seq_start=2407759&seq_stop=2409261&strand=1&rettype=fasta&retmode=text",
+    "sha256": "c2497e8427495606bf250d46a24ec41b347845be4edc861aacd702d2a005fa60"
+  },
+  {
+    "protein": "AAB59151.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=J02613.1&seq_start=170&seq_stop=1105&strand=1&rettype=fasta&retmode=text",
+    "sha256": "3dfa45e2989d92799bbd4eee40e870c102f7436346572e3c5e486dfadc0259ac"
+  },
+  {
+    "protein": "BAB80096.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=BA000016.3&seq_start=504284&seq_stop=505246&strand=2&rettype=fasta&retmode=text",
+    "sha256": "8b2046816ffe1217911fe8dc556405ce0e2a9a31dd3729d43bc99de42902b2ec"
+  },
+  {
+    "protein": "AAA83526.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=J02880.1&seq_start=6&seq_stop=968&strand=1&rettype=fasta&retmode=text",
+    "sha256": "e217ec2a624d3a717a08bf2ba3063148f697a1c49cbc00d54f492600a388d676"
+  },
+  {
+    "protein": "AAA25071.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=M62746.1&seq_start=83&seq_stop=1219&strand=1&rettype=fasta&retmode=text",
+    "sha256": "2ceaf2a4354ab9cb9d550315e65988ac5d6f78907cb6cc6b8009e6fb174d3a0c"
+  },
+  {
+    "protein": "AAA25321.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=J02577.1&seq_start=114&seq_stop=1250&strand=1&rettype=fasta&retmode=text",
+    "sha256": "ec43cf3a5717b1d1268e5a9792434e120a6f59eedd755f199c94e09fac9d56f6"
+  },
+  {
+    "protein": "AAA24802.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=M62745.1&seq_start=147&seq_stop=1283&strand=1&rettype=fasta&retmode=text",
+    "sha256": "58145b8b3e2c6c205bc7a20915460eb81b74574ddaa2ce7a880305b4cfd46eec"
+  },
+  {
+    "protein": "BAB97311.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AB075222.1&seq_start=1&seq_stop=685&strand=1&rettype=fasta&retmode=text",
+    "sha256": "84278a59f62666ed7927369856ef4ef2ded95ad000cefe637923c9cc07a10674"
+  },
+  {
+    "protein": "ZP_03961969.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=NZ_ACGX01000069.1&seq_start=169&seq_stop=1680&strand=1&rettype=fasta&retmode=text",
+    "sha256": "2ce92ac3a4ac1b3125a498f4ecb9122f51e265275645d5ff272e792af6f8b67a"
+  },
+  {
+    "protein": "ZP_03961970.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=NZ_ACGX01000069.1&seq_start=1937&seq_stop=2872&strand=1&rettype=fasta&retmode=text",
+    "sha256": "d2d4f385171756527779e34a08940c73458c5ea4190a054c2b5ad5fbcd7e5a2e"
+  },
+  {
+    "protein": "ZP_03961971.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=NZ_ACGX01000069.1&seq_start=3113&seq_stop=3637&strand=1&rettype=fasta&retmode=text",
+    "sha256": "450f5969c9e6f20400e0774be5df7f98213a00caaa4689dbd0f500f6a79a83ff"
+  },
+  {
+    "protein": "BAA07517.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=D38508.1&seq_start=91&seq_stop=2145&strand=1&rettype=fasta&retmode=text",
+    "sha256": "95d09fa3311ac68fefd7234ed2d4bb9d6a5bc697c84c40933c8247f00e3d45eb"
+  },
+  {
+    "protein": "ABQ01980.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=EF536029.1&seq_start=155&seq_stop=1105&strand=1&rettype=fasta&retmode=text",
+    "sha256": "f5a4e5d3d3997f5da31e0bc2e04e2353b036c4ab0f7a0805c59c5f97b267b365"
+  },
+  {
+    "protein": "AAF67801.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AF148138.1&seq_start=255&seq_stop=1208&strand=1&rettype=fasta&retmode=text",
+    "sha256": "21d827fb71622bed4bd64ec25c5b2644b3c28d016a236bad97b4e654ecb5007b"
+  },
+  {
+    "protein": "AAC43454.1",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=U20191.1&seq_start=69&seq_stop=1058&strand=1&rettype=fasta&retmode=text",
+    "sha256": "268c19060be83fc0b85df9fb271b00de634296045699619934b0c55438da0450"
+  }
+]

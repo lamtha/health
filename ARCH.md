@@ -449,6 +449,13 @@ Phase 5 produces an unsigned `.app` via `pnpm app:build`. Signed/notarized distr
 
 ### DNA / genomics sidecar (Phase 9)
 
+The standalone metagenomics research workflow is a separate command-line process,
+not the future HTTP sidecar or an application dependency. It owns a private local
+workspace outside Git, downloads public references and computes locally without
+sending sample data to external services. It does not access the application
+database or extraction API and is excluded from the desktop bundle. Only code,
+synthetic tests, public references and generic protocol templates are versioned.
+
 The MVP is built so the sidecar can slot in without schema migration or core rewrites.
 
 ```mermaid

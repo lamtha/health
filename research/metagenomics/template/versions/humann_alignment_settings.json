@@ -1,0 +1,24 @@
+{
+  "prescreen_threshold": 0.01,
+  "nucleotide_identity_threshold": 0.0,
+  "nucleotide_query_coverage_threshold": 90.0,
+  "nucleotide_subject_coverage_threshold": 50.0,
+  "identity_threshold_uniref90_mode": 80.0,
+  "translated_query_coverage_threshold": 90.0,
+  "translated_subject_coverage_threshold": 50.0,
+  "evalue_threshold": 1.0,
+  "bowtie2_align_opts": [
+    "--very-sensitive"
+  ],
+  "diamond_opts_uniref90": [
+    "--top",
+    "1",
+    "--outfmt",
+    "6"
+  ],
+  "interpretation": "Gene-family homology and pathway reconstruction are inferential, not experimental function validation",
+  "minpath": "on",
+  "xipe": "off",
+  "primary_gap_fill": "on",
+  "status": "Pinned settings; execution has not started"
+}

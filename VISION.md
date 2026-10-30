@@ -53,6 +53,13 @@ This app collapses that fragmentation.
 4. **Keep extraction replayable** — store raw Claude output alongside parsed metrics so we can re-parse without re-spending API calls.
 5. **Data model is additive** — new providers, new categories, DNA all slot in without migration pain.
 
+## Research workflows
+
+Standalone research workflows may be published as reusable code and public
+reference assets. Shotgun metagenomics runs locally in a private workspace outside
+Git, with no sample uploads. Research results remain personal data and are not
+shipped with the app or treated as clinical diagnoses.
+
 ## Open questions
 
 - (none blocking — core scope resolved 2026-04-17)

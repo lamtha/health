@@ -138,6 +138,14 @@ Next.js 15 (App Router, TypeScript) · Tailwind v4 + shadcn/ui · Recharts · SQ
 
 See [`VISION.md`](./VISION.md), [`ARCH.md`](./ARCH.md), and [`PLAN.md`](./PLAN.md) for scope, architecture, and roadmap. Per-phase changelog is in [`PROGRESS_LOG.md`](./PROGRESS_LOG.md).
 
+## Research workflows
+
+[Local shotgun metagenomics](research/metagenomics/README.md) provides standalone
+QC, host depletion, taxonomic/functional profiling and curated-reference mapping.
+It runs outside the application in a private workspace, with no sample uploads.
+The public research directory contains reusable code, synthetic tests and public
+references only; personal inputs and results must stay outside the repository.
+
 ## License
 
 MIT — see [`LICENSE`](./LICENSE).

@@ -1,0 +1,30 @@
+[
+  {
+    "component": "metacyc_gene_to_reactions",
+    "file": "metacyc_reactions_level4ec_only.uniref.bz2",
+    "exists": true,
+    "bytes": 57511575,
+    "sha256": "8419ce78a62ca9130914f2c347a9708111cedc7de52ba274659ce51ec7de7752"
+  },
+  {
+    "component": "metacyc_reactions_to_pathways",
+    "file": "metacyc_pathways_structured_filtered_v24_subreactions",
+    "exists": true,
+    "bytes": 189428,
+    "sha256": "e26f63618d3548ef829af9822f4c0352a74955dd20a0af0d07c4a88dbecea6f3"
+  },
+  {
+    "component": "pathway_name_mapping_file",
+    "file": "map_metacyc-pwy_name.txt.gz",
+    "exists": true,
+    "bytes": 37813,
+    "sha256": "e54dc3ecec3bdcb997d335db8876117bbaa5910692456f748d336f13d54260e0"
+  },
+  {
+    "component": "gene_family_name_mapping_file",
+    "file": "map_uniref50_name.txt.bz2",
+    "exists": true,
+    "bytes": 33505586,
+    "sha256": "7467a92ec5302de2bd6989177beabf79f16690e60f9a3c69f17e0c3e0b5fe8c9"
+  }
+]

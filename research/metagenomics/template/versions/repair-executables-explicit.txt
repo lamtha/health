@@ -1,0 +1,3 @@
+@EXPLICIT
+https://conda.anaconda.org/bioconda/osx-64/diamond-2.2.6-h2b70331_0.conda
+https://conda.anaconda.org/bioconda/osx-64/bowtie2-2.5.5-h9e7fb48_2.conda
