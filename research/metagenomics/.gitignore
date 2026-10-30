@@ -9,6 +9,7 @@ incoming/
 incomming/
 workspace.json
 followup.json
+carrier_normalization.json
 *.fastq
 *.fastq.gz
 *.fq

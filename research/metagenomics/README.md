@@ -16,6 +16,9 @@ comparisons against preselected public controls, use the optional
 [gene-recovery and comparison extension](followup/README.md). It reuses the private
 workspace and adds no application or cloud-analysis dependency.
 
+For validated single-copy markers, expanded target homologues and within-carrier
+DNA abundance ratios, continue with [carrier normalization](carrier_normalization/README.md).
+
 ## Start a private run
 
 The supplied environment locks target macOS ARM with Rosetta: the analysis tools

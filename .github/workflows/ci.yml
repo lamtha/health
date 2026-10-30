@@ -21,9 +21,12 @@ jobs:
       - run: python -m pip install -r research/metagenomics/followup/requirements.txt
       - run: python -m unittest discover -s research/metagenomics/tests -v
       - run: python -m unittest discover -s research/metagenomics/followup/tests -v
+      - run: python -m unittest discover -s research/metagenomics/carrier_normalization/tests -v
       - run: python -m compileall -q research/metagenomics
       - run: bash -c 'for script in research/metagenomics/template/scripts/*.sh; do bash -n "$script" || exit; done'
       - run: bash -c 'for script in research/metagenomics/followup/template/scripts/*.sh; do bash -n "$script" || exit; done'
+
+      - run: bash -c 'for script in research/metagenomics/carrier_normalization/template/scripts/*.sh; do bash -n "$script" || exit; done'
 
   verify:
     runs-on: ubuntu-latest
