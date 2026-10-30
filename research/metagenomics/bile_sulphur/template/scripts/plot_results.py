@@ -79,6 +79,7 @@ for sp in ["bilophila", "bt"]:
     fig, ax = plt.subplots(
         figsize=(10, max(4, len(sample) * 0.36)), layout="constrained"
     )
+    fig.get_layout_engine().set(rect=(0, 0.09, 1, 0.91))
     for i, r in enumerate(sample):
         controls = [
             c

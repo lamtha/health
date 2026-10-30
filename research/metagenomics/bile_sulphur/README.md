@@ -141,7 +141,8 @@ index per million nonhost fragments, not a cell percentage. For genes ≥600 nt,
 within-carrier ratios divide interior target depth by interior marker depth,
 trimming each end by the common maximum read length. Short genes use full target
 and full marker depth: trimming DsrC or DsrJ can otherwise leave a tiny or empty
-interior. The basis is explicit in each row, with full-depth and trimmed-mean
+interior. Short-gene full-depth estimates still retain end-mapping bias and are exploratory.
+The basis is explicit in each row, with full-depth and trimmed-mean
 sensitivity estimates. No ratio is an exact integer copy-number measurement. A separate combined
 BwBSH1 + BwBSH2 index allows comparison of complementary reference-compatible
 forms; its technical interval retains shared-fragment covariance. Summing their
