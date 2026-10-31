@@ -1,11 +1,11 @@
 """Report robust carrier-normalized DNA abundance and technical uncertainty.
 No RNA/expression, enzyme activity, clinical reference intervals or causal claims.
 """
+from carrier_config import ROOT, CONFIG
 import collections, csv, hashlib, json, math
 from pathlib import Path
 import numpy as np
 from quantify_carriers import ROOT, R, W, OLD, write_tsv
-from carrier_config import CONFIG
 
 O = ROOT / "results/carrier_normalization"
 NBOOT = CONFIG["resamples"]
@@ -32,11 +32,12 @@ rows = [{k: r.get(k, "NA") for k in fields} for r in rows]
 write_tsv(O / "group_abundances.tsv", rows)
 carriers = []
 boot = {}
+fullboot = {}
 lookup = {}
 for name in names:
     stats = list(csv.DictReader(open(OLD / name / "nonhost_stats.tsv"), delimiter="\t"))
     total_bases = sum(int(r["sum_len"]) for r in stats)
-    for sensitivity in ["full", "common2M", "exact_pair_collapsed"]:
+    for sensitivity in ["full", "common_depth", "exact_pair_collapsed"]:
         for species in ["gnavus", "torques", "gnavus_SGB4571"]:
             rr = [
                 r
@@ -70,6 +71,9 @@ for name in names:
             median = float(np.median(dd))
             lo, hi = np.quantile(bs, [0.025, 0.975])
             boot[(name, sensitivity, species)] = bs
+            fullboot[(name, sensitivity, species)] = np.median(
+                rng.choice(full, (NBOOT, len(full)), replace=True), axis=1
+            )
             eligible = (
                 species != "gnavus_SGB4571"
                 and median >= 1
@@ -78,18 +82,27 @@ for name in names:
                 and (breadth is None or breadth >= 50)
                 and lo > 0
             )
+            full_lo, full_hi = np.quantile(
+                fullboot[(name, sensitivity, species)], [0.025, 0.975]
+            )
+            full_eligible = (
+                species != "gnavus_SGB4571"
+                and float(np.median(full)) >= 1
+                and float((full > 0).mean()) >= 0.7
+                and frags >= 100
+                and (breadth is None or breadth >= 50)
+                and full_lo > 0
+            )
             status = (
                 "unvalidated_SGB_diagnostic"
                 if species == "gnavus_SGB4571"
-                else (
-                    "well_covered"
-                    if eligible and median >= 5
-                    else "limited_but_eligible"
-                    if eligible
-                    else "low_coverage_exploratory"
-                    if median > 0
-                    else "no_robust_carrier_denominator"
-                )
+                else "well_covered"
+                if eligible and median >= 5
+                else "limited_but_eligible"
+                if eligible
+                else "low_coverage_exploratory"
+                if median > 0
+                else "no_robust_carrier_denominator"
             )
             row = dict(
                 sample=name,
@@ -103,8 +116,27 @@ for name in names:
                 depth_bootstrap_low=float(lo),
                 depth_bootstrap_high=float(hi),
                 median_full_depth=float(np.median(full)),
+                full_depth_bootstrap_low=float(full_lo),
+                full_depth_bootstrap_high=float(full_hi),
+                eligible_full_depth_ratio_comparison=full_eligible,
+                full_depth_coverage_status=(
+                    "unvalidated_SGB_diagnostic"
+                    if species == "gnavus_SGB4571"
+                    else "well_covered"
+                    if full_eligible and float(np.median(full)) >= 5
+                    else "limited_but_eligible"
+                    if full_eligible
+                    else "low_coverage_exploratory"
+                    if float(np.median(full)) > 0
+                    else "no_robust_carrier_denominator"
+                ),
                 trimmed_mean_interior_depth=float(
                     np.mean(np.sort(dd)[len(dd) // 10 : len(dd) - len(dd) // 10])
+                ),
+                trimmed_mean_full_depth=float(
+                    np.mean(
+                        np.sort(full)[len(full) // 10 : len(full) - len(full) // 10]
+                    )
                 ),
                 mean_interior_depth=float(np.mean(dd)),
                 depth_q25=float(np.quantile(dd, 0.25)),
@@ -139,19 +171,28 @@ for r in rows:
     sp = r["species"]
     g = r["group"]
     c = lookup[(name, sensitivity, sp)]
-    den = c["median_interior_depth"]
-    value = float(r["interior_read_depth"])
+    short = float(r["median_reference_length"]) < max(
+        600, 2 * CONFIG["max_read_length"] + 1
+    )
+    den = c["median_full_depth"] if short else c["median_interior_depth"]
+    value = float(r["read_depth"] if short else r["interior_read_depth"])
     ratio = value / den if den > 0 else None
     low = high = None
     ci_method = "not_calculated_for_sensitivity"
-    if sensitivity == "full" and den > 0 and c["depth_bootstrap_low"] > 0:
-        db = boot[(name, sensitivity, sp)]
+    if (
+        sensitivity == "full"
+        and den > 0
+        and c["full_depth_bootstrap_low" if short else "depth_bootstrap_low"] > 0
+    ):
+        db = (fullboot if short else boot)[(name, sensitivity, sp)]
         seed = SEED + int(
             hashlib.sha256(f'{name}/{r["mode"]}/{g}'.encode()).hexdigest()[:8], 16
         )
         rng = np.random.default_rng(seed)
         if value > 0:
-            variance = float(r["core_weight_sum_squares"])
+            variance = float(
+                r["full_weight_sum_squares"] if short else r["core_weight_sum_squares"]
+            )
             effective_count = value * value / variance
             scale = variance / value
             draws = rng.gamma(effective_count + 0.5, scale, size=NBOOT)
@@ -164,8 +205,8 @@ for r in rows:
             high = (
                 -math.log(0.025)
                 * (2 * CONFIG["max_read_length"])
-                / (length - 2 * CONFIG["max_read_length"])
-                / c["depth_bootstrap_low"]
+                / (length if short else length - (2 * CONFIG["max_read_length"]))
+                / float(np.quantile(db, 0.025))
             )
             ci_method = "zero_count_conservative_fragment_upper_bound"
     out = dict(
@@ -181,17 +222,35 @@ for r in rows:
         sensitivity=sensitivity,
         community_FPKM=float(r["FPKM"]),
         gene_fragments=int(r["fragments"]),
-        gene_interior_depth=value,
-        carrier_median_interior_depth=den,
+        gene_interior_depth=float(r["interior_read_depth"]),
+        carrier_median_interior_depth=c["median_interior_depth"],
+        normalization_gene_depth=value,
+        normalization_marker_depth=den,
+        normalization_basis="full_gene_and_marker_depth_short_gene"
+        if short
+        else "interior_gene_and_marker_depth",
         gene_to_marker_ratio=ratio if ratio is not None else "NA",
-        trimmed_mean_gene_to_marker_ratio=value / c["trimmed_mean_interior_depth"]
-        if c["trimmed_mean_interior_depth"] > 0
+        gene_full_depth=float(r["read_depth"]),
+        carrier_median_full_depth=c["median_full_depth"],
+        full_depth_gene_to_marker_ratio=float(r["read_depth"]) / c["median_full_depth"]
+        if c["median_full_depth"] > 0
+        else "NA",
+        short_interior_warning=short,
+        trimmed_mean_gene_to_marker_ratio=value
+        / c["trimmed_mean_full_depth" if short else "trimmed_mean_interior_depth"]
+        if c["trimmed_mean_full_depth" if short else "trimmed_mean_interior_depth"] > 0
         else "NA",
         technical_interval_low=float(low) if low is not None else "NA",
         technical_interval_high=float(high) if high is not None else "NA",
         technical_interval_method=ci_method,
-        eligible_primary_ratio_comparison=c["eligible_primary_ratio_comparison"],
-        carrier_coverage_status=c["coverage_status"],
+        eligible_primary_ratio_comparison=c[
+            "eligible_full_depth_ratio_comparison"
+            if short
+            else "eligible_primary_ratio_comparison"
+        ],
+        carrier_coverage_status=c[
+            "full_depth_coverage_status" if short else "coverage_status"
+        ],
         reference_breadth_pct=r["exact_breadth_pct"]
         if r["mode"] == "exact"
         else r["relative_position_breadth_pct"],
@@ -215,11 +274,11 @@ for r in ratios:
         and x["sensitivity"] == r["sensitivity"]
     ]
     for cohort in cohort_names:
-        controls = [
-            x
-            for x in allcontrols
-            if cohort == "all_controls" or cohort in x["cohorts"].split(";")
-        ]
+        controls = (
+            allcontrols
+            if cohort == "all_controls"
+            else [x for x in allcontrols if cohort in x["cohorts"].split(";")]
+        )
         eligible = [
             x
             for x in controls
@@ -230,7 +289,9 @@ for r in ratios:
         community = [x["community_FPKM"] for x in controls]
         sample_ratio = r["gene_to_marker_ratio"]
         ratio_position = "insufficient_eligible_controls"
-        if len(vals) >= 3 and sample_ratio != "NA":
+        if not r["eligible_primary_ratio_comparison"]:
+            ratio_position = "sample_carrier_low_coverage"
+        elif len(vals) >= 3 and sample_ratio != "NA":
             ratio_position = (
                 "above_observed_carrier_range"
                 if sample_ratio > max(vals)
@@ -250,9 +311,12 @@ for r in ratios:
                 community_controls=len(controls),
                 eligible_carrier_controls=len(vals),
                 sample_FPKM=r["community_FPKM"],
+                control_FPKM_min=min(community),
                 control_FPKM_max=max(community),
                 community_position="above_observed_range"
                 if r["community_FPKM"] > max(community)
+                else "below_observed_range"
+                if r["community_FPKM"] < min(community)
                 else "within_observed_range",
                 sample_gene_to_marker_ratio=sample_ratio,
                 sample_technical_low=r["technical_interval_low"],
@@ -277,8 +341,10 @@ json.dump(
         carrier_bootstrap_lower_must_be_positive=True,
         minimum_eligible_controls_for_descriptive_rank=3,
         marker_depth_aggregation="median across all selected loci including zeros",
-        gene_ratio_denominator="matched sensitivity, same species, strict marker median interior depth",
+        gene_ratio_denominator="matched sensitivity and carrier group; strict marker median interior depth, or full depth below the configured trim-aware short-gene threshold",
         interior_trim_nt=CONFIG["max_read_length"],
+        short_gene_full_depth_threshold_nt=max(600, 2 * CONFIG["max_read_length"] + 1),
+        short_gene_eligibility_basis="full marker depth and full-depth bootstrap",
         interval_scope="technical uncertainty only; no between-person, batch, reference-panel or ecological uncertainty",
     ),
     open(O / "analysis_parameters.json", "w"),

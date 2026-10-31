@@ -2,6 +2,7 @@
 import csv, itertools, json
 from pathlib import Path
 import pysam
+from alignment_evidence import unique_mate_loci
 from followup_config import ROOT, CONFIG, SAMPLE
 
 OUT = ROOT / "results/followup"
@@ -30,7 +31,9 @@ def fragment(name):
     return name[:-2] if name.endswith(("/1", "/2")) else name
 
 
-def classify(group):
+def classify(group, paired=False):
+    if paired:
+        group = unique_mate_loci(group)
     ordered = sorted(
         group,
         key=lambda a: a.get_tag("AS") if a.has_tag("AS") else -100000,

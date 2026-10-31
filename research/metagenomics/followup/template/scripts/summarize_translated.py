@@ -1,11 +1,16 @@
 """Exploratory translated-read evidence; never replace strict abundance estimates."""
 import collections, csv, itertools, json
 from common import ROOT, OUT, WORK, REF, write_tsv, fragment
+from Bio import SeqIO
+from translated_groups import protein_groups, competing_score_gap
 
 manifest = {
     r["mapping_reference_id"]: r
     for r in csv.DictReader((REF / "reference_manifest_v2.tsv").open(), delimiter="\t")
 }
+equivalence = protein_groups(
+    {r.id: str(r.seq) for r in SeqIO.parse(REF / "panel_v2.faa", "fasta")}
+)
 seen = collections.defaultdict(set)
 covered = collections.defaultdict(set)
 reads = collections.Counter()
@@ -22,7 +27,7 @@ for mate in [1, 2]:
             if ref not in manifest:
                 continue
             score = float(best[11])
-            gap = score - float(parsed[1][11]) if len(parsed) > 1 else float("inf")
+            gap = competing_score_gap(parsed, equivalence)
             pid = float(best[2])
             length = int(best[3])
             qc = (abs(int(best[5]) - int(best[4])) + 1) / int(best[6])
@@ -52,10 +57,13 @@ for mate in [1, 2]:
                     and gap >= 10
                     and e <= 1e-10
                 ):
-                    key = (ref, threshold)
-                    seen[key].add(fid)
-                    covered[key].update(range(start, end + 1))
-                    reads[key] += 1
+                    for member in equivalence.get(ref, (ref,)):
+                        if member not in manifest:
+                            continue
+                        key = (member, threshold)
+                        seen[key].add(fid)
+                        covered[key].update(range(start, end + 1))
+                        reads[key] += 1
 rows = []
 for ref, m in manifest.items():
     for threshold in [80, 90, 95]:
@@ -66,6 +74,10 @@ for ref, m in manifest.items():
             dict(
                 reference_id=ref,
                 gene=m["gene"],
+                identical_protein_reference_members=";".join(
+                    equivalence.get(ref, (ref,))
+                ),
+                equivalence_scope="Shared sequence evidence; do not sum alias rows or infer an individual carrier",
                 min_aa_identity_pct=threshold,
                 min_query_coverage_pct=90,
                 min_aligned_aa=40,

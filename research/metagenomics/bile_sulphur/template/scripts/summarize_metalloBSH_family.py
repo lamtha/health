@@ -49,7 +49,7 @@ def main():
                         a, int(r["length"])
                     )[1]
         total, variance, n = combine_fragment_weights(weights)
-        for sensitivity in ["full", "common2M", "exact_pair_collapsed"]:
+        for sensitivity in ["full", "common_depth", "exact_pair_collapsed"]:
             rr = {
                 r["group"]: r
                 for r in rows

@@ -87,6 +87,12 @@ def contribution(a, length, trim=None):
     return full / length, core / (length - 2 * trim) if length > 2 * trim else 0
 
 
+def require_common_depth(total, requested):
+    if total < requested:
+        raise ValueError("Library below declared common depth")
+    return requested
+
+
 def main(name):
     d = W / name
     d.mkdir(exist_ok=True)
@@ -188,7 +194,7 @@ def main(name):
     for mm in data.values():
         for fs in mm.values():
             wanted.update(fs)
-    take = min(CONFIG["common_depth"], total)
+    take = require_common_depth(total, CONFIG["common_depth"])
     selected = np.zeros(total, dtype=bool)
     selected[
         np.random.default_rng(CONFIG["seed"]).choice(total, take, replace=False)
@@ -225,7 +231,7 @@ def main(name):
                 collapsed.setdefault(hashes[fid], v)
             for sensitivity, values, denom in [
                 ("full", list(fs.values()), total),
-                ("common2M", [v for f, v in fs.items() if f in chosen], take),
+                ("common_depth", [v for f, v in fs.items() if f in chosen], take),
                 ("exact_pair_collapsed", list(collapsed.values()), unique_total),
             ]:
                 v = np.sum(values, axis=0) if values else np.zeros(4)

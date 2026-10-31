@@ -42,6 +42,7 @@ write_tsv(
         dict(
             gene=sel[k]["gene"],
             **v,
+            coordinate_system="0-based half-open [start,end)",
             interpretation="reference coordinates only; not an assembled sample genome",
         )
         for k, v in locations.items()

@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 import pysam
 from common import CONFIG, REF, write_tsv, groups, fragment
+from coverage_evidence import coverage_evidence
 
 p = argparse.ArgumentParser()
 p.add_argument("directory")
@@ -90,17 +91,14 @@ for row in manifest:
     for fid in frags[ref] & chosen:
         for pos, c in footprints[ref][fid].items():
             rare[pos] += c
-    call = (
-        "no_qualifying_reference_match"
-        if not num
-        else (
-            "broad_reference_coverage"
-            if breadth >= 95
-            and mean >= 5
-            and len(starts[ref]) >= 10
-            and row["reference_partial"] == "false"
-            else "partial_reference_evidence"
-        )
+    label = coverage_evidence(
+        counts[ref],
+        num,
+        breadth / 100,
+        mean,
+        len(starts[ref]),
+        row["reference_partial"] == "true",
+        ambiguous[ref],
     )
     rows.append(
         dict(
@@ -122,7 +120,8 @@ for row in manifest:
             else "NA",
             FPKM=num * 1e9 / n / total,
             ambiguous_best_reads=ambiguous[ref],
-            detection_call=call,
+            **label,
+            abundance_scope="Strict CDS-reference index; terminal read rejection can depress short-gene FPKM",
             rarefied_total_fragments=take,
             rarefied_unique_fragments=len(frags[ref] & chosen),
             rarefied_FPKM=len(frags[ref] & chosen) * 1e9 / n / take,

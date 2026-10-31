@@ -23,7 +23,7 @@ for name,organism,steps in rules:
     supported=[];broad=[];abund=[];details=[]
     for alternatives in steps:
         candidates=[g for g in selected if g['gene']in alternatives]
-        some=any(g['detection_call']in ['broad_reference_coverage','substantial_partial_coverage','partial_reference_evidence','partial_reference_only']for g in candidates)
+        some=any(g['detection_call']in ['broad_reference_coverage','depth_limited_reference_evidence','substantial_incomplete_reference_coverage','incomplete_reference_coverage','substantial_partial_coverage','partial_reference_evidence','partial_reference_only']for g in candidates)
         high=any(g['detection_call']=='broad_reference_coverage'for g in candidates)
         supported.append(some);broad.append(high)
         abund.append(max([float(g['fragments_per_kb_per_million_nonhost_fragments'])for g in candidates]or[0]))

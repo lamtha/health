@@ -4,6 +4,7 @@ import pysam
 from Bio import SeqIO
 from Bio.Seq import Seq
 from common import OUT, WORK, write_tsv, fragment
+from alignment_evidence import context_summary
 
 assert (WORK / "ASSEMBLY_READBACK_COMPLETE").exists()
 tax = {}
@@ -37,13 +38,11 @@ for line in (WORK / "target_contigs_context_exact.paf").open():
 rows = []
 for r in csv.DictReader((OUT / "assembly_contig_readback.tsv").open(), delimiter="\t"):
     hits = sorted(paf[r["contig"]], key=lambda x: x["query_fraction"], reverse=True)
-    best = hits[0] if hits else {}
+    context = context_summary(hits, int(r["length"]))
     r.update(
         kraken_taxid_conf0_1=tax[(r["contig"], "0.1")]["taxid"],
         kraken_taxid_conf0_2=tax[(r["contig"], "0.2")]["taxid"],
-        best_context_reference=best.get("reference", "none"),
-        best_context_identity_pct=best.get("identity", "NA"),
-        best_context_contig_breadth_pct=best.get("query_fraction", 0) * 100,
+        **context,
         context_alignment_blocks=json.dumps(
             hits, sort_keys=True, separators=(",", ":")
         ),

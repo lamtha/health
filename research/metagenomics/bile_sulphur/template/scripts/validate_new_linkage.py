@@ -120,6 +120,18 @@ with (W / "linkage_competition.log").open("w") as log:
                 )
                 if not hits or len(hits) >= 10:
                     continue
+                # The same mate locus can appear in alternative paired placements.
+                # Keep the reporting-cap guard above and compete distinct loci only.
+                unique = {}
+                for hit in hits:
+                    key = (
+                        hit.reference_id,
+                        hit.reference_start,
+                        hit.is_reverse,
+                        hit.cigarstring,
+                    )
+                    unique.setdefault(key, hit)
+                hits = list(unique.values())
                 a = hits[0]
                 identity, qcov, span, cols = metrics(a)
                 if (

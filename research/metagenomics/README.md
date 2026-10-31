@@ -146,3 +146,19 @@ The generalized initializer is tested with synthetic inputs; a fresh multi-hour
 full metagenomics run is not part of this code-publication check.
 
 The optional [bile–taurine–sulphide module](bile_sulphur/README.md) adds carrier-normalized Bilophila/Bt genes, metalloBSH catalytic-site checks and local pathway-linkage evidence.
+
+## Coverage and taxonomic attribution limits
+
+The target table separates shallow, depth-limited evidence from incomplete
+references and trace matches. `expected_breadth_uniform_poisson_pct` is an
+illustrative uniform-sampling expectation, not a statistical completeness test.
+An intact gene still needs sequence reconstruction and appropriate validation.
+The strict ≥90% aligned-read rule can reject CDS-boundary overhangs. Full-gene
+FPKM therefore remains a conservative reference-compatible index, especially for
+short targets; interior depth and boundary-rejection diagnostics are also exported.
+
+HUMAnN may lack mappings from newer MetaPhlAn SGBs to its species pangenomes.
+Audit prescreen logs and selected pangenomes before treating missing species-strata
+as absent functions. Translated fallback does not restore reliable attribution to
+an unrepresented species. A rounded host-mapping rate of 0.00% does not mean zero
+matches or independently establish that a vendor pre-depleted the library.

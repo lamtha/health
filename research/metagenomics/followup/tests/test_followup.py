@@ -460,6 +460,7 @@ assert classify([hit(mapq=255)])[1]=='accepted'
             "private.bam",
             "reconstructed.fna",
             "private.tsv",
+            "tpa_genome_mapping_per_base.tsv",
         ):
             (self.out / name).write_text("SYNTHETIC_PRIVATE_CONTENT")
         self.run_script("package_results.py")
@@ -471,6 +472,7 @@ assert classify([hit(mapq=255)])[1]=='accepted'
                 any("private." in n or "reconstructed" in n for n in z.namelist())
             )
             self.assertIn("followup/summary.md", z.namelist())
+            self.assertNotIn("followup/tpa_genome_mapping_per_base.tsv", z.namelist())
 
 
 class SourceTests(unittest.TestCase):

@@ -166,9 +166,17 @@ data or an open-source artifact. No workflow stage uploads sample data.
   terminal stop, length divisible by three and no internal stop/N. The exploratory
   short-edge linkage audit uses ≥98% identity and ≥100 nt per nonoverlapping gene.
   Read-back mapping competes against the entire assembly, not only selected contigs.
-- Circular placement of observed tpa fragment footprints is an exploratory
-  coverage model, not a deletion test or clinical p-value. Translated-read searches
-  and reference-recruited assemblies do not replace strict abundance estimates.
+- Spatial footprint checks report separate circular and fully contained linear
+  models. Circular gaps merge across the origin for both observations and
+  simulations. The linear sensitivity retains fragment footprints without wrapping
+  and exposes terminal depletion, but does not reconstruct unobserved clipped tails.
+  Neither model tests deletion or clinical significance.
+- Context breadth unions primary contig intervals for one reference genome; it does
+  not double-count overlaps or combine different genomes. Coordinates exported as
+  start/end are explicitly zero-based, half-open.
+- Exact identical protein references share translated evidence. Alias rows must not
+  be summed or assigned to separate carrier organisms. Distinct proteins still
+  compete; translated reads do not replace strict nucleotide abundance estimates.
 
 Reference co-location is not sample strain linkage. DNA homology, full ORFs and
 physical linkage do not demonstrate expression, substrate specificity, metal
@@ -189,3 +197,17 @@ Tests create synthetic reads and alignments in private temporary directories.
 They exercise workspace isolation, frozen settings, independent donors, reference
 hashes, paired counting, duplicate denominators, empty evidence and comparison
 cohort arithmetic. No patient data or database-scale run is needed for CI.
+
+Control conversion uses [fasterq-dump split-3](https://github.com/ncbi/sra-tools/wiki/HowTo%3A%20fasterq-dump)
+and checks every mate identifier and record count before accepting the output;
+singletons are excluded from the paired inputs. The processing wrapper validates
+input pairing before fastp. Host mapping uses [Bowtie2 reorder](https://bowtie-bio.sourceforge.net/bowtie2/manual.shtml)
+and a name sort before paired FASTQ export so position-based subsampling has a
+stable input order. Historical subsamples are reproducible from their saved input
+files and seed, but are not retroactively claimed to use this revised ordering.
+
+Shallow reference coverage is labelled depth-limited. The illustrative
+`1 - exp(-depth)` breadth expectation ignores mate dependence, ends and mapping
+bias; agreement does not prove a complete gene, and a deficit does not prove a
+deletion. Strict query coverage remains in force: boundary-overhanging reads can
+be rejected, making full-CDS FPKM conservative and length biased.

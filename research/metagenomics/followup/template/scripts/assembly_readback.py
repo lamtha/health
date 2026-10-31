@@ -21,7 +21,7 @@ with pysam.AlignmentFile(sys.stdin, "r") as sam, pysam.AlignmentFile(
             sub = [a for a in records if (a.is_read1 if mate == 1 else a.is_read2)]
             if not sub:
                 continue
-            a, decision, m = classify(sub)
+            a, decision, m = classify(sub, paired=True)
             if decision != "accepted" or a.reference_name not in contigs:
                 continue
             ref = a.reference_name

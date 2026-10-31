@@ -213,46 +213,10 @@ for s in sites:
         site_rows.append(row)
 write_tsv(OUT / "catalytic_site_evidence.tsv", site_rows)
 
-# Conditional spatial null preserving each observed fragment's mate footprint.
-# Circular random shifts deliberately avoid pretending independent mates are
-# separate molecules. This is exploratory, not a clinical hypothesis test.
+# Preserve each fragment's mate dependence; compare internally consistent models.
+from coverage_models import coverage_null
 ref = "WP_005028753_1"
-L = len(seqs[ref])
-observed = read_depth[ref] > 0
-
-
-def longest_gap(x):
-    runs = "".join("1" if v else "0" for v in x).split("1")
-    return max(map(len, runs))
-
-
-rng = np.random.default_rng(CONFIG["seed"])
-breadths = []
-gaps = []
-patterns = [np.array(sorted(v)) for v in footprints[ref].values()]
-for _ in range(20000):
-    cover = np.zeros(L, dtype=bool)
-    for indices in patterns:
-        cover[(indices + int(rng.integers(L))) % L] = True
-    breadths.append(float(cover.mean()))
-    gaps.append(longest_gap(cover))
-null = dict(
-    reference_id=ref,
-    unique_fragments=len(patterns),
-    seed=CONFIG["seed"],
-    replicates=20000,
-    observed_breadth=float(observed.mean()),
-    observed_longest_uncovered_run=longest_gap(observed),
-    null_breadth_quantiles=np.quantile(breadths, [0.025, 0.5, 0.975]).tolist(),
-    fraction_simulations_breadth_le_observed=float(
-        np.mean(np.array(breadths) <= observed.mean())
-    ),
-    null_longest_gap_quantiles=np.quantile(gaps, [0.025, 0.5, 0.975]).tolist(),
-    fraction_simulations_gap_ge_observed=float(
-        np.mean(np.array(gaps) >= longest_gap(observed))
-    ),
-    assumptions="conditional circular random placement of observed fragment footprints; ignores sequence bias, divergence and terminal effects; not a clinical p value",
-)
+null = dict(reference_id=ref, **coverage_null(list(footprints[ref].values()), len(seqs[ref]), CONFIG["seed"]))
 (OUT / "tpa_coverage_null.json").write_text(json.dumps(null, indent=2) + "\n")
 print(json.dumps(null, indent=2))
 print(

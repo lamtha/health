@@ -8,6 +8,7 @@ import collections, csv, itertools, json, math, statistics
 from array import array
 from pathlib import Path
 import pysam
+from coverage_evidence import coverage_evidence
 from workspace_config import ROOT, SAMPLE;OUT=ROOT/'results';WORK=ROOT/'analysis/work/targeted'
 
 def writer(path, rows, fields):
@@ -24,6 +25,7 @@ def main():
     reads=collections.Counter();ambig=collections.Counter();frag={r:set() for r in refs};starts={r:set() for r in refs}
     matches=collections.Counter();aligned=collections.Counter();mapqs=collections.defaultdict(list)
     read_to_refs=collections.defaultdict(set);stats=collections.Counter()
+    boundary_rejections=collections.Counter();max_query_length=0
     for mate in [1,2]:
         with pysam.AlignmentFile(WORK/f'mate{mate}.bam','rb') as bam:
             for name,group in itertools.groupby(bam.fetch(until_eof=True),key=lambda a:a.query_name):
@@ -38,8 +40,15 @@ def main():
                 qspan=sum(n for op,n in best.cigartuples if op in (0,1,7,8))
                 qlen=best.infer_read_length();nm=best.get_tag('NM')
                 ident=1-nm/cols if cols else 0;qcov=qspan/qlen if qlen else 0
+                max_query_length=max(max_query_length,qlen or 0)
                 if ident<.95 or qcov<.90 or qspan<80:
-                    stats['rejected_identity_length_or_query_coverage']+=1;continue
+                    stats['rejected_identity_length_or_query_coverage']+=1
+                    scores=[a.get_tag('AS') for a in ordered[1:] if a.has_tag('AS')]
+                    if best.has_tag('XS'):scores.append(best.get_tag('XS'))
+                    gap=best.get_tag('AS')-max(scores) if scores else 100000
+                    if ident>=.95 and qspan>=80 and qcov<.90 and gap>=10 and (best.mapping_quality==255 or best.mapping_quality>=20) and (best.reference_start==0 or best.reference_end==refs[ref]):
+                        boundary_rejections[ref]+=1
+                    continue
                 other=[a.get_tag('AS') for a in ordered[1:] if a.has_tag('AS')]
                 # Bowtie2 may report a second-best score beyond the -k output.
                 if best.has_tag('XS'):other.append(best.get_tag('XS'))
@@ -97,13 +106,8 @@ def main():
         ref=row['mapping_reference_id'];d=depth[ref];length=len(d);nfrag=len(frag[ref]);nread=reads[ref]
         b1=sum(v>0 for v in d)/length;b5=sum(v>=5 for v in d)/length;mean=sum(d)/length
         partial=row['reference_partial']=='true'
-        if nread==0 and ambig[ref]>0:call='ambiguous_reference_compatible_reads';quality='unresolved_homology'
-        elif nread==0:call='no_qualifying_reference_match';quality='not_detected_by_this_panel'
-        elif nfrag<3 or b1<.10:call='trace_fragment_evidence';quality='very_low'
-        elif b1>=.95 and mean>=5 and len(starts[ref])>=10 and not partial:call='broad_reference_coverage';quality='high_for_DNA_match_only'
-        elif b1>=.80 and nfrag>=5 and not partial:call='substantial_partial_coverage';quality='moderate_for_DNA_match_only'
-        else:call='partial_reference_evidence';quality='low_for_DNA_match_only'
-        if partial and nread:call='partial_reference_only';quality='limited_by_incomplete_reference'
+        label=coverage_evidence(nread,nfrag,b1,mean,len(starts[ref]),partial,ambig[ref])
+        interior=d[max_query_length:length-max_query_length] if length>2*max_query_length else []
         carrier='reference-compatible; actual carrier unresolved' if nread else 'unassigned'
         carrier_confidence='unresolved';carrier_taxid='NA';carrier_fraction='NA'
         candidates=[(t,n) for t,n in tax_species['0.2'][ref].items() if t!='unresolved']
@@ -113,8 +117,11 @@ def main():
             if support>=10 and fraction>=.8 and tax_species['0.1'][ref][tid]>=support:
                 carrier='read-classifier-supported candidate: '+tax_names.get(tid,tid)
                 carrier_confidence='moderate_taxonomic_support_without_assembly_linkage'
-        result=dict(row, sample=SAMPLE,analysis_status='complete',detection_call=call,
-                    evidence_quality=quality,unique_mapped_reads=nread,unique_mapped_fragments=nfrag,
+        result=dict(row, sample=SAMPLE,analysis_status='complete',**label,
+                    interior_trim_nt=max_query_length,
+                    interior_mean_read_depth=sum(interior)/len(interior) if interior else 'NA',
+                    boundary_overhang_rejected_reads=boundary_rejections[ref],
+                    full_gene_abundance_scope='strict CDS-reference index with gene-end loss; not an unbiased short-gene abundance estimate',unique_mapped_reads=nread,unique_mapped_fragments=nfrag,
                     ambiguous_candidate_reads=ambig[ref],distinct_alignment_start_strand_mates=len(starts[ref]),
                     mean_read_depth=round(mean,6),median_read_depth=statistics.median(d),
                     breadth_1x_pct=round(100*b1,4),breadth_5x_pct=round(100*b5,4),

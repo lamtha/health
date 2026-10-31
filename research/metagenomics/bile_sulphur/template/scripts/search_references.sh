@@ -1,5 +1,7 @@
 #!/bin/bash
 set -euo pipefail
+cd "$(dirname "$0")/../../.."
+analysis/envs/metagenomics/bin/python results/bile_sulphur/scripts/bile_sulphur_config.py
 R=analysis/bile_sulphur/references
 B=analysis/envs/assembly/bin
 "$B/makeblastdb" -in "$R/genomes.fna" -dbtype nucl -out "$R/genome_db" > analysis/bile_sulphur/logs/genome_db.log

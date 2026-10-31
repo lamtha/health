@@ -84,6 +84,8 @@ def initialize(
             out,
             ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
         )
+        # Freeze the shared depth-label implementation with this workflow.
+        shutil.copy2(SOURCE.parent / "template/scripts/coverage_evidence.py", out / "scripts/coverage_evidence.py")
         # copytree preserves source modes; restore private directory permissions.
         for directory in [out, *(p for p in out.rglob("*") if p.is_dir())]:
             directory.chmod(0o700)

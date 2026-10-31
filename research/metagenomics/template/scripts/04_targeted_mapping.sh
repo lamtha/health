@@ -10,8 +10,9 @@ mkdir -p analysis/work/targeted
 PANEL=results/references/target_panel.fna
 INDEX=analysis/work/targeted/curated_panel
 bowtie2-build --threads 8 "$PANEL" "$INDEX" > analysis/logs/target_index.log 2>&1
-# Map mates independently so reads crossing CDS boundaries are not rejected by
-# artificial reference boundaries. Mate identity is retained in separate BAMs.
+# Map mates independently to avoid requiring both mates to lie in one CDS.
+# The summarizer still requires >=90% read alignment: boundary-overhanging reads
+# can be rejected, biasing full-CDS depth/FPKM downward, especially for short genes.
 for MATE in 1 2; do
   bowtie2 --very-sensitive-local --reorder --seed 42 -k 10 --threads 8 --no-unal \
     -x "$INDEX" -U "analysis/work/nonhost/sample_${MATE}.fastq.gz" \

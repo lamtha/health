@@ -1,6 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 cd "$(dirname "$0")/../../.."
+analysis/envs/metagenomics/bin/python results/bile_sulphur/scripts/bile_sulphur_config.py
 analysis/envs/metagenomics/bin/python - <<'PY'
 import csv
 from Bio import SeqIO

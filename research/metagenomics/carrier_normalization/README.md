@@ -159,3 +159,26 @@ python -m unittest discover -s research/metagenomics/carrier_normalization/tests
 Tests cover allele ties, inter-group ambiguity, fragment aliases, alignment caps,
 reference-end trimming, paired-fragment counts, duplicate-aware denominators and
 private-workspace initialization. CI runs them with the parent research tests.
+
+## Review corrections and historical runs
+
+Marker eligibility now uses actual FASTA length (≥600 nt); metadata length is
+exported separately. A changed marker panel requires new mapping/quantification
+in a fresh workspace. Existing frozen runs are not silently relabelled as if they
+used the new panel. A subset-denominator sensitivity holding the old competition
+panel fixed must be labelled as such.
+
+Both modules require an eligible sample and at least three eligible controls for
+automatic ratio-range labels. Community ranges distinguish below, within and above.
+Short targets use full gene/full marker depth, with eligibility and bootstrap
+positivity checked on that same full-depth denominator. The short-target threshold
+is at least 600 nt and always exceeds twice the configured end trim. End bias
+remains; these are exploratory DNA coverage ratios. A zero denominator gives NA.
+Common-depth outputs use the label `common_depth`, with the actual number in
+`nonhost_fragments`; shallow libraries fail rather than silently lowering the
+requested depth. Historical `common2M` files retain their original provenance.
+
+Initialize a fresh workspace for this version: script hashes intentionally prevent
+mixing new code with old completion markers. Do not overwrite old hashes to make
+modified code appear to be the original run. Targeted historical replays should
+record changed files, input hashes and precisely which stages were recomputed.

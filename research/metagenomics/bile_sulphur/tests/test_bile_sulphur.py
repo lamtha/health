@@ -130,6 +130,11 @@ class AssignmentTests(unittest.TestCase):
             "identity_length_coverage",
         )
 
+    def test_shallow_library_cannot_be_labelled_common_depth(self):
+        with self.assertRaisesRegex(ValueError, "below declared common depth"):
+            quant.require_common_depth(3, 4)
+        self.assertEqual(quant.require_common_depth(4, 4), 4)
+
     def test_mates_share_fragment(self):
         self.assertEqual(quant.fragment("synthetic/1"), quant.fragment("synthetic/2"))
 

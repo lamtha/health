@@ -96,7 +96,7 @@ for sgb, species, anchor in [
                 extra.append(h)
         passed_flag = (
             not v["ext"]
-            and v["len"] >= 600
+            and len(candidates[q]) >= 600
             and len(on) == len(acs)
             and {cm[h["s"]]["accession"] for h in on} == acs
             and not off
@@ -107,7 +107,8 @@ for sgb, species, anchor in [
                 marker=q,
                 species=species,
                 sgb=sgb,
-                length=v["len"],
+                length=len(candidates[q]),
+                metadata_length=v["len"],
                 external_clades=";".join(v["ext"]),
                 single_copy_full_hits=len(on),
                 required_genomes=len(acs),
@@ -122,7 +123,7 @@ for sgb, species, anchor in [
             passed.append((q, on, ah))
     # At least 5 kb between centers on the anchor chromosome, up to 100 loci.
     taken = []
-    for q, on, ah in sorted(passed, key=lambda x: (-meta[x[0]]["len"], x[0])):
+    for q, on, ah in sorted(passed, key=lambda x: (-len(candidates[x[0]]), x[0])):
         center = (ah["ss"] + ah["se"]) / 2
         if any(ah["s"] == s and abs(center - c) < 5000 for s, c in taken):
             continue
@@ -296,6 +297,7 @@ json.dump(
         marker_min_identity=85,
         marker_min_coverage=0.98,
         marker_min_length=600,
+        marker_length_basis="actual candidate FASTA sequence; metadata length retained separately",
         marker_max_count=100,
         marker_min_spacing=5000,
         off_species_min_identity=90,

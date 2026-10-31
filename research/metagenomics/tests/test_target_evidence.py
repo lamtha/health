@@ -82,6 +82,27 @@ class TargetEvidenceTests(unittest.TestCase):
         self.assertAlmostEqual(float(row['fragments_per_kb_per_million_nonhost_fragments']), 1e9 / 300 / 100, places=5)
         self.assertEqual(row['intact_gene_demonstrated'], 'no')
 
+    def test_depth_limited_label_remains_supported_in_module_export(self):
+        path = self.out / 'references/reference_manifest.tsv'
+        with path.open() as stream:
+            refs = list(csv.DictReader(stream, delimiter='\t'))
+        for row in refs:
+            row['reference_source_organism'] = 'Bilophila wadsworthia'
+            row['reference_role'] = 'target'
+            row['gene'] = 'BwBSH2' if row['mapping_reference_id'] == 'full' else 'unused'
+        with path.open('w') as stream:
+            writer = csv.DictWriter(stream, fieldnames=list(refs[0]), delimiter='\t')
+            writer.writeheader(); writer.writerows(refs)
+        rows, _ = self.summarize([[self.alignment(f'fragment{i}', start=i*20) for i in range(5)], []])
+        self.assertEqual(rows['full']['detection_call'], 'depth_limited_reference_evidence')
+        (self.work / 'TARGETED_COMPLETE').touch()
+        result = subprocess.run([sys.executable, str(self.out / 'scripts/summarize_target_modules.py')], cwd=self.root, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.out / 'targeted_modules.tsv').open() as stream:
+            module = next(r for r in csv.DictReader(stream, delimiter='\t') if r['module']=='Bilophila_bile_taurine_to_sulfide_surveyed_core')
+        self.assertEqual(module['steps_with_partial_or_better_evidence'], '1')
+        self.assertEqual(module['complete_intact_pathway_demonstrated'], 'no')
+
     def test_partial_reference_cannot_become_complete_pathway(self):
         alignments = [self.alignment(f'ref{ref}_read{i}', ref=ref, start=i * 10)
                       for ref in (0, 1) for i in range(20)]

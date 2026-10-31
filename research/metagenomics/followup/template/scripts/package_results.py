@@ -19,6 +19,7 @@ def package():
     private = {
         "accepted_alignment_intervals.tsv",
         "base_evidence.tsv",
+        "tpa_genome_mapping_per_base.tsv",
         "paired_gene_fragments_private.tsv",
         "translated_target_reads_private.tsv",
     }
@@ -130,6 +131,8 @@ def package():
                     "qseqid",
                     "query_sequence",
                     "consensus_base",
+                    "reference_position_1based",
+                    "position_1based",
                 )
             ):
                 raise ValueError("Private per-read/base fields cannot be packaged")

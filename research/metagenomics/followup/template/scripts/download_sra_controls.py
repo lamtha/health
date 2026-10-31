@@ -6,6 +6,7 @@ FASTQ headers/gzip containers differ from ENA so ENA compressed MD5s do not appl
 import concurrent.futures, csv, gzip, hashlib, json, shutil, subprocess, urllib.request
 from pathlib import Path
 from common import ROOT, OUT, REF, CONFIG
+from validate_fastq_pairs import validate_pairs
 
 base = ROOT / "analysis/followup/controls"
 import os
@@ -26,7 +27,11 @@ def fetch(row):
     d = base / run
     d.mkdir(exist_ok=True)
     if (d / "DOWNLOAD_COMPLETE").exists():
-        return run + " already verified"
+        validation = validate_pairs(d / "raw_1.fastq.gz", d / "raw_2.fastq.gz")
+        (d / "download_pair_validation.json").write_text(
+            json.dumps(validation, indent=2) + "\n"
+        )
+        return run + " verified, including paired identifiers"
     (d / "DOWNLOAD_FAILED").unlink(missing_ok=True)
     try:
         meta = REF / (run + "_sdl.json")
@@ -92,7 +97,7 @@ def fetch(row):
                 [
                     str(tool / "fasterq-dump"),
                     str(archive),
-                    "--split-files",
+                    "--split-3",
                     "--threads",
                     "3",
                     "--outdir",
@@ -105,6 +110,7 @@ def fetch(row):
                 stderr=log,
                 check=True,
             )
+        pair_validation = validate_pairs(d / f"{run}_1.fastq", d / f"{run}_2.fastq")
         records = []
         for mate in [1, 2]:
             plain = d / f"{run}_{mate}.fastq"
@@ -135,6 +141,8 @@ def fetch(row):
                         archive.open("rb"), "sha256"
                     ).hexdigest(),
                     vdb_validate="passed",
+                    pair_validation=pair_validation,
+                    singleton_handling="split-3 singleton FASTQ retained locally and excluded from paired input",
                     fasterq_version=version,
                     fastq_outputs=records,
                     ena_md5_applicable=False,
